@@ -1,0 +1,26 @@
+<form [formGroup]="loginForm" (ngSubmit)="userLogin()">
+
+  <mat-toolbar>
+    <h1>La Médiathèque</h1>
+  </mat-toolbar>
+
+  <div class="container">
+    <div>
+      <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input id="email" matInput formControlName="email">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input id="password" type="password" matInput formControlName="password">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <button class="large-button" mat-flat-button color="primary" type="submit">Log In</button>
+    </div>
+  </div>
+</form>

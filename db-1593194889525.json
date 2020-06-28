@@ -1,0 +1,93 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Akbar",
+      "lastName": "KHAN",
+      "email": "akbar.a.khan@renault.com",
+      "password": "123"
+    }
+  ],
+  "books": [
+    {
+      "id": 1,
+      "title": "Le petit prince",
+      "author": "Antoine de Saint-Exupéry",
+      "genre": "Roman",
+      "year": 1943,
+      "summary": "On ne voit bien qu'avec le cœur. L'essentiel est invisible pour les yeux."
+    },
+    {
+      "id": 2,
+      "title": "La Belle et la Bête",
+      "author": "Antoine de Saint-Exupéry",
+      "genre": "Roman",
+      "year": 1943,
+      "summary": "On ne voit bien qu'avec le cœur. L'essentiel est invisible pour les yeux."
+    },
+    {
+      "id": 3,
+      "title": "Le petit chaperon rouge",
+      "author": "Charles Perrault",
+      "genre": "Conte",
+      "year": 1697,
+      "summary": "L’héroïne en est une jeune fille bien élevée, la plus jolie du village, qui court à sa perte en donnant au loup qu’elle rencontre dans la forêt les indications nécessaires pour trouver la maison de sa grand-mère. Le loup mange la vieille dame en se cachant des bûcherons qui travaillent dans la forêt voisine.Il tend ensuite un piège au Petit Chaperon rouge et finit par la manger."
+    },
+    {
+      "title": "Maison à la compagne",
+      "author": "Albert Cohen",
+      "year": 1922,
+      "genre": "Romance",
+      "summary": "Il était une fois un jeune homme qui vivait à la campagne avec sa compagne",
+      "id": 4
+    },
+    {
+      "title": "Le bleu de l'océan",
+      "author": "KHAN",
+      "year": 1966,
+      "genre": "Conte",
+      "summary": "L'Océan bleu n'est plus comme avant",
+      "id": 5
+    },
+    {
+      "title": "Le malade imaginaire",
+      "author": "Molière",
+      "year": 1669,
+      "genre": "Comedy",
+      "summary": "La pièce tourne autour d'Argan, le « malade imaginaire », éponyme. Il est veuf et a épousé en secondes noces Béline, qui simule des soins attentionnés, mais n'attend en réalité que la mort de son mari pour hériter. Il se fait faire des saignées et des purges et absorbe toutes sortes de remèdes, prescrits par des médecins pédants, plus soucieux de complaire à leur patient que de concourir à améliorer sa santé. Pour les berner, Toinette, sa servante, se déguise en médecin et lui dispense de nombreux conseils ironiques et moqueurs pour la profession.  Angélique, sa fille, aime Cléante, ce qui contrarie Argan, qui préférerait la voir épouser Thomas Diafoirus, lui-même médecin. Pour les tirer d'affaire, Toinette recommande à Argan de faire le mort. Sa femme, appelée par Toinette, manifeste, devant celui qu'elle croit trépassé, sa joie d'en être débarrassée. Angélique, appelée ensuite par Toinette, manifeste un chagrin sincère à la mort de son père, qui arrête aussitôt son jeu et accepte l'union avec Cléante, à la condition que celui-ci devienne médecin. Béralde, frère d'Argan, conseille à ce dernier de devenir médecin à son tour, menant à une fin burlesque de la pièce, à savoir la cérémonie bouffonne de l'intronisation du « malade imaginaire » comme médecin.",
+      "id": 6
+    },
+    {
+      "title": "Al Quran",
+      "author": "Allah",
+      "year": 610,
+      "genre": "Poem",
+      "summary": "Allah is the only one god",
+      "id": 7
+    },
+    {
+      "title": "Al Quran",
+      "author": "Allah",
+      "year": 610,
+      "genre": "Poem",
+      "summary": "Allah is the only one god",
+      "id": 8
+    },
+    {
+      "title": "Al Quran",
+      "author": "Allah",
+      "year": 610,
+      "genre": "Poem",
+      "summary": "Allah is the only one god",
+      "id": 9
+    },
+    {
+      "title": "Al Quran",
+      "author": "Allah",
+      "year": 610,
+      "genre": "Poem",
+      "summary": "Allah is the only one god",
+      "id": 10
+    }
+  ]
+}

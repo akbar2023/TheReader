@@ -1,0 +1,13 @@
+.cards {
+  max-width: 400px;
+}
+
+.livres {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.cards:hover {
+  box-shadow: rgba(64, 124, 235, 0.548) 0 0 5px 10px;
+}
