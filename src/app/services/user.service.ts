@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {User} from '../models/user';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,6 @@ export class UserService {
     return this.http.get<User[]>(this.baseUrl).pipe(
       map(users => {
         users.filter(user => user.email === email);
-        // console.log(users1, '--error');
-        // console.log(users);
       })
     );
   }
