@@ -7,36 +7,22 @@
   <div>
     <div>
       <mat-form-field>
-        <mat-label>Titre</mat-label>
+        <mat-label>Title</mat-label>
         <input id="title" matInput formControlName="title">
       </mat-form-field>
     </div>
 
     <div>
       <mat-form-field>
-        <mat-label>Auteur</mat-label>
+        <mat-label>Author</mat-label>
         <input id="author" matInput formControlName="author">
       </mat-form-field>
     </div>
 
     <div>
       <mat-form-field>
-        <mat-label>Année de publication</mat-label>
+        <mat-label>Year of publication</mat-label>
         <input id="year" type="number" matInput formControlName="year">
-      </mat-form-field>
-    </div>
-
-<!--    <div>-->
-<!--      <mat-form-field>-->
-<!--        <mat-label>Genre</mat-label>-->
-<!--        <input id="genre" type="text" matInput formControlName="genre">-->
-<!--      </mat-form-field>-->
-<!--    </div>-->
-
-    <div>
-      <mat-form-field>
-        <mat-label>Résumé</mat-label>
-        <input id="summary" type="text" matInput formControlName="summary">
       </mat-form-field>
     </div>
 
@@ -51,7 +37,14 @@
     </div>
 
     <div>
-      <button class="large-button" mat-flat-button color="primary" type="submit">Enregistrer</button>
+      <mat-form-field>
+        <mat-label>Summary</mat-label>
+        <textarea id="summary" type="text" matInput formControlName="summary"></textarea>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <button class="large-button" mat-flat-button color="primary" type="submit">Save</button>
     </div>
   </div>
 </form>

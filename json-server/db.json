@@ -58,36 +58,12 @@
       "id": 6
     },
     {
-      "title": "Al Quran",
-      "author": "Allah",
-      "year": 610,
-      "genre": "Poem",
-      "summary": "Allah is the only one god",
+      "title": "TOTO",
+      "author": "Thomas",
+      "year": 2000,
+      "genre": "Comedy",
+      "summary": "testt",
       "id": 7
-    },
-    {
-      "title": "Al Quran",
-      "author": "Allah",
-      "year": 610,
-      "genre": "Poem",
-      "summary": "Allah is the only one god",
-      "id": 8
-    },
-    {
-      "title": "Al Quran",
-      "author": "Allah",
-      "year": 610,
-      "genre": "Poem",
-      "summary": "Allah is the only one god",
-      "id": 9
-    },
-    {
-      "title": "Al Quran",
-      "author": "Allah",
-      "year": 610,
-      "genre": "Poem",
-      "summary": "Allah is the only one god",
-      "id": 10
     }
   ]
 }
