@@ -9,7 +9,7 @@ import { catchError, tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class UserService {
-  private readonly baseUrl = environment.apiUrl + 'users/';
+  private readonly baseUrl = 'http://localhost:8081/api/user';
   private readonly loginApi = 'api/auth';
 
   inMemoryToken;
@@ -21,13 +21,14 @@ export class UserService {
     return this.http.get<User[]>(this.baseUrl);
   }
 
-  logIn(email: string, password: string): Observable<any> {
+  logIn(username: string, password: string): Observable<any> {
     return this.http
-      .post<any>(this.loginApi + '/login', { email, password })
+      .post<any>('http://localhost:8081/login', { username, password })
       .pipe(
         tap((data) => {
-          this.inMemoryToken = { token: data.accessToken, expiry: data.expiresIn };
-          this.loggedIn = true;
+          console.log(data, '--Data from login action');
+          // this.inMemoryToken = { token: data.accessToken, expiry: data.expiresIn };
+          // this.loggedIn = true;
         }),
         catchError((err) => {
           alert('UNAUTHORIZED!!');
@@ -37,6 +38,6 @@ export class UserService {
   }
 
   signUp(user: User): Observable<User> {
-    return this.http.post<User>(this.baseUrl, user);
+    return this.http.post<User>(this.baseUrl + '/register', user);
   }
 }

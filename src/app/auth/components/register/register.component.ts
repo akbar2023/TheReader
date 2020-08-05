@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group({
       firstName: [''],
       lastName: [''],
-      email: [''],
+      username: [''],
       password: [''],
     });
   }

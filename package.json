@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "fullApp": "concurrently \"npm run start\" \"npm run server\"",
     "server": "./node_modules/.bin/json-server --watch ./json-server/db.json --routes ./json-server/routes.json",
     "prettier:check": "./node_modules/.bin/prettier \"**/*.ts\" --check ",
     "prettier:write": "./node_modules/.bin/prettier \"**/*.ts\" --write",
@@ -24,6 +25,7 @@
     "@angular/platform-browser": "~9.1.9",
     "@angular/platform-browser-dynamic": "~9.1.9",
     "@angular/router": "~9.1.9",
+    "concurrently": "^5.2.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

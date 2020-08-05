@@ -6,6 +6,20 @@
       "lastName": "KHAN",
       "email": "akbar.a.khan@renault.com",
       "password": "123"
+    },
+    {
+      "firstName": "AKbar",
+      "lastName": "KHAN",
+      "email": "akbar2@yahoo.com",
+      "password": "password",
+      "id": 2
+    },
+    {
+      "firstName": "AKbar",
+      "lastName": "KHAN",
+      "email": "akbar2@yahoo.com",
+      "password": "password",
+      "id": 3
     }
   ],
   "books": [
@@ -58,12 +72,20 @@
       "id": 6
     },
     {
-      "title": "TOTO",
-      "author": "Thomas",
-      "year": 2000,
-      "genre": "Comedy",
-      "summary": "testt",
+      "title": "Mon voisin Totoro",
+      "author": "Hayao Miyazaki",
+      "year": 1988,
+      "genre": "Fantastic",
+      "summary": "Deux petites filles, Mei, 4 ans, et Satsuki, 10 ans, s'installent dans une grande maison à la campagne avec leur père pour se rapprocher de l'hôpital où séjourne leur mère. Elles découvrent la nature tout autour de la maison et, surtout, l'existence de créatures merveilleuses, les Totoros, avec qui elles deviennent très amies.",
       "id": 7
+    },
+    {
+      "title": "Mon voisin Totoro",
+      "author": "Hayao Miyazaki",
+      "year": 1998,
+      "genre": "Fantastic",
+      "summary": "Il était une fois...",
+      "id": 8
     }
   ]
 }
