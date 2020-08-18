@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BookService } from '../../services/book.service';
 import { BookGenre } from '../../models/book-genre';
-import { UserService } from '../../../auth/services/user.service';
+import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,7 +18,7 @@ export class BookFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private readonly service: BookService,
-    private readonly userService: UserService,
+    private readonly userService: AuthService,
     private router: Router
   ) {}
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../../auth/models/user';
-import { UserService } from '../../../auth/services/user.service';
+import { AuthService } from '../../../auth/services/auth.service';
 import { BookService } from '../../services/book.service';
 import { Book } from '../../models/book';
 import { Router } from '@angular/router';
@@ -16,7 +16,7 @@ export class BookListComponent implements OnInit {
   e: HTMLElement;
 
   constructor(
-    private readonly userService: UserService,
+    private readonly userService: AuthService,
     private readonly bookService: BookService,
     private router: Router
   ) {}
