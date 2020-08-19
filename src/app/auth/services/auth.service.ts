@@ -10,11 +10,13 @@ import { catchError, map } from 'rxjs/operators';
 export class AuthService {
   private readonly baseUrl = 'http://localhost:8081/api/user';
   private readonly loginUrl = 'http://localhost:8081/login';
+
+  // private apiUrl = environment.apiUrl; // to setUp
   private readonly loginApi = 'api/auth';
   readonly status = 200;
 
-  token = '';
-  loggedIn = false;
+  public token = '';
+  public loggedIn: boolean;
 
   constructor(private http: HttpClient) {}
 
@@ -65,5 +67,17 @@ export class AuthService {
 
   signUp(user: User): Observable<User> {
     return this.http.post<User>(this.baseUrl + '/register', user);
+  }
+
+  // logOut() {
+  //   if (localStorage.getItem('authToken')) {
+  //     localStorage.removeItem('authToken');
+  //   }
+  //   this.loggedIn = false;
+  //   return 'logged out!';
+  // }
+
+  getToken() {
+    return localStorage.getItem('authToken');
   }
 }

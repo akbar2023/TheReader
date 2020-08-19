@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  constructor(private fb: FormBuilder, private readonly service: AuthService, private route: Router) {}
+  constructor(private fb: FormBuilder, private readonly service: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -48,11 +48,12 @@ export class LoginComponent implements OnInit {
       } else {
         console.log('No');
       }
+      this.router.navigate(['book-list']).then();
     });
     //   (data) => {
     //     alert('logged!');
     //     console.log(data, '--loggedIn');
-    //     // this.route.navigate(['/book-list']).then(this.fulfilled, this.rejected);
+    //     // this.router.navigate(['/book-list']).then(this.fulfilled, this.rejected);
     //   },
     //   (error) => console.log(error),
     //   () => console.log('Complete')

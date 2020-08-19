@@ -1,4 +1,4 @@
-import {BookGenre} from './book-genre';
+import { BookGenre } from './book-genre';
 
 export interface Book {
   id: number;
