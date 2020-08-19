@@ -12,7 +12,7 @@ export class AppComponent {
   constructor(private authService: AuthService) {
     const isLoggedIn = !!this.authService.getToken();
     if (isLoggedIn) {
-      authService.loggedIn = true;
+      authService.isLoggedIn = true;
     }
   }
 }

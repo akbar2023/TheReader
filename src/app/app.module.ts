@@ -9,7 +9,6 @@ import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { BooksModule } from './books/books.module';
 import { AuthInterceptorService } from './auth/services/auth-interceptor.service';
-
 @NgModule({
   declarations: [AppComponent],
   imports: [

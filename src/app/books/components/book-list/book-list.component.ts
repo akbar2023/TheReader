@@ -22,7 +22,7 @@ export class BookListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    !this.userService.loggedIn ? this.router.navigate(['/login']).then() : this.getBooks();
+    !this.userService.isLoggedIn ? this.router.navigate(['/login']).then() : this.getBooks();
     // this.getBooks();
   }
 
