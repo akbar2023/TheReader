@@ -15,7 +15,7 @@ export class AuthService {
   private readonly loginApi = 'api/auth';
   readonly status = 200;
 
-  public token = '';
+  public token: string;
   public isLoggedIn: boolean;
 
   constructor(private http: HttpClient) {}
@@ -54,12 +54,13 @@ export class AuthService {
   }
 
   logOut() {
-    localStorage.removeItem('authToken');
     this.isLoggedIn = false;
+    localStorage.removeItem('authToken');
     return 'logged out!';
   }
 
   getToken() {
-    return localStorage.getItem('authToken');
+    this.token = localStorage.getItem('authToken');
+    return this.token;
   }
 }

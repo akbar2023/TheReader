@@ -24,7 +24,7 @@ export class BookFormComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.genres, '--les Genres');
-    !this.userService.isLoggedIn ? this.router.navigate(['/login']).then() : this.createForm();
+    this.createForm();
   }
 
   createForm() {

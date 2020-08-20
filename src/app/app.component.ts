@@ -10,9 +10,6 @@ export class AppComponent {
   title = 'mediatheque';
 
   constructor(private authService: AuthService) {
-    const isLoggedIn = !!this.authService.getToken();
-    if (isLoggedIn) {
-      authService.isLoggedIn = true;
-    }
+    authService.isLoggedIn = !!this.authService.getToken();
   }
 }
