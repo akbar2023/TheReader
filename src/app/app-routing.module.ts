@@ -5,6 +5,7 @@ import { LoginComponent } from './auth/components/login/login.component';
 import { RegisterComponent } from './auth/components/register/register.component';
 import { BookFormComponent } from './books/components/book-form/book-form.component';
 import { AuthGuard } from './auth/guards/auth.guard';
+import { HomeComponent } from './auth/components/home/home.component';
 
 const routes: Routes = [
   {
@@ -17,9 +18,9 @@ const routes: Routes = [
     component: BookFormComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'login', component: LoginComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
 
 @NgModule({

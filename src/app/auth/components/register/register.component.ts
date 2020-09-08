@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-register',
@@ -20,14 +21,15 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group({
       firstName: [''],
       lastName: [''],
-      username: [''],
+      email: [''],
       password: [''],
     });
   }
 
   register() {
-    this.service.signUp(this.registerForm.value).subscribe(
-      (user) => console.log(user),
+    const user: User = this.registerForm.value;
+    this.service.signUp(user).subscribe(
+      (userResponse) => console.log(userResponse),
       (error) => console.log(error),
       () => console.log('Completed')
     );

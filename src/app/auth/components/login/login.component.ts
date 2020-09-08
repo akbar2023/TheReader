@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { User } from '../../models/user';
+import { UserLogin } from '../../models/userLogin';
 
 @Component({
   selector: 'app-login',
@@ -31,32 +32,19 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    if (localStorage.authToken) {
-      console.log('Token is present');
+    if (this.service.isLoggedIn) {
+      console.log('User logged-in');
     } else {
       console.log('Token not found');
     }
   }
 
   userLogin() {
-    const user: User = this.loginForm.value;
-    console.log(user, '--User login');
+    const user: UserLogin = this.loginForm.value;
+    console.log(user, '--User login form data');
     this.service.logIn(user.username, user.password).subscribe((data) => {
-      console.log(data, '--data');
-      if (localStorage.authToken) {
-        console.log('Yes');
-      } else {
-        console.log('No');
-      }
+      console.log(data, '--response data');
       this.router.navigate(['book-list']).then();
     });
-    //   (data) => {
-    //     alert('logged!');
-    //     console.log(data, '--loggedIn');
-    //     // this.router.navigate(['/book-list']).then(this.fulfilled, this.rejected);
-    //   },
-    //   (error) => console.log(error),
-    //   () => console.log('Complete')
-    // );
   }
 }

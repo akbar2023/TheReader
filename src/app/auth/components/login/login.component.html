@@ -1,9 +1,5 @@
 <form [formGroup]="loginForm" (ngSubmit)="userLogin()">
 
-  <mat-toolbar>
-    <h1>La Médiathèque</h1>
-  </mat-toolbar>
-
   <div class="container">
     <div>
       <mat-form-field class="example-full-width">
@@ -20,7 +16,9 @@
     </div>
 
     <div>
-      <button class="large-button" mat-flat-button color="primary" type="submit">Log In</button>
+      <button class="myButton" mat-flat-button color="accent" type="submit">Log In</button>
     </div>
+    <hr/>
+    <a mat-flat-button color="primary" routerLink="/register">Create an account</a>
   </div>
 </form>

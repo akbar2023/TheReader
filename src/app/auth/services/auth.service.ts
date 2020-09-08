@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { User } from '../models/user';
 import { catchError, map } from 'rxjs/operators';
+import { UserLogin } from '../models/userLogin';
 
 @Injectable({
   providedIn: 'root',
@@ -10,10 +11,6 @@ import { catchError, map } from 'rxjs/operators';
 export class AuthService {
   private readonly baseUrl = 'http://localhost:8081/api/user';
   private readonly loginUrl = 'http://localhost:8081/login';
-
-  // private apiUrl = environment.apiUrl; // to setUp
-  private readonly loginApi = 'api/auth';
-  readonly status = 200;
 
   public token: string;
   public isLoggedIn: boolean;
@@ -54,13 +51,12 @@ export class AuthService {
   }
 
   logOut() {
-    this.isLoggedIn = false;
     localStorage.removeItem('authToken');
+    this.isLoggedIn = false;
     return 'logged out!';
   }
 
   getToken() {
-    this.token = localStorage.getItem('authToken');
-    return this.token;
+    return (this.token = localStorage.getItem('authToken'));
   }
 }

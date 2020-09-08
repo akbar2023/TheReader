@@ -1,7 +1,10 @@
-<div>
-  <a mat-button color="accent" routerLink="/register">Register</a>
-  <a mat-button color="accent" *ngIf="!authService.isLoggedIn" routerLink="/login">Login</a>
-  <a mat-button color="accent" *ngIf="authService.isLoggedIn" (click)="logOut()">Log Out</a>
-  <a mat-button color="accent" routerLink="/book-form">Add Book</a>
-  <a mat-button color="accent" routerLink="/book-list">Books</a>
-</div>
+  <mat-toolbar color="primary">
+    <h1>La Médiathèque</h1>
+    <div class="navBar">
+      <a mat-button routerLink="/home">Home</a>
+      <a mat-button routerLink="/book-form">Add Book</a>
+      <a mat-button routerLink="/book-list">Books</a>
+      <a mat-button *ngIf="authService.isLoggedIn" (click)="logOut()">Log Out</a>
+      <a mat-button><span class="material-icons">search</span></a>
+    </div>
+  </mat-toolbar>
