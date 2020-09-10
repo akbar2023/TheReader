@@ -10,7 +10,7 @@
 <!--</mat-card>-->
 
 <div class="livres">
-  <mat-card *ngFor="let book of books" class="cards" (click)="effect($event)" id="{{book.id}}">
+  <mat-card *ngFor="let book of books" class="cards" id="{{book.id}}">
     <mat-card-header>
       <mat-card-title>{{book.title}}</mat-card-title>
       <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
@@ -20,6 +20,6 @@
          alt="Le petit prince">
     <mat-card-content>Genre: {{book.genre}}</mat-card-content>
     <mat-card-content>Year: {{book.year}}</mat-card-content>
-    <!--    <mat-card-content>Summary: {{book.summary}}</mat-card-content>-->
+    <button mat-raised-button color="accent" (click)="openDialog(book)">Summary</button>
   </mat-card>
 </div>

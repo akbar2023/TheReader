@@ -29,8 +29,13 @@ export class RegisterComponent implements OnInit {
   register() {
     const user: User = this.registerForm.value;
     this.service.signUp(user).subscribe(
-      (userResponse) => console.log(userResponse),
-      (error) => console.log(error),
+      (userResponse) => {
+        console.log(userResponse, '--userResponse');
+      },
+      (error) => {
+        // TODO: Manage errors
+        console.log(error);
+      },
       () => console.log('Completed')
     );
   }
