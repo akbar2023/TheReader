@@ -6,5 +6,5 @@ export interface Book {
   author: string;
   year: number;
   genre: BookGenre;
-  // summary: string;
+  summary: string;
 }

@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { BooksModule } from './books/books.module';
 import { AuthInterceptorService } from './auth/services/auth-interceptor.service';
+import { BookDetailsComponent } from './books/components/book-details/book-details.component';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -20,6 +21,7 @@ import { AuthInterceptorService } from './auth/services/auth-interceptor.service
     AuthModule,
     BooksModule,
   ],
+  entryComponents: [BookDetailsComponent],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

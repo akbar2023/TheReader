@@ -17,6 +17,10 @@ export class BookService {
     return this.http.get<Book[]>(this.baseUrl);
   }
 
+  getBookById(id: number) {
+    console.log('Get book by id works! Id is :' + id);
+  }
+
   add(book: Book): Observable<any> {
     return this.http.post(this.baseUrl, book);
   }
