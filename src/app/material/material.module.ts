@@ -23,6 +23,7 @@ const modules = [
   MatDividerModule,
   MatDialogModule,
 ];
+
 @NgModule({
   declarations: [],
   imports: [...modules],

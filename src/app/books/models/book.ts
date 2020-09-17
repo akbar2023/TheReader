@@ -1,4 +1,5 @@
 import { BookGenre } from './book-genre';
+import { BookCreator } from './book-creator';
 
 export interface Book {
   id: number;
@@ -7,4 +8,6 @@ export interface Book {
   year: number;
   genre: BookGenre;
   summary: string;
+  creator?: BookCreator;
+  creatorId?: number;
 }
