@@ -3,22 +3,26 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { User } from '../models/user';
 import { catchError, map } from 'rxjs/operators';
-import { UserLogin } from '../models/userLogin';
+import { UserDetails } from '../models/userDetails';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly baseUrl = 'http://localhost:8081/api/user';
+  private readonly baseUrl = 'http://localhost:8081/api/user/';
   private readonly loginUrl = 'http://localhost:8081/login';
 
   public token: string;
   public isLoggedIn: boolean;
+  public user = localStorage.getItem('userDetails');
+  public userDetails: UserDetails = JSON.parse(this.user);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    console.log(this.userDetails, 'Auth service');
+  }
 
-  get(): Observable<User[]> {
-    return this.http.get<User[]>(this.baseUrl);
+  get(email: string): Observable<User> {
+    return this.http.get<User>(this.baseUrl + email);
   }
 
   logIn(username: string, password: string) {
@@ -47,7 +51,7 @@ export class AuthService {
   }
 
   signUp(user: User): Observable<User> {
-    return this.http.post<User>(this.baseUrl + '/register', user);
+    return this.http.post<User>(this.baseUrl + 'register/', user);
   }
 
   logOut() {

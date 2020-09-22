@@ -11,5 +11,7 @@ export class AppComponent {
 
   constructor(private authService: AuthService) {
     authService.isLoggedIn = !!this.authService.getToken();
+    const userDetails = localStorage.getItem('userDetails');
+    console.log('User from localstorage', JSON.parse(userDetails));
   }
 }

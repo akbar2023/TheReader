@@ -1,10 +1,12 @@
-  <mat-toolbar color="primary">
-    <h1>La Médiathèque</h1>
-    <div class="navBar">
-      <a mat-button routerLink="/home">Home</a>
-      <a mat-button routerLink="/book-form">Add Book</a>
-      <a mat-button routerLink="/book-list">Books</a>
-      <a mat-button *ngIf="authService.isLoggedIn" (click)="logOut()">Log Out</a>
-<!--      <a mat-button><span class="material-icons">search</span></a>-->
-    </div>
-  </mat-toolbar>
+<mat-toolbar color="primary">
+  <h1>La Médiathèque</h1>
+  <div class="navBar">
+    <a mat-button routerLink="/home">Home</a>
+    <a mat-button routerLink="/book-form">Add Book</a>
+    <a mat-button routerLink="/book-list">Books</a>
+    <a mat-button *ngIf="authService.isLoggedIn" (click)="logOut()">Log Out</a>
+    <!--      <a mat-button><span class="material-icons">search</span></a>-->
+  </div>
+
+  <span class="material-icons" matTooltip="{{authService.userDetails.firstName}}" *ngIf="authService.isLoggedIn">account_circle</span>
+</mat-toolbar>

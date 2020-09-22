@@ -8,6 +8,6 @@
 <!--    </p>-->
   </div>
   <div id="loginComponent">
-    <app-login></app-login>
+    <app-login *ngIf="!authService.isLoggedIn"></app-login>
   </div>
 </div>

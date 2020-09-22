@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { User } from '../../models/user';
 import { UserLogin } from '../../models/userLogin';
+import { LoginSnackComponent } from '../login-snack/login-snack.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -13,14 +14,6 @@ import { UserLogin } from '../../models/userLogin';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
-  fulfilled() {
-    console.log('Fulfilled');
-  }
-
-  rejected() {
-    console.log('Rejected');
-  }
-
   createForm() {
     this.loginForm = this.fb.group({
       username: [''],
@@ -28,7 +21,12 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  constructor(private fb: FormBuilder, private readonly service: AuthService, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private readonly service: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -42,9 +40,23 @@ export class LoginComponent implements OnInit {
   userLogin() {
     const user: UserLogin = this.loginForm.value;
     console.log(user, '--User login form data');
-    this.service.logIn(user.username, user.password).subscribe((data) => {
-      console.log(data, '--response data');
-      this.router.navigate(['book-list']).then();
-    });
+    this.service.logIn(user.username, user.password).subscribe(
+      (data) => {
+        console.log(data, '--response data');
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        alert('connected');
+        this.service.get(user.username).subscribe((data) => {
+          console.log(data);
+          this.snackBar.openFromComponent(LoginSnackComponent, { duration: 5000 });
+
+          localStorage.setItem('userDetails', JSON.stringify(data));
+          this.router.navigate(['book-list']).then();
+        });
+      }
+    );
   }
 }

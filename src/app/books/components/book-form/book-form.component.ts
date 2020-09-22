@@ -39,6 +39,8 @@ export class BookFormComponent implements OnInit {
 
   saveBook() {
     const book = this.bookForm.value;
+    const userDetails = localStorage.getItem('userDetails');
+    book.creatorId = JSON.parse(userDetails).id;
     this.service.add(book).subscribe(
       () => console.log('Success!', book),
       (error) => console.log(error),
