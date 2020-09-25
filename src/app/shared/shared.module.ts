@@ -4,11 +4,11 @@ import { MenuComponent } from './components/menu/menu.component';
 import { MaterialModule } from '../material/material.module';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
-import { MatMenuModule } from '@angular/material/menu';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
-  imports: [CommonModule, MaterialModule, MatButtonModule, RouterModule, MatMenuModule],
-  declarations: [MenuComponent],
+  imports: [CommonModule, MaterialModule, MatButtonModule, RouterModule],
+  declarations: [MenuComponent, ProfileComponent],
   exports: [MenuComponent],
 })
 export class SharedModule {}
