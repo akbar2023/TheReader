@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-snack',
@@ -6,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login-snack.component.scss'],
 })
 export class LoginSnackComponent implements OnInit {
-  constructor() {}
+  userName: string;
 
-  ngOnInit(): void {}
+  constructor(public authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.userName = this.authService.userDetails.firstName;
+  }
 }
