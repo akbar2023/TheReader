@@ -5,7 +5,7 @@ import { LoginComponent } from './auth/components/login/login.component';
 import { RegisterComponent } from './auth/components/register/register.component';
 import { BookFormComponent } from './books/components/book-form/book-form.component';
 import { AuthGuard } from './auth/guards/auth.guard';
-import { HomeComponent } from './auth/components/home/home.component';
+import { HomeComponent } from './shared/components/home/home.component';
 
 const routes: Routes = [
   {
