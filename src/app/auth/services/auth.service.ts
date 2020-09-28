@@ -14,8 +14,7 @@ export class AuthService {
 
   public token: string;
   public isLoggedIn: boolean;
-  public user = localStorage.getItem('userDetails');
-  public userDetails: UserDetails = JSON.parse(this.user);
+  public userDetails: UserDetails;
 
   constructor(private http: HttpClient) {
     console.log(this.userDetails, 'Auth service');
@@ -39,7 +38,6 @@ export class AuthService {
       .pipe(
         map((response: HttpResponse<User>) => {
           this.token = response.headers.get('Authorization');
-          this.isLoggedIn = true;
           localStorage.setItem('authToken', this.token);
           return 'Success';
         }),
@@ -56,6 +54,7 @@ export class AuthService {
 
   logOut() {
     localStorage.removeItem('authToken');
+    localStorage.removeItem('userDetails');
     this.isLoggedIn = false;
     return 'logged out!';
   }

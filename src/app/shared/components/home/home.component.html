@@ -1,0 +1,8 @@
+<div class="container">
+  <div>
+    <app-profile *ngIf="authService.isLoggedIn"></app-profile>
+  </div>
+  <div id="loginComponent">
+    <app-login *ngIf="!authService.isLoggedIn"></app-login>
+  </div>
+</div>

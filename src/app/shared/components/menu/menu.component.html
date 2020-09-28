@@ -4,9 +4,13 @@
     <a mat-button routerLink="/home">Home</a>
     <a mat-button routerLink="/book-form">Add Book</a>
     <a mat-button routerLink="/book-list">Books</a>
-    <a mat-button *ngIf="authService.isLoggedIn" (click)="logOut()">Log Out</a>
-    <!--      <a mat-button><span class="material-icons">search</span></a>-->
   </div>
 
-  <span class="material-icons" matTooltip="{{authService.userDetails.firstName}}" *ngIf="authService.isLoggedIn">account_circle</span>
+  <button mat-button [matMenuTriggerFor]="menu">
+    <span class="material-icons" matTooltip="{{authService.userDetails.firstName}}" *ngIf="authService.isLoggedIn">account_circle</span>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/home">Profile</button>
+    <button style="color: #f44336" mat-menu-item (click)="logOut()">Log Out</button>
+  </mat-menu>
 </mat-toolbar>
