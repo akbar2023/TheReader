@@ -8,8 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class BookService {
-  // private readonly baseUrl = environment.apiUrl + 'books/';
-  private readonly baseUrl = 'http://localhost:8081/api/book';
+  private readonly baseUrl = `${environment.apiUrl}/api/book/`;
 
   constructor(private http: HttpClient) {}
 

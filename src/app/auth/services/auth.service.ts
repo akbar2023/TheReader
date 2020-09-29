@@ -4,13 +4,14 @@ import { Observable, of } from 'rxjs';
 import { User } from '../models/user';
 import { catchError, map } from 'rxjs/operators';
 import { UserDetails } from '../models/userDetails';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly baseUrl = 'http://localhost:8081/api/user/';
-  private readonly loginUrl = 'http://localhost:8081/login';
+  private readonly baseUrl = `${environment.apiUrl}/api/user/`;
+  private readonly loginUrl = `${environment.apiUrl}/login`;
 
   public token: string;
   public isLoggedIn: boolean;
