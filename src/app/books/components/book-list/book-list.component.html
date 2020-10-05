@@ -14,10 +14,14 @@
     <mat-card-header>
       <mat-card-title>{{book.title}}</mat-card-title>
       <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
+      <button style="position: absolute; right: 50px;" mat-icon-button color="warn" (click)="addToList(book.id)">
+        <mat-icon>favorite_border</mat-icon>
+      </button>
     </mat-card-header>
     <img mat-card-image
-         src="https://www.realites-pediatriques.com/wp-content/uploads/sites/3/2019/04/Le-petit-prince-et-le-chercheur.jpg"
+         src="assets/img/petit_prince.jpg"
          alt="Le petit prince">
     <button mat-raised-button color="accent" (click)="openDialog(book)">Details</button>
   </mat-card>
+
 </div>

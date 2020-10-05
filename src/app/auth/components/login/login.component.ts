@@ -43,19 +43,19 @@ export class LoginComponent implements OnInit {
     this.service.logIn(user.username, user.password).subscribe(
       (data) => {
         console.log(data, '--response data');
+        alert('connected');
       },
       (error) => {
         console.log(error);
       },
       () => {
-        alert('connected');
         this.service.get(user.username).subscribe((data) => {
           console.log(data);
 
           localStorage.setItem('userDetails', JSON.stringify(data));
-          const userDetails = localStorage.getItem('userDetails');
+          const userDetString = localStorage.getItem('userDetails');
           this.service.isLoggedIn = true;
-          this.service.userDetails = JSON.parse(userDetails);
+          this.service.userDetails = JSON.parse(userDetString);
           this.snackBar.openFromComponent(LoginSnackComponent, { duration: 2000 });
           this.router.navigate(['book-list']).then();
         });

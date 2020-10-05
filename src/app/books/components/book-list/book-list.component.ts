@@ -6,6 +6,7 @@ import { Book } from '../../models/book';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { BookDetailsComponent } from '../book-details/book-details.component';
+import { HomeComponent } from '../../../shared/components/home/home.component';
 
 @Component({
   selector: 'app-book-list',
@@ -15,8 +16,6 @@ import { BookDetailsComponent } from '../book-details/book-details.component';
 export class BookListComponent implements OnInit {
   users: User[];
   books: Book[];
-  e: HTMLElement;
-  @Input() public book = { author: 'Izzat Nadiri', year: 26 };
 
   constructor(
     private readonly userService: AuthService,
@@ -45,5 +44,11 @@ export class BookListComponent implements OnInit {
   openDialog(book: Book) {
     const modalRef = this.dialog.open(BookDetailsComponent);
     modalRef.componentInstance.book = book;
+  }
+
+  addToList(bookId: number) {
+    // console.log(bookId);
+    this.userService.addBookToList(bookId).subscribe((data) => console.log(data, 'addBookFromAuthService'));
+    this.userService.removeBookFromList(bookId);
   }
 }
