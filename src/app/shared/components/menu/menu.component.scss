@@ -7,8 +7,9 @@
 
 mat-toolbar {
   margin-bottom: 50px;
-  //span {
-  //  display: flex;
-  //  justify-content: flex-end;
-  //}
+}
+
+.userIcon {
+  position: absolute;
+  right: 50px;
 }

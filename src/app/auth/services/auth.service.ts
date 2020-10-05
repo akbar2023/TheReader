@@ -80,8 +80,9 @@ export class AuthService {
     return this.http.get<Book[]>(`${this.baseUrl}${userId}/books`);
   }
 
-  // todo
   removeBookFromList(bookId: number) {
-    return this.http.post<UserBook>(this.baseUrl + 'add-book/', this.userBook);
+    const userId = this.userDetails.id;
+    this.userBook = { userId, bookId };
+    return this.http.put<UserBook>(this.baseUrl + 'remove-book/', this.userBook);
   }
 }

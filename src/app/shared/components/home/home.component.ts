@@ -19,4 +19,9 @@ export class HomeComponent implements OnInit {
       this.myBooks = books;
     });
   }
+
+  removeBookFromList(bookId: number) {
+    console.log(bookId, 'home comp');
+    this.authService.removeBookFromList(bookId).subscribe((data) => console.log(data));
+  }
 }

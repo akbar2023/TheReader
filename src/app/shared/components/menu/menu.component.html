@@ -6,7 +6,7 @@
     <a mat-button routerLink="/book-list">Books</a>
   </div>
 
-  <button mat-button [matMenuTriggerFor]="menu">
+  <button class="userIcon" mat-button [matMenuTriggerFor]="menu">
     <span class="material-icons" matTooltip="{{authService.userDetails.firstName}}" *ngIf="authService.isLoggedIn">account_circle</span>
   </button>
   <mat-menu #menu="matMenu">

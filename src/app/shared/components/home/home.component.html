@@ -1,22 +1,21 @@
 <div class="container">
   <div *ngIf="authService.isLoggedIn">
     <app-profile></app-profile>
-    <div style="width: 100px">
-      <div *ngFor="let book of myBooks">
-        <div>
-          <h3>{{book.title}}</h3>
-<!--          <em>{{book.author}}</em>-->
-<!--          <button style="position: fixed; margin-left: 350px;" mat-icon-button color="warn">-->
-<!--            <mat-icon>favorite_border</mat-icon>-->
-<!--          </button>-->
+    <div>
+      <mat-card style="width: 400px" *ngFor="let book of myBooks">
+        <mat-card-header>
+          <mat-card-title>{{book.title}}</mat-card-title>
+          <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
+          <button style="position: absolute; right: 50px;" mat-icon-button color="warn" (click)="removeBookFromList(book.id)">
+            <mat-icon>favorite</mat-icon>
+          </button>
           <!--      <button class="material-icons" >add_box</button>-->
-        </div>
-<!--        <img style="width: 100px" mat-card-image-->
-<!--             src="assets/img/petit_prince.jpg"-->
-<!--             alt="Le petit prince">-->
-<!--        <button mat-raised-button color="accent">Details</button>-->
-        <hr>
-      </div>
+        </mat-card-header>
+        <img mat-card-image
+             src="assets/img/petit_prince.jpg"
+             alt="Le petit prince">
+        <button mat-raised-button color="accent">Details</button>
+      </mat-card>
 
     </div>
   </div>
