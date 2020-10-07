@@ -1,12 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from '../../../auth/models/user';
 import { AuthService } from '../../../auth/services/auth.service';
 import { BookService } from '../../services/book.service';
 import { Book } from '../../models/book';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { BookDetailsComponent } from '../book-details/book-details.component';
-import { HomeComponent } from '../../../shared/components/home/home.component';
 
 @Component({
   selector: 'app-book-list',
@@ -20,19 +18,12 @@ export class BookListComponent implements OnInit {
   constructor(
     private readonly userService: AuthService,
     private readonly bookService: BookService,
-    public dialog: MatDialog,
-    private router: Router
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.getBooks();
   }
-
-  // getUsers(): void {
-  //   this.userService.get().subscribe(users => {
-  //     this.users = users;
-  //   });
-  // }
 
   getBooks(): void {
     this.bookService.get().subscribe((books: Book[]) => {
@@ -47,8 +38,6 @@ export class BookListComponent implements OnInit {
   }
 
   addToList(bookId: number) {
-    // console.log(bookId);
     this.userService.addBookToList(bookId).subscribe((data) => console.log(data, 'addBookFromAuthService'));
-    this.userService.removeBookFromList(bookId);
   }
 }

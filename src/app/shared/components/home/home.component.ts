@@ -9,7 +9,7 @@ import { Book } from '../../../books/models/book';
 })
 export class HomeComponent implements OnInit {
   myBooks: Book[];
-  public lesLivres = ['Al Anfal', 'Al Araf', 'Al Baqarah'];
+
   constructor(public authService: AuthService) {}
 
   ngOnInit(): void {
@@ -21,7 +21,6 @@ export class HomeComponent implements OnInit {
   }
 
   removeBookFromList(bookId: number) {
-    console.log(bookId, 'home comp');
     this.authService.removeBookFromList(bookId).subscribe((data) => console.log(data));
   }
 }
