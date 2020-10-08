@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../../../auth/models/user';
 import { AuthService } from '../../../auth/services/auth.service';
 import { BookService } from '../../services/book.service';
 import { Book } from '../../models/book';
@@ -12,7 +11,6 @@ import { BookDetailsComponent } from '../book-details/book-details.component';
   styleUrls: ['./book-list.component.scss'],
 })
 export class BookListComponent implements OnInit {
-  users: User[];
   books: Book[];
 
   constructor(

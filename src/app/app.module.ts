@@ -10,6 +10,7 @@ import { SharedModule } from './shared/shared.module';
 import { BooksModule } from './books/books.module';
 import { AuthInterceptorService } from './auth/services/auth-interceptor.service';
 import { BookDetailsComponent } from './books/components/book-details/book-details.component';
+import { UserModule } from './user/user.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -20,6 +21,7 @@ import { BookDetailsComponent } from './books/components/book-details/book-detai
     SharedModule,
     AuthModule,
     BooksModule,
+    UserModule,
   ],
   entryComponents: [BookDetailsComponent],
   providers: [

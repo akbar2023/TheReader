@@ -75,14 +75,14 @@ export class AuthService {
     return this.http.post<UserBook>(this.baseUrl + 'add-book/', this.userBook);
   }
 
-  getMyBooks(): Observable<Book[]> {
-    const userId = this.userDetails.id;
-    return this.http.get<Book[]>(`${this.baseUrl}${userId}/books`);
-  }
-
-  removeBookFromList(bookId: number) {
-    const userId = this.userDetails.id;
-    this.userBook = { userId, bookId };
-    return this.http.put<UserBook>(this.baseUrl + 'remove-book/', this.userBook);
-  }
+  // getMyBooks(): Observable<Book[]> {
+  //   const userId = this.userDetails.id;
+  //   return this.http.get<Book[]>(`${this.baseUrl}${userId}/books`);
+  // }
+  //
+  // removeBookFromList(bookId: number) {
+  //   const userId = this.userDetails.id;
+  //   this.userBook = { userId, bookId };
+  //   return this.http.put<UserBook>(this.baseUrl + 'remove-book/', this.userBook);
+  // }
 }
