@@ -17,6 +17,7 @@ export class UserLibraryComponent implements OnInit {
     console.log(this.authService.isLoggedIn);
     this.userService.getMyBooks().subscribe((books: Book[]) => {
       console.log(books, 'My books');
+      this.userService.userBookList = books;
       this.myBooks = books;
     });
   }

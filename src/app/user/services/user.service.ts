@@ -13,12 +13,12 @@ export class UserService {
   private readonly baseUrl = `${environment.apiUrl}/api/user/`;
   private userBook: UserBook;
   private readonly userId: number;
+  public userBookList: Book[];
 
   constructor(private authService: AuthService, private http: HttpClient) {
     this.userId = this.authService.userDetails.id;
   }
 
-  // todo : replace book-list component inside user directory
   addBookToList(bookId: number): Observable<any> {
     console.log(this.authService.userDetails.id);
     const userId = this.userId;
