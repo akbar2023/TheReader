@@ -23,14 +23,14 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private readonly service: AuthService,
+    private readonly authService: AuthService,
     private router: Router,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     this.createForm();
-    if (this.service.isLoggedIn) {
+    if (this.authService.isLoggedIn) {
       console.log('User logged-in');
     } else {
       console.log('Token not found');
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
   userLogin() {
     const user: UserLogin = this.loginForm.value;
     console.log(user, '--User login form data');
-    this.service.logIn(user.username, user.password).subscribe(
+    this.authService.logIn(user.username, user.password).subscribe(
       (data) => {
         console.log(data, '--response data');
         alert('connected');
@@ -49,14 +49,14 @@ export class LoginComponent implements OnInit {
         console.log(error);
       },
       () => {
-        this.service.get(user.username).subscribe((data) => {
+        this.authService.getUser(user.username).subscribe((data) => {
           console.log(data);
 
           localStorage.setItem('userDetails', JSON.stringify(data));
           const userDetString = localStorage.getItem('userDetails');
-          this.service.isLoggedIn = true;
-          this.service.userDetails = JSON.parse(userDetString);
-          this.snackBar.openFromComponent(LoginSnackComponent, { duration: 2000 });
+          this.authService.isLoggedIn = true;
+          this.authService.userDetails = JSON.parse(userDetString);
+          this.snackBar.openFromComponent(LoginSnackComponent, { duration: 3000 });
           this.router.navigate(['book-list']).then();
         });
       }
