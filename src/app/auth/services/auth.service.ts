@@ -17,9 +17,7 @@ export class AuthService {
   public isLoggedIn: boolean;
   public userDetails: UserDetails;
 
-  constructor(private http: HttpClient) {
-    console.log(this.userDetails, 'Auth service');
-  }
+  constructor(private http: HttpClient) {}
 
   getUser(email: string): Observable<User> {
     return this.http.get<User>(this.baseUrl + email);
