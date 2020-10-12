@@ -3,8 +3,9 @@
     <mat-card-header>
       <mat-card-title>{{book.title}}</mat-card-title>
       <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
-      <button style="position: absolute; right: 50px;" mat-icon-button color="warn" (click)="addToList(book.id)">
-        <mat-icon>favorite_border</mat-icon>
+      <button style="position: absolute; right: 50px;" mat-icon-button color="warn" (click)="book.users.includes(userId)?removeFromList(book.id   ) : addToList(book.id)">
+        <mat-icon *ngIf="book.users.includes(userId)">favorite</mat-icon>
+        <mat-icon *ngIf="!book.users.includes(userId)">favorite_border</mat-icon>
       </button>
     </mat-card-header>
     <img mat-card-image

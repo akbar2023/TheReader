@@ -4,6 +4,7 @@ import { Book } from '../../models/book';
 import { MatDialog } from '@angular/material/dialog';
 import { BookDetailsComponent } from '../book-details/book-details.component';
 import { UserService } from '../../../user/services/user.service';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-book-list',
@@ -12,12 +13,16 @@ import { UserService } from '../../../user/services/user.service';
 })
 export class BookListComponent implements OnInit {
   libraryBooks: Book[];
+  userId: number;
 
   constructor(
     private readonly userService: UserService,
     private readonly bookService: BookService,
+    private readonly authService: AuthService,
     public dialog: MatDialog
-  ) {}
+  ) {
+    this.userId = this.authService.userDetails.id;
+  }
 
   ngOnInit(): void {
     this.getLibraryBooks();
@@ -25,7 +30,7 @@ export class BookListComponent implements OnInit {
 
   getLibraryBooks(): void {
     this.bookService.get().subscribe((books: Book[]) => {
-      console.log(books);
+      console.log(books, 'library books');
       this.libraryBooks = books;
     });
   }
@@ -36,26 +41,25 @@ export class BookListComponent implements OnInit {
   }
 
   addToList(bookId: number) {
+    this.libraryBooks.forEach((book) => {
+      if (book.id === bookId) {
+        book.users.push(this.userId);
+      }
+    });
     this.userService.addBookToList(bookId).subscribe((data) => {
       console.log(data, 'addBook From UserService');
       alert(data);
     });
+  }
 
-    // this.userService.getMyBooks().subscribe((data1) => {
-    //   console.log(data1, 'user Books from book service');
-    //   const userBooks: Book[] = data1;
-    //   const bookIds: number[] = [];
-    //   userBooks.forEach((book) => {
-    //     bookIds.push(book.id);
-    //   });
-    //   if (!bookIds.includes(bookId)) {
-    //     this.userService.addBookToList(bookId).subscribe((data) => {
-    //       console.log(data, 'addBook From UserService');
-    //       alert(data);
-    //     });
-    //   } else {
-    //     alert('This book already exists in your book list');
-    //   }
-    // });
+  removeFromList(bookId: number): void {
+    console.log('remove detected !');
+    this.libraryBooks.forEach((book) => {
+      if (book.id === bookId) {
+        const index = book.users.indexOf(this.userId);
+        book.users.splice(index, 1);
+      }
+    });
+    this.userService.removeBookFromList(bookId).subscribe((data) => alert(data));
   }
 }

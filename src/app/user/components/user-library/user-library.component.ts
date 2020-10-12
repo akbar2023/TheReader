@@ -23,6 +23,14 @@ export class UserLibraryComponent implements OnInit {
   }
 
   removeBookFromList(bookId: number) {
-    this.userService.removeBookFromList(bookId).subscribe((data) => alert(data));
+    this.userService.removeBookFromList(bookId).subscribe((data) => {
+      // alert(data);
+      this.myBooks.forEach((book) => {
+        if (book.id === bookId) {
+          const index = this.myBooks.indexOf(book);
+          this.myBooks.splice(index, 1);
+        }
+      });
+    });
   }
 }

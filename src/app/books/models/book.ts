@@ -10,4 +10,5 @@ export interface Book {
   summary: string;
   creator?: BookCreator;
   creatorId?: number;
+  users?: number[];
 }
