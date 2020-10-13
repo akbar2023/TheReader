@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { UserBook } from '../../auth/models/userBook';
 import { AuthService } from '../../auth/services/auth.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Book } from '../../books/models/book';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -20,19 +21,36 @@ export class UserService {
   }
 
   addBookToList(bookId: number): Observable<any> {
-    console.log(this.authService.userDetails.id);
     const userId = this.userId;
     this.userBook = { userId, bookId };
-    return this.http.post<UserBook>(this.baseUrl + 'add-book/', this.userBook);
+    return this.http
+      .post<UserBook>(this.baseUrl + 'add-book/', this.userBook, { observe: 'response' })
+      .pipe(
+        map((response: HttpResponse<any>) => {
+          return response;
+        }),
+        catchError((err) => {
+          return of(err);
+        })
+      );
   }
 
   getMyBooks(): Observable<Book[]> {
     return this.http.get<Book[]>(`${this.baseUrl}${this.userId}/books`);
   }
 
-  removeBookFromList(bookId: number) {
+  removeBookFromList(bookId: number): Observable<any> {
     const userId = this.userId;
     this.userBook = { userId, bookId };
-    return this.http.put<UserBook>(this.baseUrl + 'remove-book/', this.userBook);
+    return this.http
+      .put<UserBook>(this.baseUrl + 'remove-book/', this.userBook, { observe: 'response' })
+      .pipe(
+        map((response: HttpResponse<any>) => {
+          return response;
+        }),
+        catchError((err) => {
+          return of(err);
+        })
+      );
   }
 }

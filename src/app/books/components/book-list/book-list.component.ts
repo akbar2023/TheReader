@@ -5,6 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { BookDetailsComponent } from '../book-details/book-details.component';
 import { UserService } from '../../../user/services/user.service';
 import { AuthService } from '../../../auth/services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { BookSnackComponent } from '../book-snack/book-snack.component';
 
 @Component({
   selector: 'app-book-list',
@@ -19,7 +21,8 @@ export class BookListComponent implements OnInit {
     private readonly userService: UserService,
     private readonly bookService: BookService,
     private readonly authService: AuthService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
     this.userId = this.authService.userDetails.id;
   }
@@ -41,25 +44,29 @@ export class BookListComponent implements OnInit {
   }
 
   addToList(bookId: number) {
-    this.libraryBooks.forEach((book) => {
-      if (book.id === bookId) {
-        book.users.push(this.userId);
+    this.userService.addBookToList(bookId).subscribe((response) => {
+      console.log(response.status, 'addBook From UserService');
+      if (response.status === 200) {
+        this.snackBar.openFromComponent(BookSnackComponent, { duration: 1000, verticalPosition: 'top' });
+        this.libraryBooks.forEach((book) => {
+          if (book.id === bookId) {
+            book.users.push(this.userId);
+          }
+        });
       }
-    });
-    this.userService.addBookToList(bookId).subscribe((data) => {
-      console.log(data, 'addBook From UserService');
-      alert(data);
     });
   }
 
   removeFromList(bookId: number): void {
-    console.log('remove detected !');
-    this.libraryBooks.forEach((book) => {
-      if (book.id === bookId) {
-        const index = book.users.indexOf(this.userId);
-        book.users.splice(index, 1);
+    this.userService.removeBookFromList(bookId).subscribe((response) => {
+      if (response.status === 200) {
+        this.libraryBooks.forEach((book) => {
+          if (book.id === bookId) {
+            const index = book.users.indexOf(this.userId);
+            book.users.splice(index, 1);
+          }
+        });
       }
     });
-    this.userService.removeBookFromList(bookId).subscribe((data) => alert(data));
   }
 }

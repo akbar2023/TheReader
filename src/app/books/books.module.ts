@@ -5,9 +5,10 @@ import { BookListComponent } from './components/book-list/book-list.component';
 import { MaterialModule } from '../material/material.module';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
 import { MatIconModule } from '@angular/material/icon';
+import { BookSnackComponent } from './components/book-snack/book-snack.component';
 @NgModule({
   imports: [CommonModule, MaterialModule, MatIconModule],
-  declarations: [BookFormComponent, BookListComponent, BookDetailsComponent],
+  declarations: [BookFormComponent, BookListComponent, BookDetailsComponent, BookSnackComponent],
   exports: [BookFormComponent, BookListComponent],
 })
 export class BooksModule {}

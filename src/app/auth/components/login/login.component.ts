@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
           const userDetString = localStorage.getItem('userDetails');
           this.authService.isLoggedIn = true;
           this.authService.userDetails = JSON.parse(userDetString);
-          this.snackBar.openFromComponent(LoginSnackComponent, { duration: 3000 });
+          this.snackBar.openFromComponent(LoginSnackComponent, { duration: 3000, verticalPosition: 'top' });
           this.router.navigate(['book-list']).then();
         });
       }
