@@ -19,8 +19,7 @@ export class UserService {
     this.userId = this.authService.userDetails.id;
   }
 
-  addBookToList(bookId: number): Observable<any> {
-    const userId = this.userId;
+  addBookToList(bookId: number, userId: number): Observable<any> {
     this.userBook = { userId, bookId };
     return this.http
       .post<UserBook>(this.baseUrl + 'add-book/', this.userBook, { observe: 'response' })
@@ -34,12 +33,11 @@ export class UserService {
       );
   }
 
-  getMyBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>(`${this.baseUrl}${this.userId}/books`);
+  getMyBooks(userId: number): Observable<Book[]> {
+    return this.http.get<Book[]>(`${this.baseUrl}${userId}/books`);
   }
 
-  removeBookFromList(bookId: number): Observable<any> {
-    const userId = this.userId;
+  removeBookFromList(bookId: number, userId: number): Observable<any> {
     this.userBook = { userId, bookId };
     return this.http
       .put<UserBook>(this.baseUrl + 'remove-book/', this.userBook, { observe: 'response' })

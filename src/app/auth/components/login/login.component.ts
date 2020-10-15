@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserLogin } from '../../models/userLogin';
-import { LoginSnackComponent } from '../login-snack/login-snack.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
@@ -56,7 +55,11 @@ export class LoginComponent implements OnInit {
           const userDetString = localStorage.getItem('userDetails');
           this.authService.isLoggedIn = true;
           this.authService.userDetails = JSON.parse(userDetString);
-          this.snackBar.openFromComponent(LoginSnackComponent, { duration: 3000, verticalPosition: 'top' });
+          this.snackBar.open(`Welcome ${this.authService.userDetails.firstName}!`, null, {
+            duration: 3000,
+            verticalPosition: 'top',
+            panelClass: ['green-snackbar'],
+          });
           this.router.navigate(['home']).then();
         });
       }

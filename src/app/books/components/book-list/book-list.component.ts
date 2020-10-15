@@ -6,7 +6,6 @@ import { BookDetailsComponent } from '../book-details/book-details.component';
 import { UserService } from '../../../user/services/user.service';
 import { AuthService } from '../../../auth/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BookSnackComponent } from '../book-snack/book-snack.component';
 
 @Component({
   selector: 'app-book-list',
@@ -23,11 +22,10 @@ export class BookListComponent implements OnInit {
     private readonly authService: AuthService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
-  ) {
-    this.userId = this.authService.userDetails.id;
-  }
+  ) {}
 
   ngOnInit(): void {
+    this.userId = this.authService.userDetails.id;
     this.getLibraryBooks();
   }
 
@@ -44,10 +42,14 @@ export class BookListComponent implements OnInit {
   }
 
   addToList(bookId: number) {
-    this.userService.addBookToList(bookId).subscribe((response) => {
+    this.userService.addBookToList(bookId, this.userId).subscribe((response) => {
       console.log(response.status, 'addBook From UserService');
       if (response.status === 200) {
-        this.snackBar.openFromComponent(BookSnackComponent, { duration: 1000, verticalPosition: 'top' });
+        this.snackBar.open('Book added!', null, {
+          duration: 1000,
+          verticalPosition: 'top',
+          panelClass: ['green-snackbar'],
+        });
         this.libraryBooks.forEach((book) => {
           if (book.id === bookId) {
             book.users.push(this.userId);
@@ -58,13 +60,18 @@ export class BookListComponent implements OnInit {
   }
 
   removeFromList(bookId: number): void {
-    this.userService.removeBookFromList(bookId).subscribe((response) => {
+    this.userService.removeBookFromList(bookId, this.userId).subscribe((response) => {
       if (response.status === 200) {
         this.libraryBooks.forEach((book) => {
           if (book.id === bookId) {
             const index = book.users.indexOf(this.userId);
             book.users.splice(index, 1);
           }
+        });
+        this.snackBar.open('Book removed!', null, {
+          duration: 1000,
+          verticalPosition: 'top',
+          panelClass: ['yellow-snackbar'],
         });
       }
     });
