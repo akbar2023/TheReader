@@ -14,7 +14,6 @@ export class UserService {
   private readonly baseUrl = `${environment.apiUrl}/api/user/`;
   private userBook: UserBook;
   private readonly userId: number;
-  public userBookList: Book[];
 
   constructor(private authService: AuthService, private http: HttpClient) {
     this.userId = this.authService.userDetails.id;

@@ -50,14 +50,14 @@ export class LoginComponent implements OnInit {
       },
       () => {
         this.authService.getUser(user.username).subscribe((data) => {
-          console.log(data);
+          console.log(data, '--userDetails');
 
           localStorage.setItem('userDetails', JSON.stringify(data));
           const userDetString = localStorage.getItem('userDetails');
           this.authService.isLoggedIn = true;
           this.authService.userDetails = JSON.parse(userDetString);
           this.snackBar.openFromComponent(LoginSnackComponent, { duration: 3000, verticalPosition: 'top' });
-          this.router.navigate(['book-list']).then();
+          this.router.navigate(['home']).then();
         });
       }
     );
