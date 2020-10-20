@@ -3,7 +3,7 @@
     <mat-card-header>
       <mat-card-title>{{book.title}}</mat-card-title>
       <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
-      <button style="position: absolute; right: 50px;" mat-icon-button color="warn" (click)="book.users.includes(userId)?removeFromList(book.id) : addToList(book.id)">
+      <button style="position: absolute; right: 50px;" mat-icon-button color="warn" (click)="book.users.includes(userId)?removeFromList(book.id, book.title) : addToList(book.id, book.title)">
         <mat-icon>{{book.users.includes(userId)?'favorite':'favorite_border'}}</mat-icon>
       </button>
     </mat-card-header>

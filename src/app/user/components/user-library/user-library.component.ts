@@ -27,7 +27,7 @@ export class UserLibraryComponent implements OnInit {
     });
   }
 
-  removeBookFromList(bookId: number) {
+  removeBookFromList(bookId: number, title: string) {
     this.userService.removeBookFromList(bookId, this.userId).subscribe((data) => {
       // alert(data);
       this.myBooks.forEach((book) => {
@@ -36,7 +36,7 @@ export class UserLibraryComponent implements OnInit {
           this.myBooks.splice(index, 1);
         }
       });
-      this.snackBar.open('Book removed!', null, {
+      this.snackBar.open(`**${title}** removed from favorite!`, null, {
         duration: 1000,
         verticalPosition: 'top',
         panelClass: ['yellow-snackbar'],

@@ -41,11 +41,11 @@ export class BookListComponent implements OnInit {
     modalRef.componentInstance.book = book;
   }
 
-  addToList(bookId: number) {
+  addToList(bookId: number, title: string) {
     this.userService.addBookToList(bookId, this.userId).subscribe((response) => {
       console.log(response.status, 'addBook From UserService');
       if (response.status === 200) {
-        this.snackBar.open('Book added!', null, {
+        this.snackBar.open(`**${title}** added to favorite!`, null, {
           duration: 1000,
           verticalPosition: 'top',
           panelClass: ['green-snackbar'],
@@ -59,7 +59,7 @@ export class BookListComponent implements OnInit {
     });
   }
 
-  removeFromList(bookId: number): void {
+  removeFromList(bookId: number, title: string): void {
     this.userService.removeBookFromList(bookId, this.userId).subscribe((response) => {
       if (response.status === 200) {
         this.libraryBooks.forEach((book) => {
@@ -68,7 +68,7 @@ export class BookListComponent implements OnInit {
             book.users.splice(index, 1);
           }
         });
-        this.snackBar.open('Book removed!', null, {
+        this.snackBar.open(`**${title}** removed from favorite!`, null, {
           duration: 1000,
           verticalPosition: 'top',
           panelClass: ['yellow-snackbar'],

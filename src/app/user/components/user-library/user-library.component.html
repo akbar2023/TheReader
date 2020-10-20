@@ -2,7 +2,7 @@
   <mat-card-header>
     <mat-card-title>{{book.title}}</mat-card-title>
     <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
-    <button style="position: absolute; right: 50px;" mat-icon-button color="warn" (click)="removeBookFromList(book.id)">
+    <button style="position: absolute; right: 50px;" mat-icon-button color="warn" (click)="removeBookFromList(book.id, book.title)">
       <mat-icon>favorite</mat-icon>
     </button>
   </mat-card-header>
