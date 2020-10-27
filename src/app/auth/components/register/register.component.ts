@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user';
 
@@ -11,18 +11,31 @@ import { User } from '../../models/user';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private readonly service: AuthService) {}
+  constructor(private fb: FormBuilder, public readonly service: AuthService) {}
 
   ngOnInit(): void {
     this.createForm();
+    console.log(this.registerForm);
   }
 
   createForm() {
     this.registerForm = this.fb.group({
-      firstName: [''],
-      lastName: [''],
-      email: [''],
-      password: [''],
+      firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      email: [
+        '',
+        [Validators.required, Validators.email], // Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$')
+      ],
+      password: [
+        '',
+        [
+          Validators.required,
+          // REGEX: minimum 4 characters, at least one uppercase letter, one lowercase letter and one number
+          Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{4,}$'),
+          Validators.minLength(4),
+          Validators.maxLength(20),
+        ],
+      ],
     });
   }
 
@@ -38,5 +51,33 @@ export class RegisterComponent implements OnInit {
       },
       () => console.log('Completed')
     );
+  }
+
+  get firstName() {
+    return this.registerForm.get('firstName');
+  }
+
+  get lastName() {
+    return this.registerForm.get('lastName');
+  }
+
+  get email() {
+    return this.registerForm.get('email');
+  }
+
+  get password() {
+    return this.registerForm.get('password');
+  }
+
+  patternMessage() {
+    return 'Password should contain numbers, uppercase and lowercase letters';
+  }
+
+  lengthMessage(length: number, minMax: number): string {
+    return `The ${minMax === 0 ? 'minimum' : 'maximum'} length for this field is ${length} characters`;
+  }
+
+  requiredMessage(name: string) {
+    return `${name} is required`;
   }
 }

@@ -1,26 +1,21 @@
 <form [formGroup]="loginForm" (ngSubmit)="userLogin()">
 
   <div class="container">
-    <div>
-      <mat-form-field class="example-full-width">
+      <mat-form-field>
         <mat-label>Email</mat-label>
         <input id="username" matInput formControlName="username">
-      </mat-form-field>
-    </div>
 
-    <div>
+        <mat-error *ngIf="username.hasError('required')"></mat-error>
+      </mat-form-field>
+
       <mat-form-field class="example-full-width">
         <mat-label>Password</mat-label>
         <input id="password" type="password" matInput formControlName="password">
       </mat-form-field>
-    </div>
 
-    <div>
       <button class="myButton" mat-flat-button color="accent" type="submit">Log In</button>
-      <hr />
       <p>No account yet?</p>
       <p>Create an account and mange your book shelf online!</p>
       <a mat-flat-button color="primary" routerLink="/register">Create an account</a>
-    </div>
   </div>
 </form>
