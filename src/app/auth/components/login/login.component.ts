@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserLogin } from '../../models/userLogin';
@@ -15,8 +15,8 @@ export class LoginComponent implements OnInit {
 
   createForm() {
     this.loginForm = this.fb.group({
-      username: [''],
-      password: [''],
+      username: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(4)]],
     });
   }
 
@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
     this.createForm();
     if (this.authService.isLoggedIn) {
       console.log('User logged-in');
+      // document.getElementById('jane').classList.remove('austen');
     } else {
       console.log('Token not found');
     }
@@ -72,5 +73,9 @@ export class LoginComponent implements OnInit {
 
   get username() {
     return this.loginForm.get('username');
+  }
+
+  requiredMessage(field: string) {
+    return `Enter your ${field} please`;
   }
 }

@@ -1,21 +1,39 @@
 <form [formGroup]="loginForm" (ngSubmit)="userLogin()">
 
   <div class="container">
-      <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input id="username" matInput formControlName="username">
 
-        <mat-error *ngIf="username.hasError('required')"></mat-error>
-      </mat-form-field>
+    <div>
+      <h1>La Médiathèque</h1>
+    </div>
 
-      <mat-form-field class="example-full-width">
-        <mat-label>Password</mat-label>
-        <input id="password" type="password" matInput formControlName="password">
-      </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input id="username" matInput formControlName="username" placeholder="Ex. pat@exemple.com">
+      <mat-error *ngIf="username.hasError('required')">
+        {{requiredMessage('email')}}
+      </mat-error>
+      <mat-error *ngIf="username.hasError('email')">
+        Please enter a valid email address
+      </mat-error>
+    </mat-form-field>
 
-      <button class="myButton" mat-flat-button color="accent" type="submit">Log In</button>
-      <p>No account yet?</p>
-      <p>Create an account and mange your book shelf online!</p>
-      <a mat-flat-button color="primary" routerLink="/register">Create an account</a>
+    <mat-form-field class="example-full-width">
+      <mat-label>Password</mat-label>
+      <input id="password" type="password" matInput formControlName="password">
+      <mat-error *ngIf="password.hasError('required')">
+        {{requiredMessage('password')}}
+      </mat-error>
+    </mat-form-field>
+
+    <div>
+      <button [ngClass]="{'disabledBtn': loginForm.invalid}" class="loginButton" mat-flat-button color="accent"
+              type="submit" [disabled]="loginForm.invalid">Log In
+      </button>
+    </div>
+
+    <!--    <mat-divider></mat-divider>-->
+    <div>
+      <a color="primary" routerLink="/register">No Account Yet?</a>
+    </div>
   </div>
 </form>
