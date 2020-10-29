@@ -1,15 +1,36 @@
 
 .container {
-  margin: 0 50px;
+  width: 400px;
+  margin: 0 auto;
   display: grid;
-  grid-gap: 50px;
-  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  text-align: center;
+
+  .loginButton {
+    width: 100%;
+  }
+
+  .disabledBtn {
+    background-color: #92b8f8;
+  }
+
+  h1 {
+    color: #4384f6;
+  }
+
+  a {
+    text-decoration: none;
+    color: #4384f6;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
 }
 
 @media screen and (max-width: 640px) {
   .container {
-    display:flex;
-    margin: 0 20px;
-    flex-direction: column;
+    width: 300px;
   }
 }
+
+
