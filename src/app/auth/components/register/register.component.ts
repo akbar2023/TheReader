@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +13,12 @@ import { User } from '../../models/user';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder, public readonly service: AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    public readonly service: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -44,10 +51,30 @@ export class RegisterComponent implements OnInit {
     this.service.signUp(user).subscribe(
       (userResponse) => {
         console.log(userResponse, '--userResponse');
+        if (userResponse === 200) {
+          this.snackBar.open(`Congrats ${user.firstName}, your account is created! Login now!`, null, {
+            duration: 3000,
+            verticalPosition: 'top',
+            panelClass: ['green-snackbar'],
+          });
+          setTimeout(() => {
+            this.router.navigate(['home']).then();
+          }, 3000);
+        }
       },
       (error) => {
         // TODO: Manage errors
-        console.log(error);
+        if (error.status === 400) {
+          this.email.setErrors({
+            notUnique: true,
+          });
+          this.snackBar.open(`Error occurred during registration.`, null, {
+            duration: 5000,
+            verticalPosition: 'top',
+            panelClass: ['yellow-snackbar'],
+          });
+        }
+        console.log(error, '-- Erreur');
       },
       () => console.log('Completed')
     );

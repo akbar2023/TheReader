@@ -23,7 +23,7 @@ export class AuthService {
     return this.http.get<User>(this.baseUrl + email);
   }
 
-  logIn(username: string, password: string) {
+  logIn(username: string, password: string): Observable<any> {
     return this.http
       .post<User>(
         this.loginUrl,
@@ -38,17 +38,22 @@ export class AuthService {
         map((response: HttpResponse<User>) => {
           this.token = response.headers.get('Authorization');
           localStorage.setItem('authToken', this.token);
-          return 'Success';
+          return of(response);
         }),
         catchError((err) => {
-          alert('Erreur !');
           return of(err);
         })
       );
   }
 
-  signUp(user: User): Observable<User> {
-    return this.http.post<User>(this.baseUrl + 'register/', user);
+  signUp(user: User) {
+    return this.http
+      .post<User>(this.baseUrl + 'register/', user, { observe: 'response' })
+      .pipe(
+        map((response: HttpResponse<any>) => {
+          return response.status;
+        })
+      );
   }
 
   logOut() {

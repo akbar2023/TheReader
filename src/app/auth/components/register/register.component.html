@@ -44,6 +44,10 @@
       <mat-error *ngIf="email.hasError('required')">
         {{requiredMessage('Email')}}
       </mat-error>
+      <mat-error *ngIf="email.hasError('notUnique')">
+        An account already exists with this email.
+        Please try with an other one.
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field>

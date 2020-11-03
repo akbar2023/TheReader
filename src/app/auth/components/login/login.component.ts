@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserLogin } from '../../models/userLogin';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { concatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +32,6 @@ export class LoginComponent implements OnInit {
     this.createForm();
     if (this.authService.isLoggedIn) {
       console.log('User logged-in');
-      // document.getElementById('jane').classList.remove('austen');
     } else {
       console.log('Token not found');
     }
@@ -42,11 +42,11 @@ export class LoginComponent implements OnInit {
     console.log(user, '--User login form data');
     this.authService.logIn(user.username, user.password).subscribe(
       (data) => {
-        console.log(data, '--response data');
+        console.log(data.status, '--response data');
         alert('connected');
       },
       (error) => {
-        console.log(error);
+        console.log(error.status);
       },
       () => {
         this.authService.getUser(user.username).subscribe((data) => {

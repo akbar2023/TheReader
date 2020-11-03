@@ -47,4 +47,8 @@ export class BookFormComponent implements OnInit {
       () => console.log('Completed')
     );
   }
+
+  get summary() {
+    return this.bookForm.get('summary');
+  }
 }
