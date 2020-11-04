@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { User } from '../models/user';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { UserDetails } from '../models/userDetails';
 import { environment } from '../../../environments/environment';
 
@@ -35,13 +35,13 @@ export class AuthService {
         }
       )
       .pipe(
-        map((response: HttpResponse<User>) => {
+        switchMap((response: any) => {
           this.token = response.headers.get('Authorization');
           localStorage.setItem('authToken', this.token);
-          return of(response);
+          return this.getUser(username);
         }),
         catchError((err) => {
-          return of(err);
+          return Array.of(err);
         })
       );
   }

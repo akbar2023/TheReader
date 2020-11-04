@@ -4,7 +4,6 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserLogin } from '../../models/userLogin';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { concatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -42,16 +41,11 @@ export class LoginComponent implements OnInit {
     console.log(user, '--User login form data');
     this.authService.logIn(user.username, user.password).subscribe(
       (data) => {
-        console.log(data.status, '--response data');
-        alert('connected');
-      },
-      (error) => {
-        console.log(error.status);
-      },
-      () => {
-        this.authService.getUser(user.username).subscribe((data) => {
-          console.log(data, '--userDetails');
+        console.log(data, '--response data');
 
+        // todo: improve with an other method than length
+        // data length is 4 when service returns User, which has 4 properties
+        if (Object.values(data).length === 4) {
           localStorage.setItem('userDetails', JSON.stringify(data));
           const userDetString = localStorage.getItem('userDetails');
           this.authService.isLoggedIn = true;
@@ -61,8 +55,19 @@ export class LoginComponent implements OnInit {
             verticalPosition: 'top',
             panelClass: ['green-snackbar'],
           });
-          this.router.navigate(['home']).then();
-        });
+        } else {
+          this.snackBar.open(`Incorrect email or password.`, null, {
+            duration: 5000,
+            verticalPosition: 'top',
+            panelClass: ['orange-snackbar'],
+          });
+        }
+      },
+      (error) => {
+        console.log(error, 'login error');
+      },
+      () => {
+        console.log('login request complete!');
       }
     );
   }
