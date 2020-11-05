@@ -1,6 +1,5 @@
 <form [formGroup]="bookForm" (ngSubmit)="saveBook()">
   <div class="container">
-    <div>
       <mat-form-field>
         <mat-label>Title</mat-label>
         <input id="title" matInput formControlName="title">
@@ -14,9 +13,7 @@
           {{lengthMessage(100, 1)}}
         </mat-error>
       </mat-form-field>
-    </div>
 
-    <div>
       <mat-form-field>
         <mat-label>Author</mat-label>
         <input id="author" matInput formControlName="author">
@@ -30,9 +27,7 @@
           {{lengthMessage(100, 1)}}
         </mat-error>
       </mat-form-field>
-    </div>
 
-    <div>
       <mat-form-field>
         <mat-label>Year of publication</mat-label>
         <input id="year" type="number" matInput formControlName="year">
@@ -46,9 +41,7 @@
           {{lengthMessage(currentYear, 1)}}
         </mat-error>
       </mat-form-field>
-    </div>
 
-    <div>
       <mat-form-field>
         <mat-select id="genre" placeholder="Genre" formControlName="genre">
           <mat-option *ngFor="let genre of genres" [value]="genre">
@@ -65,9 +58,7 @@
           {{lengthMessage(20, 1)}}
         </mat-error>
       </mat-form-field>
-    </div>
 
-    <div>
       <mat-form-field>
         <mat-label>Summary</mat-label>
         <textarea id="summary" [maxLength]="255" type="text" matInput formControlName="summary"></textarea>
@@ -82,10 +73,9 @@
         </mat-error>
         <mat-hint align="end">{{summary.value.length}} / 255</mat-hint>
       </mat-form-field>
-    </div>
 
     <div>
-      <button [ngClass]="{'disabledBtn': bookForm.invalid}" [disabled]="bookForm.invalid" class="large-button" mat-flat-button color="primary" type="submit">Save</button>
+      <button [ngClass]="{'disabledBtn': bookForm.invalid}" [disabled]="bookForm.invalid" class="saveBtn" mat-flat-button color="primary" type="submit">Save</button>
     </div>
   </div>
 </form>
