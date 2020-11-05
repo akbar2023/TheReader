@@ -5,5 +5,5 @@ export enum BookGenre {
   Fantastic = 'Fantastic',
   Biography = 'Biography',
   Autobiography = 'Autobiography',
-  Poem = 'Poem'
+  Poem = 'Poem',
 }

@@ -1,9 +1,18 @@
 <form [formGroup]="bookForm" (ngSubmit)="saveBook()">
-  <div>
+  <div class="container">
     <div>
       <mat-form-field>
         <mat-label>Title</mat-label>
         <input id="title" matInput formControlName="title">
+        <mat-error class="text-danger" *ngIf="title.hasError('required')">
+          {{requiredMessage('Title')}}
+        </mat-error>
+        <mat-error class="text-danger" *ngIf="title.hasError('minlength')">
+          {{lengthMessage(2, 0)}}
+        </mat-error>
+        <mat-error class="text-danger" *ngIf="title.hasError('maxlength')">
+          {{lengthMessage(100, 1)}}
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -11,6 +20,15 @@
       <mat-form-field>
         <mat-label>Author</mat-label>
         <input id="author" matInput formControlName="author">
+        <mat-error class="text-danger" *ngIf="author.hasError('required')">
+          {{requiredMessage('Author')}}
+        </mat-error>
+        <mat-error class="text-danger" *ngIf="author.hasError('minlength')">
+          {{lengthMessage(2, 0)}}
+        </mat-error>
+        <mat-error class="text-danger" *ngIf="author.hasError('maxlength')">
+          {{lengthMessage(100, 1)}}
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -18,6 +36,15 @@
       <mat-form-field>
         <mat-label>Year of publication</mat-label>
         <input id="year" type="number" matInput formControlName="year">
+        <mat-error class="text-danger" *ngIf="year.hasError('required')">
+          {{requiredMessage('Year')}}
+        </mat-error>
+        <mat-error class="text-danger" *ngIf="year.hasError('min')">
+          {{lengthMessage(0, 0)}}
+        </mat-error>
+        <mat-error class="text-danger" *ngIf="year.hasError('max')">
+          {{lengthMessage(currentYear, 1)}}
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -28,19 +55,37 @@
             {{genre}}
           </mat-option>
         </mat-select>
+        <mat-error class="text-danger" *ngIf="genre.hasError('required')">
+          {{requiredMessage('Genre')}}
+        </mat-error>
+        <mat-error class="text-danger" *ngIf="genre.hasError('minlength')">
+          {{lengthMessage(3, 0)}}
+        </mat-error>
+        <mat-error class="text-danger" *ngIf="genre.hasError('maxlength')">
+          {{lengthMessage(20, 1)}}
+        </mat-error>
       </mat-form-field>
     </div>
 
     <div>
       <mat-form-field>
         <mat-label>Summary</mat-label>
-        <textarea id="summary" type="text" matInput formControlName="summary"></textarea>
-        <mat-hint align="end">{{summary.value.length}} / 10</mat-hint>
+        <textarea id="summary" [maxLength]="255" type="text" matInput formControlName="summary"></textarea>
+        <mat-error class="text-danger" *ngIf="summary.hasError('required')">
+          {{requiredMessage('Summary')}}
+        </mat-error>
+        <mat-error class="text-danger" *ngIf="summary.hasError('minlength')">
+          {{lengthMessage(10, 0)}}
+        </mat-error>
+        <mat-error class="text-danger" *ngIf="summary.hasError('maxlength')">
+          {{lengthMessage(255, 1)}}
+        </mat-error>
+        <mat-hint align="end">{{summary.value.length}} / 255</mat-hint>
       </mat-form-field>
     </div>
 
     <div>
-      <button class="large-button" mat-flat-button color="primary" type="submit">Save</button>
+      <button [ngClass]="{'disabledBtn': bookForm.invalid}" [disabled]="bookForm.invalid" class="large-button" mat-flat-button color="primary" type="submit">Save</button>
     </div>
   </div>
 </form>
