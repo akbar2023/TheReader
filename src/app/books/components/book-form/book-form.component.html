@@ -1,5 +1,11 @@
 <form [formGroup]="bookForm" (ngSubmit)="saveBook()">
   <div class="container">
+
+      <div>
+        <h1>Add a new book</h1>
+        <small>It's quick and simple.</small>
+      </div>
+
       <mat-form-field>
         <mat-label>Title</mat-label>
         <input id="title" matInput formControlName="title">
