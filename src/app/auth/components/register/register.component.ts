@@ -62,12 +62,13 @@ export class RegisterComponent implements OnInit {
           }, 3000);
         }
       },
-      (error) => {
+      (error: any) => {
         // TODO: Manage errors
+        // console.log(error.error.errors[1].defaultMessage, '--Message register');
         if (error.status === 400) {
-          this.email.setErrors({
-            notUnique: true,
-          });
+          // this.email.setErrors({
+          //   notUnique: true,
+          // });
           this.snackBar.open(`Error occurred during registration.`, null, {
             duration: 5000,
             verticalPosition: 'top',

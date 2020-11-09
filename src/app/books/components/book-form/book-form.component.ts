@@ -4,6 +4,7 @@ import { BookService } from '../../services/book.service';
 import { BookGenre } from '../../models/book-genre';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-book-form',
@@ -19,7 +20,8 @@ export class BookFormComponent implements OnInit {
     private fb: FormBuilder,
     private readonly service: BookService,
     private readonly userService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -42,8 +44,28 @@ export class BookFormComponent implements OnInit {
     const userDetails = localStorage.getItem('userDetails');
     book.creatorId = JSON.parse(userDetails).id;
     this.service.add(book).subscribe(
-      () => console.log('Success!', book),
-      (error) => console.log(error),
+      (response) => {
+        if (response === 200) {
+          this.snackBar.open(`Congrats, ${book.title} was added successfully!`, null, {
+            duration: 3000,
+            verticalPosition: 'top',
+            panelClass: ['green-snackbar'],
+          });
+          setTimeout(() => {
+            this.router.navigate(['home']).then();
+          }, 3000);
+        }
+      },
+      (error: any) => {
+        console.log(error);
+        if (error.status === 400) {
+          this.snackBar.open(`Error occurred while saving the book.`, null, {
+            duration: 5000,
+            verticalPosition: 'top',
+            panelClass: ['orange-snackbar'],
+          });
+        }
+      },
       () => console.log('Completed')
     );
   }

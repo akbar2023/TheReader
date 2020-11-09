@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Book } from '../models/book';
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,11 @@ export class BookService {
   }
 
   add(book: Book): Observable<any> {
-    return this.http.post(this.baseUrl, book);
+    return this.http.post(this.baseUrl, book, { observe: 'response' }).pipe(
+      map((response: HttpResponse<any>) => {
+        console.log(response, '--Book Response');
+        return response.status;
+      })
+    );
   }
 }
