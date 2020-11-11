@@ -1,13 +1,46 @@
-.cards {
-  max-width: 400px;
-}
 
 .livres {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+  grid-gap: 20px;
+  display: grid;
+  grid-row: 1;
+  align-items: start;
+  margin: 50px 20px;
+
+  .cards {
+    max-width: 400px;
+    display: inline-block;
+  }
+
+  .like-btn {
+    position: absolute;
+    right: 10px;
+  }
+
+   mat-card-title {
+    font-size: 1.5vw;
+  }
+
 }
 
 .cards:hover {
   box-shadow: rgba(64, 124, 235, 0.548) 0 0 5px 10px;
+}
+@media screen and (max-width: 940px) {
+  .livres {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+    mat-card-title {
+         font-size: 12px;
+         //overflow: auto;
+       }
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .livres {
+    grid-template-columns: 1fr;
+    //grid-gap: 15px;
+  }
 }

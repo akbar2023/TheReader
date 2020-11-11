@@ -3,14 +3,14 @@
     <mat-card-header>
       <mat-card-title>{{book.title}}</mat-card-title>
       <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
-      <button style="position: absolute; right: 50px;" mat-icon-button color="warn" (click)="book.users.includes(userId)?removeFromList(book.id, book.title) : addToList(book.id, book.title)">
-        <mat-icon>{{book.users.includes(userId)?'favorite':'favorite_border'}}</mat-icon>
-      </button>
     </mat-card-header>
     <img mat-card-image
          src="assets/img/petit_prince.jpg"
          alt="Le petit prince">
     <button mat-raised-button color="accent" (click)="openDialog(book)">Details</button>
+    <button class="like-btn" mat-icon-button color="warn" (click)="book.users.includes(userId)?removeFromList(book.id, book.title) : addToList(book.id, book.title)">
+      <mat-icon>{{book.users.includes(userId)?'favorite':'favorite_border'}}</mat-icon>
+    </button>
   </mat-card>
 
 </div>
