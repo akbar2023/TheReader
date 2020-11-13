@@ -3,6 +3,8 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { Book } from '../../../books/models/book';
 import { UserService } from '../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { BookDetailsComponent } from '../../../books/components/book-details/book-details.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user-library',
@@ -13,7 +15,12 @@ export class UserLibraryComponent implements OnInit {
   myBooks: Book[];
   userId: number;
 
-  constructor(private authService: AuthService, private userService: UserService, private snackBar: MatSnackBar) {}
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.userId = this.authService.userDetails.id;
@@ -42,5 +49,10 @@ export class UserLibraryComponent implements OnInit {
         panelClass: ['yellow-snackbar'],
       });
     });
+  }
+
+  openDialog(book: Book) {
+    const modalRef = this.dialog.open(BookDetailsComponent);
+    modalRef.componentInstance.book = book;
   }
 }
