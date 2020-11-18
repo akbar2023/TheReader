@@ -40,12 +40,18 @@ export class BookFormComponent implements OnInit {
           console.log(response);
           if (response.status === 200 && response.body) {
             this.createForm(response.body);
-          } else {
-            alert(response.status);
           }
         },
         (error) => {
-          alert(error.status);
+          if (error.status === 400) {
+            this.snackBar.open(`Book not found!`, null, {
+              duration: 2000,
+              verticalPosition: 'top',
+              panelClass: ['orange-snackbar'],
+            });
+          } else {
+            alert('Error!');
+          }
         }
       );
     } else {
@@ -86,7 +92,15 @@ export class BookFormComponent implements OnInit {
           }
         },
         (error) => {
-          alert('error!');
+          if (error.status === 403) {
+            this.snackBar.open(`You are not allowed to edit this Book!`, null, {
+              duration: 2000,
+              verticalPosition: 'top',
+              panelClass: ['orange-snackbar'],
+            });
+          } else {
+            alert('error!');
+          }
         }
       );
     } else {
@@ -113,8 +127,7 @@ export class BookFormComponent implements OnInit {
               panelClass: ['orange-snackbar'],
             });
           }
-        },
-        () => console.log('Completed')
+        }
       );
     }
   }
