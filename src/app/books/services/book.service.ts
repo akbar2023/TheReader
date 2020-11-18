@@ -17,8 +17,14 @@ export class BookService {
     return this.http.get<Book[]>(this.baseUrl);
   }
 
-  getBookById(id: number) {
-    console.log('Get book by id works! Id is :' + id);
+  getBookById(id: number): Observable<any> {
+    return this.http
+      .get<Book>(this.baseUrl + id, { observe: 'response' })
+      .pipe(
+        map((response: HttpResponse<any>) => {
+          return response;
+        })
+      );
   }
 
   add(book: Book): Observable<any> {
@@ -28,5 +34,17 @@ export class BookService {
         return response.status;
       })
     );
+  }
+
+  updateBook(book: Book) {
+    console.log(book, '--Book update');
+    return this.http
+      .put<Book>(this.baseUrl, book, { observe: 'response' })
+      .pipe(
+        map((response: HttpResponse<any>) => {
+          console.log(response, '--book update response');
+          return response.status;
+        })
+      );
   }
 }

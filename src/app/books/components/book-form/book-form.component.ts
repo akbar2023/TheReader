@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BookService } from '../../services/book.service';
 import { BookGenre } from '../../models/book-genre';
 import { AuthService } from '../../../auth/services/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Book } from '../../models/book';
 
 @Component({
   selector: 'app-book-form',
@@ -15,27 +16,50 @@ export class BookFormComponent implements OnInit {
   bookForm: FormGroup;
   currentYear = new Date().getFullYear();
   genres = Object.keys(BookGenre);
+  bookId: number;
+  book: Book;
+  editMode: boolean;
 
   constructor(
     private fb: FormBuilder,
-    private readonly service: BookService,
+    private readonly bookService: BookService,
     private readonly userService: AuthService,
     private router: Router,
+    private route: ActivatedRoute,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
     console.log(this.genres, '--les Genres');
-    this.createForm();
+    this.bookId = parseInt(this.route.snapshot.paramMap.get('id'), 10);
+    this.editMode = !!this.bookId;
+    console.log(this.bookId, '--book Id');
+    if (this.bookId) {
+      this.bookService.getBookById(this.bookId).subscribe(
+        (response) => {
+          console.log(response);
+          if (response.status === 200 && response.body) {
+            this.createForm(response.body);
+          } else {
+            alert(response.status);
+          }
+        },
+        (error) => {
+          alert(error.status);
+        }
+      );
+    } else {
+      this.createForm();
+    }
   }
 
-  createForm() {
+  createForm(book?: Book) {
     this.bookForm = this.fb.group({
-      title: ['', [Validators.minLength(2), Validators.maxLength(100), Validators.required]],
-      author: ['', [Validators.minLength(2), Validators.maxLength(100), Validators.required]],
-      year: ['', [Validators.min(0), Validators.max(this.currentYear), Validators.required]],
-      genre: ['', [Validators.minLength(3), Validators.maxLength(20), Validators.required]],
-      summary: ['', [Validators.minLength(10), Validators.maxLength(255), Validators.required]],
+      title: [book ? book.title : '', [Validators.minLength(2), Validators.maxLength(100), Validators.required]],
+      author: [book ? book.author : '', [Validators.minLength(2), Validators.maxLength(100), Validators.required]],
+      year: [book ? book.year : '', [Validators.min(0), Validators.max(this.currentYear), Validators.required]],
+      genre: [book ? book.genre : '', [Validators.minLength(3), Validators.maxLength(20), Validators.required]],
+      summary: [book ? book.summary : '', [Validators.minLength(10), Validators.maxLength(255), Validators.required]],
     });
   }
 
@@ -43,31 +67,56 @@ export class BookFormComponent implements OnInit {
     const book = this.bookForm.value;
     const userDetails = localStorage.getItem('userDetails');
     book.creatorId = JSON.parse(userDetails).id;
-    this.service.add(book).subscribe(
-      (response) => {
-        if (response === 200) {
-          this.snackBar.open(`Congrats, ${book.title} was added successfully!`, null, {
-            duration: 3000,
-            verticalPosition: 'top',
-            panelClass: ['green-snackbar'],
-          });
-          setTimeout(() => {
-            this.router.navigate(['home']).then();
-          }, 3000);
+    // ***Update
+    if (this.bookId) {
+      book.id = this.bookId;
+      this.bookService.updateBook(book).subscribe(
+        (data) => {
+          if (data === 200) {
+            this.snackBar.open(`Updated successfully!`, null, {
+              duration: 2000,
+              verticalPosition: 'top',
+              panelClass: ['green-snackbar'],
+            });
+            setTimeout(() => {
+              this.router.navigate(['/home']).then();
+            }, 2000);
+          } else {
+            alert('error!');
+          }
+        },
+        (error) => {
+          alert('error!');
         }
-      },
-      (error: any) => {
-        console.log(error);
-        if (error.status === 400) {
-          this.snackBar.open(`Error occurred while saving the book.`, null, {
-            duration: 5000,
-            verticalPosition: 'top',
-            panelClass: ['orange-snackbar'],
-          });
-        }
-      },
-      () => console.log('Completed')
-    );
+      );
+    } else {
+      // ***Create
+      this.bookService.add(book).subscribe(
+        (response) => {
+          if (response === 200) {
+            this.snackBar.open(`Congrats, ${book.title} was added successfully!`, null, {
+              duration: 3000,
+              verticalPosition: 'top',
+              panelClass: ['green-snackbar'],
+            });
+            setTimeout(() => {
+              this.router.navigate(['home']).then();
+            }, 3000);
+          }
+        },
+        (error: any) => {
+          console.log(error);
+          if (error.status === 400) {
+            this.snackBar.open(`Error occurred while saving the book.`, null, {
+              duration: 5000,
+              verticalPosition: 'top',
+              panelClass: ['orange-snackbar'],
+            });
+          }
+        },
+        () => console.log('Completed')
+      );
+    }
   }
 
   get title() {

@@ -24,6 +24,7 @@ export class UserLibraryComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.authService.userDetails.id;
+    this.authService.getToken();
     this.getBooks();
   }
 

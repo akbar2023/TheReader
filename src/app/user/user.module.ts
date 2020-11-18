@@ -5,9 +5,10 @@ import { HomeComponent } from './components/home/home.component';
 import { MaterialModule } from '../material/material.module';
 import { AuthModule } from '../auth/auth.module';
 import { UserLibraryComponent } from './components/user-library/user-library.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  imports: [CommonModule, MaterialModule, AuthModule],
+  imports: [CommonModule, MaterialModule, AuthModule, RouterModule],
   declarations: [ProfileComponent, HomeComponent, UserLibraryComponent],
   exports: [ProfileComponent, HomeComponent],
 })

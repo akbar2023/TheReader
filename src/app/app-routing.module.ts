@@ -18,6 +18,7 @@ const routes: Routes = [
     component: BookFormComponent,
     canActivate: [AuthGuard],
   },
+  { path: 'edit-book/:id', component: BookFormComponent },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },

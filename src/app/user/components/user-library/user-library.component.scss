@@ -10,12 +10,18 @@
   .cards {
     max-width: 400px;
     display: inline-block;
+
+    .card-actions {
+      display: flex;
+      justify-content: space-between;
+      .remove-btn {
+        //order: 5;
+        //flex-grow: 3;
+      }
+    }
   }
 
-  .like-btn {
-    position: absolute;
-    right: 10px;
-  }
+
 
   mat-card-title {
     font-size: 1.5vw;

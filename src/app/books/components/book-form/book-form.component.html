@@ -1,9 +1,9 @@
-<form [formGroup]="bookForm" (ngSubmit)="saveBook()">
+<form *ngIf="bookForm" [formGroup]="bookForm" (ngSubmit)="saveBook()">
   <div class="container">
 
       <div>
-        <h1>Add a new book</h1>
-        <small>It's quick and simple.</small>
+        <h1>{{bookId ? 'Edit Book' : 'Add a new book'}}</h1>
+        <small>{{bookId ? 'Correct any mistake easily.' : 'It\'s quick and simple.'}}</small>
       </div>
 
       <mat-form-field>
@@ -81,7 +81,9 @@
       </mat-form-field>
 
     <div>
-      <button [ngClass]="{'disabledBtn': bookForm.invalid}" [disabled]="bookForm.invalid" class="saveBtn" mat-flat-button color="primary" type="submit">Save</button>
+      <button [ngClass]="{'disabledBtn': bookForm.invalid}"
+              [disabled]="bookForm.invalid" class="saveBtn"
+              mat-flat-button color="primary" type="submit">{{bookId ? 'Save' : 'Submit'}}</button>
     </div>
   </div>
 </form>
