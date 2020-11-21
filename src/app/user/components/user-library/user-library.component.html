@@ -21,6 +21,10 @@
                 (click)="removeBookFromList(book.id, book.title)">
           <mat-icon>cancel</mat-icon>
         </button>
+        <button *ngIf="userId === book.creator.id" class="remove-btn" mat-icon-button color="warn" matTooltip="delete"
+                (click)="deleteBook(book.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
       </div>
     </div>
   </mat-card>

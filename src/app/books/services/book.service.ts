@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Book } from '../models/book';
 import { environment } from '../../../environments/environment';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -46,5 +46,23 @@ export class BookService {
           return response.status;
         })
       );
+  }
+
+  // delete(bookId: number, userId: number) {
+  //   const options = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //     }),
+  //     body: {
+  //       userId,
+  //       bookId,
+  //     },
+  //   };
+  //   console.log(options.body, '--Delete Body');
+  //   this.http.delete(this.baseUrl, options).subscribe((data) => console.log(data));
+  // }
+
+  delete(bookId: number, userId: number): Observable<any> {
+    return this.http.delete(this.baseUrl + bookId + '/' + userId, { observe: 'response' });
   }
 }
