@@ -36,7 +36,7 @@ export class BookService {
     );
   }
 
-  updateBook(book: Book) {
+  updateBook(book: Book): Observable<any> {
     console.log(book, '--Book update');
     return this.http
       .put<Book>(this.baseUrl, book, { observe: 'response' })
@@ -48,21 +48,7 @@ export class BookService {
       );
   }
 
-  // delete(bookId: number, userId: number) {
-  //   const options = {
-  //     headers: new HttpHeaders({
-  //       'Content-Type': 'application/json',
-  //     }),
-  //     body: {
-  //       userId,
-  //       bookId,
-  //     },
-  //   };
-  //   console.log(options.body, '--Delete Body');
-  //   this.http.delete(this.baseUrl, options).subscribe((data) => console.log(data));
-  // }
-
-  delete(bookId: number, userId: number): Observable<any> {
+  delete(bookId: number, userId: number): Observable<HttpResponse<any>> {
     return this.http.delete(this.baseUrl + bookId + '/' + userId, { observe: 'response' });
   }
 }
