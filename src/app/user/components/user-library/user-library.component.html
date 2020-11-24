@@ -13,8 +13,8 @@
       <!--       alt="Le petit prince">-->
     <div class="card-actions">
       <button mat-raised-button color="accent" (click)="openDialog(book)">Details</button>
-      <div class="">
-        <a *ngIf="userId === book.creator.id" mat-icon-button color="accent" [routerLink]="['/edit-book', book.id]">
+      <div>
+        <a *ngIf="userId === book.creator.id" mat-icon-button matTooltip="edit" color="accent" [routerLink]="['/edit-book', book.id]">
           <mat-icon>edit</mat-icon>
         </a>
         <button class="remove-btn" mat-icon-button color="warn" matTooltip="remove"
