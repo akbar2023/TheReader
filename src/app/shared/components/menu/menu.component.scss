@@ -13,3 +13,18 @@ mat-toolbar {
   position: absolute;
   right: 50px;
 }
+
+@media screen and (max-width: 499px) {
+  .navBar, .userIcon {
+    display: none;
+  }
+  .small-menu {
+    position: absolute;
+    right: 50px;
+  }
+}
+@media screen and (min-width: 500px) {
+  .small-menu {
+    display: none;
+  }
+}
