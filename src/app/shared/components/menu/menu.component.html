@@ -2,8 +2,8 @@
   <h1>The Reader</h1>
   <div class="navBar">
     <a mat-button routerLink="/home">Home</a>
-    <a mat-button routerLink="/book-form">Add Book</a>
-    <a mat-button routerLink="/book-list">Books</a>
+    <a *ngIf="authService.isLoggedIn" mat-button routerLink="/book-form">New book</a>
+    <a *ngIf="authService.isLoggedIn" mat-button routerLink="/book-list">Library</a>
   </div>
 
   <button class="userIcon" mat-button [matMenuTriggerFor]="menu">
