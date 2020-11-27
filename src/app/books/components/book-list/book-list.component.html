@@ -8,7 +8,9 @@
          src="assets/img/petit_prince.jpg"
          alt="Le petit prince">
     <button mat-raised-button color="accent" (click)="openDialog(book)">Details</button>
-    <button matTooltip="{{book.users.length < 2 ? book.users.length + ' user like this book' : book.users.length + ' users like this book'}}" class="like-btn" mat-icon-button (click)="book.users.includes(userId)?removeFromList(book.id, book.title) : addToList(book.id, book.title)">
+    <button matTooltip="{{book.users.length < 2 ? book.users.length + ' user like this book' : book.users.length + ' users like this book'}}"
+            class="like-btn" mat-icon-button
+            (click)="book.users.includes(userId)?removeFromList(book.id, book.title) : addToList(book.id, book.title)">
       <mat-icon color="warn">{{book.users.includes(userId)?'favorite':'favorite_border'}}</mat-icon>
       <small>{{book.users.length}}</small>
     </button>

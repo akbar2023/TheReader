@@ -60,7 +60,7 @@ export class UserLibraryComponent implements OnInit {
   }
 
   deleteBook(id: number) {
-    this.bookService.delete(id, this.authService.userDetails.id).subscribe(
+    this.bookService.delete(id).subscribe(
       (data) => {
         console.log(data);
         if (data.status === 200) {

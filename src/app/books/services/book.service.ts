@@ -48,7 +48,7 @@ export class BookService {
       );
   }
 
-  delete(bookId: number, userId: number): Observable<HttpResponse<any>> {
-    return this.http.delete(this.baseUrl + bookId + '/' + userId, { observe: 'response' });
+  delete(bookId: number): Observable<HttpResponse<any>> {
+    return this.http.delete(this.baseUrl + bookId, { observe: 'response' });
   }
 }

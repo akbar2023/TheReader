@@ -9,6 +9,5 @@ export interface Book {
   genre: BookGenre;
   summary: string;
   creator?: BookCreator;
-  creatorId?: number;
   users?: number[];
 }

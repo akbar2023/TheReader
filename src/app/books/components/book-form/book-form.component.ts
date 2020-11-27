@@ -70,9 +70,7 @@ export class BookFormComponent implements OnInit {
   }
 
   saveBook() {
-    const book = this.bookForm.value;
-    const userDetails = localStorage.getItem('userDetails');
-    book.creatorId = JSON.parse(userDetails).id;
+    const book: Book = this.bookForm.value;
     // ***Update
     if (this.bookId) {
       book.id = this.bookId;

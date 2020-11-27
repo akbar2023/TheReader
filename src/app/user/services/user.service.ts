@@ -19,10 +19,9 @@ export class UserService {
     this.userId = this.authService.userDetails.id;
   }
 
-  addBookToList(bookId: number, userId: number): Observable<any> {
-    this.userBook = { userId, bookId };
+  addBookToList(bookId: number): Observable<any> {
     return this.http
-      .post<UserBook>(this.baseUrl + 'add-book/', this.userBook, { observe: 'response' })
+      .post<UserBook>(`${this.baseUrl}add-to-list/${bookId}`, null, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<any>) => {
           return response;
@@ -37,10 +36,9 @@ export class UserService {
     return this.http.get<Book[]>(`${this.baseUrl}${userId}/books`);
   }
 
-  removeBookFromList(bookId: number, userId: number): Observable<any> {
-    this.userBook = { userId, bookId };
+  removeBookFromList(bookId: number): Observable<any> {
     return this.http
-      .put<UserBook>(this.baseUrl + 'remove-book/', this.userBook, { observe: 'response' })
+      .put<UserBook>(`${this.baseUrl}remove-book/${bookId}`, null, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<any>) => {
           return response;

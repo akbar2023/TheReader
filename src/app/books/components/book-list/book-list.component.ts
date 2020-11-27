@@ -42,7 +42,7 @@ export class BookListComponent implements OnInit {
   }
 
   addToList(bookId: number, title: string) {
-    this.userService.addBookToList(bookId, this.userId).subscribe((response) => {
+    this.userService.addBookToList(bookId).subscribe((response) => {
       console.log(response.status, 'addBook From UserService');
       if (response.status === 200) {
         this.snackBar.open(`**${title}** added to favorite!`, null, {
@@ -60,7 +60,7 @@ export class BookListComponent implements OnInit {
   }
 
   removeFromList(bookId: number, title: string): void {
-    this.userService.removeBookFromList(bookId, this.userId).subscribe((response) => {
+    this.userService.removeBookFromList(bookId).subscribe((response) => {
       if (response.status === 200) {
         this.libraryBooks.forEach((book) => {
           if (book.id === bookId) {
