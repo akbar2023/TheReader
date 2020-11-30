@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { User } from '../models/user';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { UserDetails } from '../models/userDetails';
@@ -19,8 +19,8 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  getUser(email: string): Observable<User> {
-    return this.http.get<User>(this.baseUrl + email);
+  getUser(): Observable<HttpResponse<any>> {
+    return this.http.get<any>(this.baseUrl + 'info', { observe: 'response' });
   }
 
   logIn(username: string, password: string): Observable<any> {
@@ -38,7 +38,7 @@ export class AuthService {
         switchMap((response: any) => {
           this.token = response.headers.get('Authorization');
           localStorage.setItem('authToken', this.token);
-          return this.getUser(username);
+          return this.getUser();
         }),
         catchError((err) => {
           return Array.of(err);
@@ -57,10 +57,8 @@ export class AuthService {
   }
 
   logOut() {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('userDetails');
+    localStorage.clear();
     this.isLoggedIn = false;
-    return 'logged out!';
   }
 
   getToken() {

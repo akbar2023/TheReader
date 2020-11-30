@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserLogin } from '../../models/userLogin';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -29,24 +30,16 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    if (this.authService.isLoggedIn) {
-      console.log('User logged-in');
-    } else {
-      console.log('Token not found');
-    }
   }
 
   userLogin() {
     const user: UserLogin = this.loginForm.value;
     console.log(user, '--User login form data');
     this.authService.logIn(user.username, user.password).subscribe(
-      (data) => {
+      (data: HttpResponse<any>) => {
         console.log(data, '--response data');
-
-        // todo: improve with an other method than length
-        // data length is 4 when service returns User, which has 4 properties
-        if (Object.values(data).length === 4) {
-          localStorage.setItem('userDetails', JSON.stringify(data));
+        if (data.status === 200) {
+          localStorage.setItem('userDetails', JSON.stringify(data.body));
           const userDetString = localStorage.getItem('userDetails');
           this.authService.isLoggedIn = true;
           this.authService.userDetails = JSON.parse(userDetString);
