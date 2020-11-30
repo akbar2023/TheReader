@@ -38,19 +38,28 @@ export class UserLibraryComponent implements OnInit {
   }
 
   removeBookFromList(bookId: number, title: string) {
-    this.userService.removeBookFromList(bookId).subscribe((data) => {
-      // alert(data);
-      this.myBooks.forEach((book) => {
-        if (book.id === bookId) {
-          const index = this.myBooks.indexOf(book);
-          this.myBooks.splice(index, 1);
-        }
-      });
-      this.snackBar.open(`**${title}** removed from favorite!`, null, {
-        duration: 1000,
-        verticalPosition: 'top',
-        panelClass: ['yellow-snackbar'],
-      });
+    this.userService.removeBookFromList(bookId).subscribe((response) => {
+      if (response.status === 200) {
+        this.myBooks.forEach((book) => {
+          if (book.id === bookId) {
+            const index = this.myBooks.indexOf(book);
+            this.myBooks.splice(index, 1);
+          }
+        });
+        this.snackBar.open(`**${title}** removed from favorite!`, null, {
+          duration: 1000,
+          verticalPosition: 'top',
+          panelClass: ['yellow-snackbar'],
+        });
+      } else if (response.status === 403) {
+        this.snackBar.open(`Error: Unable to remove`, null, {
+          duration: 1000,
+          verticalPosition: 'top',
+          panelClass: ['orange-snackbar'],
+        });
+      } else {
+        alert('Error!');
+      }
     });
   }
 
@@ -61,9 +70,9 @@ export class UserLibraryComponent implements OnInit {
 
   deleteBook(id: number) {
     this.bookService.delete(id).subscribe(
-      (data) => {
-        console.log(data);
-        if (data.status === 200) {
+      (response) => {
+        console.log(response);
+        if (response.status === 200) {
           this.myBooks.forEach((book) => {
             if (book.id === id) {
               const index = this.myBooks.indexOf(book);
@@ -75,7 +84,7 @@ export class UserLibraryComponent implements OnInit {
             verticalPosition: 'top',
             panelClass: ['green-snackbar'],
           });
-        } else if (data.status === 404 && data.body === null) {
+        } else if (response.status === 404 && response.body === null) {
           this.snackBar.open(`Error!`, null, {
             duration: 1000,
             verticalPosition: 'top',

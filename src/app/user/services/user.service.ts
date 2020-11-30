@@ -12,7 +12,6 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class UserService {
   private readonly baseUrl = `${environment.apiUrl}/api/user/`;
-  private userBook: UserBook;
   private readonly userId: number;
 
   constructor(private authService: AuthService, private http: HttpClient) {
