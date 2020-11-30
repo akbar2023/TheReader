@@ -32,8 +32,8 @@ export class UserService {
       );
   }
 
-  getMyBooks(userId: number): Observable<Book[]> {
-    return this.http.get<Book[]>(`${this.baseUrl}${userId}/books`);
+  getMyBooks(): Observable<Book[]> {
+    return this.http.get<Book[]>(`${this.baseUrl}books`);
   }
 
   removeBookFromList(bookId: number): Observable<any> {

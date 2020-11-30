@@ -31,14 +31,14 @@ export class UserLibraryComponent implements OnInit {
   }
 
   getBooks() {
-    this.userService.getMyBooks(this.userId).subscribe((books: Book[]) => {
+    this.userService.getMyBooks().subscribe((books: Book[]) => {
       console.log(books, 'My books');
       this.myBooks = books;
     });
   }
 
   removeBookFromList(bookId: number, title: string) {
-    this.userService.removeBookFromList(bookId, this.userId).subscribe((data) => {
+    this.userService.removeBookFromList(bookId).subscribe((data) => {
       // alert(data);
       this.myBooks.forEach((book) => {
         if (book.id === bookId) {
