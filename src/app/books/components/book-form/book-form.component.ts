@@ -65,7 +65,7 @@ export class BookFormComponent implements OnInit {
       author: [book ? book.author : '', [Validators.minLength(2), Validators.maxLength(100), Validators.required]],
       year: [book ? book.year : '', [Validators.min(0), Validators.max(this.currentYear), Validators.required]],
       genre: [book ? book.genre : '', [Validators.minLength(3), Validators.maxLength(20), Validators.required]],
-      summary: [book ? book.summary : '', [Validators.minLength(10), Validators.maxLength(255), Validators.required]],
+      summary: [book ? book.summary : '', [Validators.minLength(10), Validators.maxLength(1000), Validators.required]],
     });
   }
 

@@ -67,7 +67,7 @@
 
       <mat-form-field>
         <mat-label>Summary</mat-label>
-        <textarea id="summary" [maxLength]="255" type="text" matInput formControlName="summary"></textarea>
+        <textarea id="summary" [maxLength]="1000" type="text" matInput formControlName="summary"></textarea>
         <mat-error class="text-danger" *ngIf="summary.hasError('required')">
           {{requiredMessage('Summary')}}
         </mat-error>
@@ -75,9 +75,9 @@
           {{lengthMessage(10, 0)}}
         </mat-error>
         <mat-error class="text-danger" *ngIf="summary.hasError('maxlength')">
-          {{lengthMessage(255, 1)}}
+          {{lengthMessage(1000, 1)}}
         </mat-error>
-        <mat-hint align="end">{{summary.value.length}} / 255</mat-hint>
+        <mat-hint align="end">{{summary.value.length}} / 1000</mat-hint>
       </mat-form-field>
 
     <div>
