@@ -23,14 +23,13 @@ export class BookFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private readonly bookService: BookService,
-    private readonly userService: AuthService,
+    private readonly authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    console.log(this.genres, '--les Genres');
     this.bookId = parseInt(this.route.snapshot.paramMap.get('id'), 10);
     this.editMode = !!this.bookId;
     console.log(this.bookId, '--book Id');

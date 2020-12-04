@@ -5,6 +5,7 @@ import { RegisterComponent } from './auth/components/register/register.component
 import { BookFormComponent } from './books/components/book-form/book-form.component';
 import { AuthGuard } from './auth/guards/auth.guard';
 import { HomeComponent } from './user/components/home/home.component';
+import { EditBookGuard } from './auth/guards/edit-book.guard';
 
 const routes: Routes = [
   {
@@ -17,7 +18,7 @@ const routes: Routes = [
     component: BookFormComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'edit-book/:id', component: BookFormComponent },
+  { path: 'edit-book/:id', component: BookFormComponent, canActivate: [EditBookGuard] },
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },

@@ -13,6 +13,7 @@ import { catchError, map } from 'rxjs/operators';
 export class UserService {
   private readonly baseUrl = `${environment.apiUrl}/api/user/`;
   private readonly userId: number;
+  private userBooks: Book[] = []; // used by editGuard
 
   constructor(private authService: AuthService, private http: HttpClient) {
     this.userId = this.authService.userDetails.id;
@@ -46,5 +47,13 @@ export class UserService {
           return of(err);
         })
       );
+  }
+
+  setUserBooks(books: Book[]) {
+    this.userBooks = books;
+  }
+
+  getUserBooks() {
+    return this.userBooks;
   }
 }
