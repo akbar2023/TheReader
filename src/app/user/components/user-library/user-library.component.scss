@@ -14,17 +14,33 @@
     .card-actions {
       display: flex;
       justify-content: space-between;
-      .remove-btn {
-        //order: 5;
-        //flex-grow: 3;
-      }
     }
   }
 
-
+  .cards:hover {
+    box-shadow: rgba(64, 124, 235, 0.548) 0 0 5px 10px;
+  }
 
   mat-card-title {
     font-size: 1.5vw;
   }
+}
 
+@media screen and (max-width: 940px) {
+  .livres {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+    mat-card-title {
+      font-size: 14px;
+    }
+    .mat-card-subtitle {
+      font-size: 10px;
+    }
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .livres {
+    grid-template-columns: 1fr;
+  }
 }
