@@ -71,10 +71,10 @@ export class UserLibraryComponent implements OnInit {
   }
 
   deleteBook(id: number) {
-    const bookToDelete = this.myBooks.filter((book) => book.id === id);
+    const bookToDelete = this.myBooks.filter((book) => book.id === id)[0];
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '350px',
-      data: `Delete **${bookToDelete[0].title}**?`,
+      data: `Delete **${bookToDelete.title}**?`,
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
