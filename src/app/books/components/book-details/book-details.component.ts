@@ -7,9 +7,9 @@ import { Book } from '../../models/book';
   styleUrls: ['./book-details.component.scss'],
 })
 export class BookDetailsComponent implements OnInit {
-  constructor() {}
-
   book: Book;
+
+  constructor() {}
 
   ngOnInit(): void {}
 }

@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { BookDetailsComponent } from '../../../books/components/book-details/book-details.component';
 import { MatDialog } from '@angular/material/dialog';
 import { BookService } from '../../../books/services/book.service';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-user-library',
@@ -70,32 +71,41 @@ export class UserLibraryComponent implements OnInit {
   }
 
   deleteBook(id: number) {
-    this.bookService.delete(id).subscribe(
-      (response) => {
-        console.log(response);
-        if (response.status === 200) {
-          this.myBooks.forEach((book) => {
-            if (book.id === id) {
-              const index = this.myBooks.indexOf(book);
-              this.myBooks.splice(index, 1);
+    const bookToDelete = this.myBooks.filter((book) => book.id === id);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '350px',
+      data: `Delete **${bookToDelete[0].title}**?`,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.bookService.delete(id).subscribe(
+          (response) => {
+            console.log(response);
+            if (response.status === 200) {
+              this.myBooks.forEach((book) => {
+                if (book.id === id) {
+                  const index = this.myBooks.indexOf(book);
+                  this.myBooks.splice(index, 1);
+                }
+              });
+              this.snackBar.open(`DELETE success!`, null, {
+                duration: 2000,
+                verticalPosition: 'top',
+                panelClass: ['green-snackbar'],
+              });
+            } else if (response.status === 404 && response.body === null) {
+              this.snackBar.open(`Error!`, null, {
+                duration: 1000,
+                verticalPosition: 'top',
+                panelClass: ['orange-snackbar'],
+              });
             }
-          });
-          this.snackBar.open(`DELETE success!`, null, {
-            duration: 2000,
-            verticalPosition: 'top',
-            panelClass: ['green-snackbar'],
-          });
-        } else if (response.status === 404 && response.body === null) {
-          this.snackBar.open(`Error!`, null, {
-            duration: 1000,
-            verticalPosition: 'top',
-            panelClass: ['orange-snackbar'],
-          });
-        }
-      },
-      (error) => {
-        console.log('Error ' + error.status);
+          },
+          (error) => {
+            console.log('Error ' + error.status);
+          }
+        );
       }
-    );
+    });
   }
 }
