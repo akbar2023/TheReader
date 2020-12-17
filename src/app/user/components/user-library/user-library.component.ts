@@ -7,6 +7,7 @@ import { BookDetailsComponent } from '../../../books/components/book-details/boo
 import { MatDialog } from '@angular/material/dialog';
 import { BookService } from '../../../books/services/book.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { Reading } from '../../../books/models/reading';
 
 @Component({
   selector: 'app-user-library',
@@ -16,6 +17,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 export class UserLibraryComponent implements OnInit {
   myBooks: Book[];
   userId: number;
+  myReadings: Reading[];
 
   constructor(
     private authService: AuthService,
@@ -36,6 +38,10 @@ export class UserLibraryComponent implements OnInit {
       console.log(books, 'My books');
       this.myBooks = books;
       this.userService.setUserBooks(books);
+    });
+
+    this.userService.getReadings().subscribe((readings: Reading[]) => {
+      this.myReadings = readings;
     });
   }
 
@@ -63,6 +69,37 @@ export class UserLibraryComponent implements OnInit {
         alert('Error!');
       }
     });
+  }
+
+  removeUserReading(readingId: number, title: string) {
+    this.userService.removeReading(readingId).subscribe((response) => {
+      if (response.status === 200) {
+        this.myReadings = this.myReadings.filter((reading) => reading.readingId !== readingId);
+        this.snackBar.open(`**${title}** removed from favorite!`, null, {
+          duration: 1000,
+          verticalPosition: 'top',
+          panelClass: ['yellow-snackbar'],
+        });
+      } else if (response.status === 400) {
+        this.snackBar.open(`Error: Unable to remove`, null, {
+          duration: 1000,
+          verticalPosition: 'top',
+          panelClass: ['orange-snackbar'],
+        });
+      } else {
+        alert('Error!');
+      }
+    });
+  }
+
+  changeReadingStatus(readingId: number, read: boolean) {
+    this.myReadings.filter((readings) => readings.readingId === readingId).map((reading) => (reading.read = !read));
+    this.userService
+      .editReadingStatus({
+        id: readingId,
+        isRead: !read,
+      })
+      .subscribe();
   }
 
   openDialog(book: Book) {

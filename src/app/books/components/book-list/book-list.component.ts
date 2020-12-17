@@ -42,7 +42,7 @@ export class BookListComponent implements OnInit {
   }
 
   addToList(bookId: number, title: string) {
-    this.userService.addBookToList(bookId).subscribe((response) => {
+    this.userService.addReading(bookId).subscribe((response) => {
       console.log(response.status, 'addBook From UserService');
       if (response.status === 200) {
         this.snackBar.open(`**${title}** added to favorite!`, null, {
