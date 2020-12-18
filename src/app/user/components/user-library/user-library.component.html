@@ -1,8 +1,8 @@
 <div class="livres">
-  <mat-card class="cards" *ngFor="let book of myReadings">
+  <mat-card class="cards" *ngFor="let reading of myReadings">
     <mat-card-header>
-      <mat-card-title>{{book.title}}</mat-card-title>
-      <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
+      <mat-card-title>{{reading.title}}</mat-card-title>
+      <mat-card-subtitle>{{reading.author}}</mat-card-subtitle>
 
     </mat-card-header>
     <img mat-card-image
@@ -14,19 +14,19 @@
     <div class="card-actions">
 <!--      <button mat-raised-button color="accent" (click)="openDialog(book)">Details</button>-->
       <div>
-<!--        <a *ngIf="userId === book.creator.id" mat-icon-button matTooltip="edit" color="accent" [routerLink]="['/edit-book', book.id]">-->
-<!--          <mat-icon>edit</mat-icon>-->
-<!--        </a>-->
+        <a *ngIf="userId === reading.creatorId" mat-icon-button matTooltip="edit" color="accent" [routerLink]="['/edit-book', reading.bookId]">
+          <mat-icon>edit</mat-icon>
+        </a>
         <button class="remove-btn" mat-icon-button matTooltip="remove"
-                (click)="removeUserReading(book.readingId, book.title)">
+                (click)="removeUserReading(reading.readingId, reading.title)">
           <mat-icon>remove_circle</mat-icon>
         </button>
-<!--        <button *ngIf="userId === book.creator.id" class="remove-btn" mat-icon-button color="warn" matTooltip="delete"-->
-<!--                (click)="deleteBook(book.id)">-->
-<!--          <mat-icon>delete</mat-icon>-->
-<!--        </button>-->
-        <button (click)="changeReadingStatus(book.readingId, book.read)" mat-icon-button color="accent" matTooltip="{{book.read?'Already read': 'Unread'}}">
-          <mat-icon>{{book.read? 'check_box': 'check_box_outline_blank'}}</mat-icon>
+        <button *ngIf="userId === reading.creatorId" class="remove-btn" mat-icon-button color="warn" matTooltip="delete"
+                (click)="deleteBook(reading.bookId)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button (click)="changeReadingStatus(reading.readingId, reading.read)" mat-icon-button color="accent" matTooltip="{{reading.read?'reading complete': 'Unread'}}">
+          <mat-icon>{{reading.read? 'check_box': 'check_box_outline_blank'}}</mat-icon>
           </button>
       </div>
     </div>

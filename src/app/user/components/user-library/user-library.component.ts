@@ -29,7 +29,7 @@ export class UserLibraryComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.authService.userDetails.id;
-    this.authService.getToken();
+    // this.authService.getToken();
     this.getBooks();
   }
 
@@ -42,6 +42,7 @@ export class UserLibraryComponent implements OnInit {
 
     this.userService.getReadings().subscribe((readings: Reading[]) => {
       this.myReadings = readings;
+      console.log(this.myReadings, 'My readings');
     });
   }
 
@@ -107,24 +108,19 @@ export class UserLibraryComponent implements OnInit {
     modalRef.componentInstance.book = book;
   }
 
-  deleteBook(id: number) {
-    const bookToDelete = this.myBooks.filter((book) => book.id === id)[0];
+  deleteBook(bookId: number) {
+    const bookToDelete = this.myReadings.filter((reading) => reading.bookId === bookId)[0];
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '350px',
       data: `Delete **${bookToDelete.title}**?`,
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.bookService.delete(id).subscribe(
+        this.bookService.delete(bookId).subscribe(
           (response) => {
             console.log(response);
             if (response.status === 200) {
-              this.myBooks.forEach((book) => {
-                if (book.id === id) {
-                  const index = this.myBooks.indexOf(book);
-                  this.myBooks.splice(index, 1);
-                }
-              });
+              this.myReadings = this.myReadings.filter((reading) => reading.bookId !== bookId);
               this.snackBar.open(`DELETE success!`, null, {
                 duration: 2000,
                 verticalPosition: 'top',
@@ -139,7 +135,7 @@ export class UserLibraryComponent implements OnInit {
             }
           },
           (error) => {
-            console.log('Error ' + error.status);
+            alert('Error ' + error.status);
           }
         );
       }
