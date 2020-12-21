@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Book } from '../../models/book';
 import { BookService } from '../../services/book.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-book-details',
@@ -14,8 +15,6 @@ export class BookDetailsComponent implements OnInit {
   constructor(private bookService: BookService) {}
 
   ngOnInit(): void {
-    this.bookService.getBookById(this.bookId).subscribe((data: Book) => {
-      return (this.book = data);
-    });
+    this.bookService.getBookById(this.bookId).subscribe((data: HttpResponse<Book>) => (this.book = data.body));
   }
 }

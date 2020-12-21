@@ -18,38 +18,34 @@ export class BookService {
     return this.http.get<Book[]>(this.baseUrl);
   }
 
-  getBookById(id: number): Observable<any> {
+  getBookById(id: number): Observable<HttpResponse<Book>> {
+    return this.http.get<Book>(this.baseUrl + id, { observe: 'response' });
+  }
+
+  add(book: Book): Observable<number> {
     return this.http
-      .get<Book>(this.baseUrl + id, { observe: 'response' })
+      .post<void>(this.baseUrl, book, { observe: 'response' })
       .pipe(
-        map((response: HttpResponse<any>) => {
-          return response;
+        map((response) => {
+          console.log(response, '--Book Response');
+          return response.status;
         })
       );
   }
 
-  add(book: Book): Observable<any> {
-    return this.http.post(this.baseUrl, book, { observe: 'response' }).pipe(
-      map((response: HttpResponse<any>) => {
-        console.log(response, '--Book Response');
-        return response.status;
-      })
-    );
-  }
-
-  updateBook(book: Book): Observable<any> {
+  updateBook(book: Book): Observable<number> {
     console.log(book, '--Book update');
     return this.http
       .put<Book>(this.baseUrl, book, { observe: 'response' })
       .pipe(
-        map((response: HttpResponse<any>) => {
+        map((response: HttpResponse<Book>) => {
           console.log(response, '--book update response');
           return response.status;
         })
       );
   }
 
-  delete(bookId: number): Observable<HttpResponse<any>> {
-    return this.http.delete(this.baseUrl + bookId, { observe: 'response' });
+  delete(bookId: number): Observable<HttpResponse<void>> {
+    return this.http.delete<void>(this.baseUrl + bookId, { observe: 'response' });
   }
 }
