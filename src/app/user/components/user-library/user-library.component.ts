@@ -8,6 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { BookService } from '../../../books/services/book.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { Reading } from '../../../books/models/reading';
+import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-user-library',
@@ -18,6 +20,7 @@ export class UserLibraryComponent implements OnInit {
   myBooks: Book[];
   userId: number;
   myReadings: Reading[];
+  private bookDetails: Book;
 
   constructor(
     private authService: AuthService,
@@ -29,7 +32,6 @@ export class UserLibraryComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.authService.userDetails.id;
-    // this.authService.getToken();
     this.getBooks();
   }
 
@@ -37,11 +39,11 @@ export class UserLibraryComponent implements OnInit {
     this.userService.getMyBooks().subscribe((books: Book[]) => {
       console.log(books, 'My books');
       this.myBooks = books;
-      this.userService.setUserBooks(books);
     });
 
     this.userService.getReadings().subscribe((readings: Reading[]) => {
       this.myReadings = readings;
+      this.userService.setUserReadings(readings);
       console.log(this.myReadings, 'My readings');
     });
   }
@@ -103,9 +105,9 @@ export class UserLibraryComponent implements OnInit {
       .subscribe();
   }
 
-  openDialog(book: Book) {
-    const modalRef = this.dialog.open(BookDetailsComponent);
-    modalRef.componentInstance.book = book;
+  openDialog(bookId) {
+    const matDialogRef = this.dialog.open(BookDetailsComponent);
+    matDialogRef.componentInstance.bookId = bookId;
   }
 
   deleteBook(bookId: number) {

@@ -12,7 +12,7 @@
       <!--       src="http://books.google.com/books/content?id=RsdyDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&imgtk=AFLRE71vV0YpiOiaMgmx19uVw5r0dsCW_9NVTMiAcFBYLJHnWkPeAHdCIE8vPEeSRmy6g4YSzz5B_-HyS9LHLPzKP86rEds4rQp8iLtsiNz6oFtqW17XOImWGcNvL6I1krl22Oh_7fcO&source=gbs_api"-->
       <!--       alt="Le petit prince">-->
     <div class="card-actions">
-<!--      <button mat-raised-button color="accent" (click)="openDialog(book)">Details</button>-->
+      <button mat-raised-button color="accent" (click)="openDialog(reading.bookId)">Details</button>
       <div>
         <a *ngIf="userId === reading.creatorId" mat-icon-button matTooltip="edit" color="accent" [routerLink]="['/edit-book', reading.bookId]">
           <mat-icon>edit</mat-icon>

@@ -16,7 +16,7 @@ export class UserService {
   private readonly baseUrl = `${environment.apiUrl}/api/user/`;
   private readonly readingApi = `${environment.apiUrl}/api/reading/`;
   private readonly userId: number;
-  private userBooks: Book[] = []; // used by editGuard
+  private userReadings: Reading[] = []; // used by editGuard
 
   constructor(private authService: AuthService, private http: HttpClient) {
     this.userId = this.authService.userDetails.id;
@@ -81,11 +81,11 @@ export class UserService {
       );
   }
 
-  setUserBooks(books: Book[]) {
-    this.userBooks = books;
+  setUserReadings(books: Reading[]) {
+    this.userReadings = books;
   }
 
-  getUserBooks() {
-    return this.userBooks;
+  getUserReadings() {
+    return this.userReadings;
   }
 }

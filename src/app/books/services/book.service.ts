@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 })
 export class BookService {
   private readonly baseUrl = `${environment.apiUrl}/api/book/`;
+  bookDetails: any;
 
   constructor(private http: HttpClient) {}
 

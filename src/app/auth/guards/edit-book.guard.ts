@@ -31,7 +31,9 @@ export class EditBookGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const books = this.userService.getUserBooks().filter((book) => book.id === parseInt(next.paramMap.get('id'), 10));
-    return books[0]?.creator.id === this.authService.userDetails.id ? true : this.router.navigate(['/home']).then();
+    const readings = this.userService
+      .getUserReadings()
+      .filter((reading) => reading.bookId === parseInt(next.paramMap.get('id'), 10));
+    return readings[0]?.creatorId === this.authService.userDetails.id ? true : this.router.navigate(['/home']).then();
   }
 }

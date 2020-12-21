@@ -60,19 +60,38 @@ export class BookListComponent implements OnInit {
   }
 
   removeFromList(bookId: number, title: string): void {
-    this.userService.removeBookFromList(bookId).subscribe((response) => {
+    // this.userService.removeBookFromList(bookId).subscribe((response) => {
+    //   if (response.status === 200) {
+    //     this.libraryBooks.forEach((book) => {
+    //       if (book.id === bookId) {
+    //         const index = book.users.indexOf(this.userId);
+    //         book.users.splice(index, 1);
+    //       }
+    //     });
+    //     this.snackBar.open(`**${title}** removed from favorite!`, null, {
+    //       duration: 1000,
+    //       verticalPosition: 'top',
+    //       panelClass: ['yellow-snackbar'],
+    //     });
+    //   }
+    // });
+
+    this.userService.removeReading(bookId).subscribe((response) => {
       if (response.status === 200) {
-        this.libraryBooks.forEach((book) => {
-          if (book.id === bookId) {
-            const index = book.users.indexOf(this.userId);
-            book.users.splice(index, 1);
-          }
-        });
+        // this.myReadings = this.myReadings.filter((reading) => reading.readingId !== readingId);
         this.snackBar.open(`**${title}** removed from favorite!`, null, {
           duration: 1000,
           verticalPosition: 'top',
           panelClass: ['yellow-snackbar'],
         });
+      } else if (response.status === 400) {
+        this.snackBar.open(`Error: Unable to remove`, null, {
+          duration: 1000,
+          verticalPosition: 'top',
+          panelClass: ['orange-snackbar'],
+        });
+      } else {
+        alert('Error!');
       }
     });
   }
