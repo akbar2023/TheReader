@@ -6,6 +6,7 @@ import { BookDetailsComponent } from '../book-details/book-details.component';
 import { UserService } from '../../../user/services/user.service';
 import { AuthService } from '../../../auth/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-book-list',
@@ -15,6 +16,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class BookListComponent implements OnInit {
   libraryBooks: Book[];
   userId: number;
+  readingBookIds: number[] = [];
 
   constructor(
     private readonly userService: UserService,
@@ -27,6 +29,7 @@ export class BookListComponent implements OnInit {
   ngOnInit(): void {
     this.userId = this.authService.userDetails.id;
     this.getLibraryBooks();
+    this.getUserReadingBookIds();
   }
 
   getLibraryBooks(): void {
@@ -36,15 +39,24 @@ export class BookListComponent implements OnInit {
     });
   }
 
-  openDialog(book: Book) {
+  getUserReadingBookIds() {
+    this.userService.getReadingBookIds().subscribe((data) => {
+      console.log(data, 'les IDs');
+      this.readingBookIds = data;
+    });
+  }
+
+  openDialog(bookId: number) {
     const modalRef = this.dialog.open(BookDetailsComponent);
-    modalRef.componentInstance.book = book;
+    modalRef.componentInstance.bookId = bookId;
   }
 
   addToList(bookId: number, title: string) {
     this.userService.addReading(bookId).subscribe((response) => {
       console.log(response.status, 'addBook From UserService');
       if (response.status === 200) {
+        this.readingBookIds.push(bookId);
+        console.log(this.readingBookIds);
         this.snackBar.open(`**${title}** added to favorite!`, null, {
           duration: 1000,
           verticalPosition: 'top',
@@ -78,7 +90,14 @@ export class BookListComponent implements OnInit {
 
     this.userService.removeReading(bookId).subscribe((response) => {
       if (response.status === 200) {
-        // this.myReadings = this.myReadings.filter((reading) => reading.readingId !== readingId);
+        // this.readingBookIds = this.readingBookIds.filter((id) => id !== bookId); //doesn't work, IDK why...
+        this.readingBookIds.forEach((id) => {
+          if (id === bookId) {
+            const index = this.readingBookIds.indexOf(id);
+            this.readingBookIds.splice(index, 1);
+            console.log(this.readingBookIds);
+          }
+        });
         this.snackBar.open(`**${title}** removed from favorite!`, null, {
           duration: 1000,
           verticalPosition: 'top',

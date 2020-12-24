@@ -17,9 +17,9 @@
         <a *ngIf="userId === reading.creatorId" mat-icon-button matTooltip="edit" color="accent" [routerLink]="['/edit-book', reading.bookId]">
           <mat-icon>edit</mat-icon>
         </a>
-        <button class="remove-btn" mat-icon-button matTooltip="remove"
-                (click)="removeUserReading(reading.readingId, reading.title)">
-          <mat-icon>remove_circle</mat-icon>
+        <button class="remove-btn" color="warn" mat-icon-button matTooltip="remove"
+                (click)="removeUserReading(reading.bookId, reading.title)">
+          <mat-icon>favorite</mat-icon>
         </button>
         <button *ngIf="userId === reading.creatorId" class="remove-btn" mat-icon-button color="warn" matTooltip="delete"
                 (click)="deleteBook(reading.bookId)">

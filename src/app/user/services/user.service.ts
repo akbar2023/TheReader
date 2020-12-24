@@ -4,7 +4,6 @@ import { Observable, of } from 'rxjs';
 import { UserBook } from '../../auth/models/userBook';
 import { AuthService } from '../../auth/services/auth.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Book } from '../../books/models/book';
 import { catchError, map } from 'rxjs/operators';
 import { Reading } from '../../books/models/reading';
 import { ReadingStatus } from '../../books/models/readingStatus';
@@ -22,18 +21,19 @@ export class UserService {
     this.userId = this.authService.userDetails.id;
   }
 
-  addBookToList(bookId: number): Observable<any> {
-    return this.http
-      .post<UserBook>(`${this.baseUrl}add-to-list/${bookId}`, null, { observe: 'response' })
-      .pipe(
-        map((response: HttpResponse<any>) => {
-          return response;
-        }),
-        catchError((err) => {
-          return of(err);
-        })
-      );
-  }
+  // todo: remove
+  // addBookToList(bookId: number): Observable<any> {
+  //   return this.http
+  //     .post<UserBook>(`${this.baseUrl}add-to-list/${bookId}`, null, { observe: 'response' })
+  //     .pipe(
+  //       map((response: HttpResponse<any>) => {
+  //         return response;
+  //       }),
+  //       catchError((err) => {
+  //         return of(err);
+  //       })
+  //     );
+  // }
 
   addReading(bookId: number): Observable<any> {
     return this.http
@@ -44,12 +44,12 @@ export class UserService {
       );
   }
 
-  getMyBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>(`${this.baseUrl}books`);
-  }
-
   getReadings(): Observable<Reading[]> {
     return this.http.get<Reading[]>(`${this.readingApi}`);
+  }
+
+  getReadingBookIds(): Observable<number[]> {
+    return this.http.get<number[]>(`${this.readingApi}` + `reading-book-ids`);
   }
 
   removeBookFromList(bookId: number): Observable<any> {
@@ -65,11 +65,15 @@ export class UserService {
       );
   }
 
-  removeReading(readingId: number): Observable<any> {
-    return this.http.delete(`${this.readingApi + readingId}`, { observe: 'response' }).pipe(
-      map((response: HttpResponse<any>) => response),
-      catchError((err) => of(err))
-    );
+  removeReading(bookId?: number): Observable<any> {
+    return this.http
+      .delete(`${this.readingApi + bookId}`, {
+        observe: 'response',
+      })
+      .pipe(
+        map((response: HttpResponse<any>) => response),
+        catchError((err) => of(err))
+      );
   }
 
   editReadingStatus(readingStatus: ReadingStatus): Observable<any> {

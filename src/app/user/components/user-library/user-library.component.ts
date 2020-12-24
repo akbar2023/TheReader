@@ -32,15 +32,10 @@ export class UserLibraryComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.authService.userDetails.id;
-    this.getBooks();
+    this.getUserReadings();
   }
 
-  getBooks() {
-    this.userService.getMyBooks().subscribe((books: Book[]) => {
-      console.log(books, 'My books');
-      this.myBooks = books;
-    });
-
+  getUserReadings() {
     this.userService.getReadings().subscribe((readings: Reading[]) => {
       this.myReadings = readings;
       this.userService.setUserReadings(readings);
@@ -74,10 +69,10 @@ export class UserLibraryComponent implements OnInit {
     });
   }
 
-  removeUserReading(readingId: number, title: string) {
-    this.userService.removeReading(readingId).subscribe((response) => {
+  removeUserReading(bookId: number, title: string) {
+    this.userService.removeReading(bookId).subscribe((response) => {
       if (response.status === 200) {
-        this.myReadings = this.myReadings.filter((reading) => reading.readingId !== readingId);
+        this.myReadings = this.myReadings.filter((reading) => reading.bookId !== bookId);
         this.snackBar.open(`**${title}** removed from favorite!`, null, {
           duration: 1000,
           verticalPosition: 'top',
