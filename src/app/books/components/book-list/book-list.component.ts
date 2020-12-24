@@ -74,13 +74,9 @@ export class BookListComponent implements OnInit {
     this.userService.removeReading(bookId).subscribe((response) => {
       if (response.status === 200) {
         // this.readingBookIds = this.readingBookIds.filter((id) => id !== bookId); //doesn't work, IDK why...
-        this.readingBookIds.forEach((id) => {
-          if (id === bookId) {
-            const index = this.readingBookIds.indexOf(id);
-            this.readingBookIds.splice(index, 1);
-            console.log(this.readingBookIds);
-          }
-        });
+        const index = this.readingBookIds.indexOf(bookId);
+        this.readingBookIds.splice(index, 1);
+
         this.snackBar.open(`**${title}** removed from favorite!`, null, {
           duration: 1000,
           verticalPosition: 'top',
