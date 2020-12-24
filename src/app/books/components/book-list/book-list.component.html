@@ -1,5 +1,5 @@
 <div class="livres">
-  <mat-card *ngFor="let book of libraryBooks; let reading of readingBookIds" class="cards" id="{{book.id}}">
+  <mat-card *ngFor="let book of libraryBooks" class="cards" id="{{book.id}}">
     <mat-card-header>
       <mat-card-title>{{book.title}}</mat-card-title>
       <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
@@ -9,9 +9,8 @@
          alt="Le petit prince">
     <button mat-raised-button color="accent" (click)="openDialog(book.id)">Details</button>
 
-    <button
-      class="like-btn" mat-icon-button
-      (click)="readingBookIds.includes(book.id)?removeFromList(book.id, book.title) : addToList(book.id, book.title)">
+    <button class="like-btn" mat-icon-button
+      (click)="readingBookIds.includes(book.id) ? removeFromList(book.id, book.title) : addToList(book.id, book.title)">
       <mat-icon color="warn">{{readingBookIds.includes(book.id) ? 'favorite' : 'favorite_border'}}</mat-icon>
     </button>
   </mat-card>

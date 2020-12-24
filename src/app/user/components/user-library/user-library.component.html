@@ -5,16 +5,12 @@
       <mat-card-subtitle>{{reading.author}}</mat-card-subtitle>
 
     </mat-card-header>
-    <img mat-card-image
-            src="../../../../assets/img/petit_prince.jpg"
-            alt="Le petit prince">
-      <!--  <img mat-card-image-->
-      <!--       src="http://books.google.com/books/content?id=RsdyDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&imgtk=AFLRE71vV0YpiOiaMgmx19uVw5r0dsCW_9NVTMiAcFBYLJHnWkPeAHdCIE8vPEeSRmy6g4YSzz5B_-HyS9LHLPzKP86rEds4rQp8iLtsiNz6oFtqW17XOImWGcNvL6I1krl22Oh_7fcO&source=gbs_api"-->
-      <!--       alt="Le petit prince">-->
+    <img mat-card-image src="../../../../assets/img/petit_prince.jpg" alt="Le petit prince">
     <div class="card-actions">
       <button mat-raised-button color="accent" (click)="openDialog(reading.bookId)">Details</button>
       <div>
-        <a *ngIf="userId === reading.creatorId" mat-icon-button matTooltip="edit" color="accent" [routerLink]="['/edit-book', reading.bookId]">
+        <a *ngIf="userId === reading.creatorId" mat-icon-button matTooltip="edit" color="accent"
+           [routerLink]="['/edit-book', reading.bookId]">
           <mat-icon>edit</mat-icon>
         </a>
         <button class="remove-btn" color="warn" mat-icon-button matTooltip="remove"
@@ -25,9 +21,10 @@
                 (click)="deleteBook(reading.bookId)">
           <mat-icon>delete</mat-icon>
         </button>
-        <button (click)="changeReadingStatus(reading.readingId, reading.read)" mat-icon-button color="accent" matTooltip="{{reading.read?'reading complete': 'Unread'}}">
-          <mat-icon>{{reading.read? 'check_box': 'check_box_outline_blank'}}</mat-icon>
-          </button>
+        <button (click)="changeReadingStatus(reading.readingId, reading.read)" mat-icon-button color="accent"
+                matTooltip="{{reading.read?'reading complete': 'Unread'}}">
+          <mat-icon>{{reading.read ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
+        </button>
       </div>
     </div>
   </mat-card>

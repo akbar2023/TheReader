@@ -8,8 +8,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { BookService } from '../../../books/services/book.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { Reading } from '../../../books/models/reading';
-import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
 
 @Component({
   selector: 'app-user-library',
@@ -20,7 +18,6 @@ export class UserLibraryComponent implements OnInit {
   myBooks: Book[];
   userId: number;
   myReadings: Reading[];
-  private bookDetails: Book;
 
   constructor(
     private authService: AuthService,
@@ -40,32 +37,6 @@ export class UserLibraryComponent implements OnInit {
       this.myReadings = readings;
       this.userService.setUserReadings(readings);
       console.log(this.myReadings, 'My readings');
-    });
-  }
-
-  removeBookFromList(bookId: number, title: string) {
-    this.userService.removeBookFromList(bookId).subscribe((response) => {
-      if (response.status === 200) {
-        this.myBooks.forEach((book) => {
-          if (book.id === bookId) {
-            const index = this.myBooks.indexOf(book);
-            this.myBooks.splice(index, 1);
-          }
-        });
-        this.snackBar.open(`**${title}** removed from favorite!`, null, {
-          duration: 1000,
-          verticalPosition: 'top',
-          panelClass: ['yellow-snackbar'],
-        });
-      } else if (response.status === 403) {
-        this.snackBar.open(`Error: Unable to remove`, null, {
-          duration: 1000,
-          verticalPosition: 'top',
-          panelClass: ['orange-snackbar'],
-        });
-      } else {
-        alert('Error!');
-      }
     });
   }
 
@@ -113,7 +84,7 @@ export class UserLibraryComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.bookService.delete(bookId).subscribe(
+        this.bookService.deleteBook(bookId).subscribe(
           (response) => {
             console.log(response);
             if (response.status === 200) {

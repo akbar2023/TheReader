@@ -102,7 +102,7 @@ export class BookFormComponent implements OnInit {
       );
     } else {
       // ***Create
-      this.bookService.add(book).subscribe(
+      this.bookService.addBook(book).subscribe(
         (response) => {
           if (response === 200) {
             this.snackBar.open(`Congrats, ${book.title} was added successfully!`, null, {

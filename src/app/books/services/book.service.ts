@@ -13,7 +13,7 @@ export class BookService {
 
   constructor(private http: HttpClient) {}
 
-  get(): Observable<Book[]> {
+  getBooks(): Observable<Book[]> {
     return this.http.get<Book[]>(this.baseUrl);
   }
 
@@ -21,7 +21,7 @@ export class BookService {
     return this.http.get<Book>(this.baseUrl + id, { observe: 'response' });
   }
 
-  add(book: Book): Observable<number> {
+  addBook(book: Book): Observable<number> {
     return this.http
       .post<void>(this.baseUrl, book, { observe: 'response' })
       .pipe(
@@ -35,16 +35,16 @@ export class BookService {
   updateBook(book: Book): Observable<number> {
     console.log(book, '--Book update');
     return this.http
-      .put<Book>(this.baseUrl, book, { observe: 'response' })
+      .put<void>(this.baseUrl, book, { observe: 'response' })
       .pipe(
-        map((response: HttpResponse<Book>) => {
+        map((response: HttpResponse<void>) => {
           console.log(response, '--book update response');
           return response.status;
         })
       );
   }
 
-  delete(bookId: number): Observable<HttpResponse<void>> {
+  deleteBook(bookId: number): Observable<HttpResponse<void>> {
     return this.http.delete<void>(this.baseUrl + bookId, { observe: 'response' });
   }
 }

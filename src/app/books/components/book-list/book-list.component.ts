@@ -6,7 +6,6 @@ import { BookDetailsComponent } from '../book-details/book-details.component';
 import { UserService } from '../../../user/services/user.service';
 import { AuthService } from '../../../auth/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-book-list',
@@ -33,7 +32,7 @@ export class BookListComponent implements OnInit {
   }
 
   getLibraryBooks(): void {
-    this.bookService.get().subscribe((books: Book[]) => {
+    this.bookService.getBooks().subscribe((books: Book[]) => {
       console.log(books, 'library books');
       this.libraryBooks = books;
     });
@@ -72,22 +71,6 @@ export class BookListComponent implements OnInit {
   }
 
   removeFromList(bookId: number, title: string): void {
-    // this.userService.removeBookFromList(bookId).subscribe((response) => {
-    //   if (response.status === 200) {
-    //     this.libraryBooks.forEach((book) => {
-    //       if (book.id === bookId) {
-    //         const index = book.users.indexOf(this.userId);
-    //         book.users.splice(index, 1);
-    //       }
-    //     });
-    //     this.snackBar.open(`**${title}** removed from favorite!`, null, {
-    //       duration: 1000,
-    //       verticalPosition: 'top',
-    //       panelClass: ['yellow-snackbar'],
-    //     });
-    //   }
-    // });
-
     this.userService.removeReading(bookId).subscribe((response) => {
       if (response.status === 200) {
         // this.readingBookIds = this.readingBookIds.filter((id) => id !== bookId); //doesn't work, IDK why...

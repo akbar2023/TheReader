@@ -46,7 +46,7 @@ export class AuthService {
       );
   }
 
-  signUp(user: User) {
+  signUp(user: User): Observable<number> {
     return this.http
       .post<User>(this.baseUrl + 'register/', user, { observe: 'response' })
       .pipe(
@@ -56,12 +56,12 @@ export class AuthService {
       );
   }
 
-  logOut() {
+  logOut(): void {
     localStorage.clear();
     this.isLoggedIn = false;
   }
 
-  getToken() {
+  getToken(): string {
     return (this.token = localStorage.getItem('authToken'));
   }
 }

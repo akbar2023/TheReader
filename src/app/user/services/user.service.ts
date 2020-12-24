@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable, of } from 'rxjs';
-import { UserBook } from '../../auth/models/userBook';
 import { AuthService } from '../../auth/services/auth.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
@@ -12,34 +11,19 @@ import { ReadingStatus } from '../../books/models/readingStatus';
   providedIn: 'root',
 })
 export class UserService {
-  private readonly baseUrl = `${environment.apiUrl}/api/user/`;
   private readonly readingApi = `${environment.apiUrl}/api/reading/`;
   private readonly userId: number;
-  private userReadings: Reading[] = []; // used by editGuard
+  private userReadings: Reading[] = []; // used by editBookGuard
 
   constructor(private authService: AuthService, private http: HttpClient) {
     this.userId = this.authService.userDetails.id;
   }
 
-  // todo: remove
-  // addBookToList(bookId: number): Observable<any> {
-  //   return this.http
-  //     .post<UserBook>(`${this.baseUrl}add-to-list/${bookId}`, null, { observe: 'response' })
-  //     .pipe(
-  //       map((response: HttpResponse<any>) => {
-  //         return response;
-  //       }),
-  //       catchError((err) => {
-  //         return of(err);
-  //       })
-  //     );
-  // }
-
-  addReading(bookId: number): Observable<any> {
+  addReading(bookId: number): Observable<HttpResponse<void>> {
     return this.http
-      .post<any>(`${this.readingApi + bookId}`, null, { observe: 'response' })
+      .post<void>(`${this.readingApi + bookId}`, null, { observe: 'response' })
       .pipe(
-        map((response: HttpResponse<any>) => response),
+        map((response: HttpResponse<void>) => response),
         catchError((err) => of(err))
       );
   }
@@ -52,39 +36,27 @@ export class UserService {
     return this.http.get<number[]>(`${this.readingApi}` + `reading-book-ids`);
   }
 
-  removeBookFromList(bookId: number): Observable<any> {
+  removeReading(bookId?: number): Observable<HttpResponse<void>> {
     return this.http
-      .put<UserBook>(`${this.baseUrl}remove-book/${bookId}`, null, { observe: 'response' })
-      .pipe(
-        map((response: HttpResponse<any>) => {
-          return response;
-        }),
-        catchError((err) => {
-          return of(err);
-        })
-      );
-  }
-
-  removeReading(bookId?: number): Observable<any> {
-    return this.http
-      .delete(`${this.readingApi + bookId}`, {
+      .delete<void>(`${this.readingApi + bookId}`, {
         observe: 'response',
       })
       .pipe(
-        map((response: HttpResponse<any>) => response),
+        map((response: HttpResponse<void>) => response),
         catchError((err) => of(err))
       );
   }
 
-  editReadingStatus(readingStatus: ReadingStatus): Observable<any> {
+  editReadingStatus(readingStatus: ReadingStatus): Observable<HttpResponse<void>> {
     return this.http
-      .put<ReadingStatus>(`${this.readingApi}`, readingStatus, { observe: 'response' })
+      .put<void>(`${this.readingApi}`, readingStatus, { observe: 'response' })
       .pipe(
-        map((response: HttpResponse<any>) => response),
+        map((response: HttpResponse<void>) => response),
         catchError((err) => of(err))
       );
   }
 
+  // used by editBookGuard
   setUserReadings(books: Reading[]) {
     this.userReadings = books;
   }
