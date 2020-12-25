@@ -94,7 +94,7 @@ export class UserLibraryComponent implements OnInit {
                 verticalPosition: 'top',
                 panelClass: ['green-snackbar'],
               });
-            } else if (response.status === 404 && response.body === null) {
+            } else if (response.status === 400 && response.body === null) {
               this.snackBar.open(`Error!`, null, {
                 duration: 1000,
                 verticalPosition: 'top',

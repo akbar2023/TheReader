@@ -89,7 +89,7 @@ export class BookFormComponent implements OnInit {
           }
         },
         (error) => {
-          if (error.status === 403) {
+          if (error.status === 400) {
             this.snackBar.open(`You are not allowed to edit this Book!`, null, {
               duration: 2000,
               verticalPosition: 'top',
