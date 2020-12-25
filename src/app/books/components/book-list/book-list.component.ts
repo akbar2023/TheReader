@@ -6,6 +6,7 @@ import { BookDetailsComponent } from '../book-details/book-details.component';
 import { UserService } from '../../../user/services/user.service';
 import { AuthService } from '../../../auth/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { BookLite } from '../../models/book-lite';
 
 @Component({
   selector: 'app-book-list',
@@ -13,7 +14,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./book-list.component.scss'],
 })
 export class BookListComponent implements OnInit {
-  libraryBooks: Book[];
+  libraryBooks: BookLite[];
   userId: number;
   readingBookIds: number[] = [];
 
@@ -32,7 +33,7 @@ export class BookListComponent implements OnInit {
   }
 
   getLibraryBooks(): void {
-    this.bookService.getBooks().subscribe((books: Book[]) => {
+    this.bookService.getBooks().subscribe((books: BookLite[]) => {
       console.log(books, 'library books');
       this.libraryBooks = books;
     });
@@ -60,11 +61,6 @@ export class BookListComponent implements OnInit {
           duration: 1000,
           verticalPosition: 'top',
           panelClass: ['green-snackbar'],
-        });
-        this.libraryBooks.forEach((book) => {
-          if (book.id === bookId) {
-            book.users.push(this.userId);
-          }
         });
       }
     });

@@ -4,6 +4,7 @@ import { Book } from '../models/book';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { BookLite } from '../models/book-lite';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +14,8 @@ export class BookService {
 
   constructor(private http: HttpClient) {}
 
-  getBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>(this.baseUrl);
+  getBooks(): Observable<BookLite[]> {
+    return this.http.get<BookLite[]>(this.baseUrl);
   }
 
   getBookById(id: number): Observable<HttpResponse<Book>> {
