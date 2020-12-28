@@ -2,7 +2,7 @@
   <h1>The Reader</h1>
   <div class="navBar">
     <a mat-button routerLink="/home">Home</a>
-    <a *ngIf="authService.isLoggedIn" mat-button routerLink="/book-form">New book</a>
+    <a *ngIf="authService.isLoggedIn" mat-button routerLink="/book-form">Add book</a>
     <a *ngIf="authService.isLoggedIn" mat-button routerLink="/book-list">Library</a>
   </div>
 
@@ -20,7 +20,7 @@
     </button>
     <mat-menu #menu2="matMenu">
       <a mat-menu-item routerLink="/home">Home</a>
-      <a *ngIf="authService.isLoggedIn" mat-menu-item routerLink="/book-form">New book</a>
+      <a *ngIf="authService.isLoggedIn" mat-menu-item routerLink="/book-form">Add book</a>
       <a *ngIf="authService.isLoggedIn" mat-menu-item routerLink="/book-list">Library</a>
       <button style="color: #f44336" mat-menu-item (click)="logOut()">Log Out</button>
     </mat-menu>

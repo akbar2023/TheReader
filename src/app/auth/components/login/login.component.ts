@@ -13,6 +13,7 @@ import { HttpResponse } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  hide = true;
 
   createForm() {
     this.loginForm = this.fb.group({
@@ -76,4 +77,6 @@ export class LoginComponent implements OnInit {
   requiredMessage(field: string) {
     return `Enter your ${field} please`;
   }
+
+  showPassword() {}
 }
