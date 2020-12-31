@@ -5,6 +5,7 @@ import { User } from '../models/user';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { UserDetails } from '../models/userDetails';
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class AuthService {
   public isLoggedIn: boolean;
   public userDetails: UserDetails;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getUser(): Observable<HttpResponse<any>> {
     return this.http.get<any>(this.baseUrl + 'info', { observe: 'response' });
@@ -59,6 +60,7 @@ export class AuthService {
   logOut(): void {
     localStorage.clear();
     this.isLoggedIn = false;
+    this.router.navigate(['/home']).then();
   }
 
   getToken(): string {

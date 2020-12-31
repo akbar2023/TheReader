@@ -1,11 +1,14 @@
+.container {
+  min-height: 70%;
 
-//.container {
-//  display: flex;
-//  justify-content: space-between;
-//}
-//
-//#loginComponent {
-//  height: 100%;
-//  display: flex;
-//  justify-content: flex-end;
-//}
+  .profile {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    app-profile {
+      margin: 0 auto;
+      width: 100%;
+    }
+  }
+}

@@ -1,4 +1,13 @@
+.search-container {
+  margin: 0 auto;
+  width: 300px;
+  .mat-form-field {
+    display: block;
+  }
+}
+
 .livres {
+  min-height: 56%;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto;
   grid-gap: 20px;

@@ -14,12 +14,16 @@ export class BookService {
 
   constructor(private http: HttpClient) {}
 
-  getBooks(): Observable<BookLite[]> {
-    return this.http.get<BookLite[]>(this.baseUrl);
+  getBooks(): Observable<HttpResponse<BookLite[]>> {
+    return this.http.get<BookLite[]>(this.baseUrl, { observe: 'response' });
   }
 
   getBookById(id: number): Observable<HttpResponse<Book>> {
     return this.http.get<Book>(this.baseUrl + id, { observe: 'response' });
+  }
+
+  searchBookByTitle(title: string): Observable<HttpResponse<BookLite[]>> {
+    return this.http.get<BookLite[]>(`${this.baseUrl + 'search/' + title}`, { observe: 'response' });
   }
 
   addBook(book: Book): Observable<number> {

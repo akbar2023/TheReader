@@ -96,7 +96,7 @@ export class BookFormComponent implements OnInit {
               panelClass: ['orange-snackbar'],
             });
           } else {
-            alert('error!');
+            alert('Error!');
           }
         }
       );
@@ -106,7 +106,7 @@ export class BookFormComponent implements OnInit {
         (response) => {
           if (response === 200) {
             this.snackBar.open(`Congrats, ${book.title} was added successfully!`, null, {
-              duration: 3000,
+              duration: 2000,
               verticalPosition: 'top',
               panelClass: ['green-snackbar'],
             });
@@ -123,6 +123,17 @@ export class BookFormComponent implements OnInit {
               verticalPosition: 'top',
               panelClass: ['orange-snackbar'],
             });
+          } else if (error.status === 403) {
+            this.snackBar.open('Token might be expired. Please log-out and log-in again. Thank you.', null, {
+              duration: 2000,
+              verticalPosition: 'top',
+              panelClass: ['orange-snackbar'],
+            });
+            // if (confirm('Token might be expired. Log-out and log-in again?')) {
+            //   this.authService.logOut();
+            // }
+          } else {
+            alert('Error!');
           }
         }
       );

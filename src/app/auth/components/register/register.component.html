@@ -52,7 +52,7 @@
 
     <mat-form-field>
       <mat-label>Password</mat-label>
-      <input id="password" type="{{hide ? 'password' : 'text'}}" matInput formControlName="password">
+      <input id="password" [type]="hide ? 'password' : 'text'" matInput formControlName="password">
       <i class="material-icons" matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</i>
       <mat-error class="text-danger" *ngIf="password.hasError('required')">
         {{requiredMessage('Password')}}

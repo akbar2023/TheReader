@@ -1,5 +1,5 @@
 <div class="container">
-  <div *ngIf="authService.isLoggedIn">
+  <div class="profile" *ngIf="authService.isLoggedIn">
     <app-profile></app-profile>
     <app-user-library></app-user-library>
   </div>

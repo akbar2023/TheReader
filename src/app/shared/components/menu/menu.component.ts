@@ -8,12 +8,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService) {}
 
   ngOnInit(): void {}
 
   logOut() {
     this.authService.logOut();
-    this.router.navigate(['/home']).then();
   }
 }
