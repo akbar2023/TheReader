@@ -61,10 +61,12 @@ export class BookListComponent implements OnInit {
   }
 
   searchBook() {
-    if (this.search === '') {
+    // this.search.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
+    const safeSearch = this.search.replace(/[`~!@#$%^&*()_|+=?;:",.<>{}\[\]\\\/]/gi, '');
+    if (safeSearch === '') {
       this.getLibraryBooks();
     } else {
-      this.bookService.searchBookByTitle(this.search).subscribe((data) => {
+      this.bookService.searchBookByTitle(safeSearch).subscribe((data) => {
         this.libraryBooks = data.body;
       });
     }
