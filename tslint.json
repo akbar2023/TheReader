@@ -50,11 +50,20 @@
         "order": [
           "static-field",
           "instance-field",
+          "public-instance-accessor",
+          "constructor",
           "static-method",
-          "instance-method"
+          "instance-method",
+          "private-instance-method"
         ]
       }
     ],
+    "typedef": [
+      true,
+      "call-signature",
+      "property-declaration"
+    ],
+    "no-debugger": true,
     "no-console": [
       true,
       "debug",
