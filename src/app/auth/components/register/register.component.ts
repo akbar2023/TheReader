@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user';
 import { Router } from '@angular/router';
@@ -14,6 +14,22 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   hide = true;
 
+  get firstName(): AbstractControl {
+    return this.registerForm.get('firstName');
+  }
+
+  get lastName(): AbstractControl {
+    return this.registerForm.get('lastName');
+  }
+
+  get email(): AbstractControl {
+    return this.registerForm.get('email');
+  }
+
+  get password(): AbstractControl {
+    return this.registerForm.get('password');
+  }
+
   constructor(
     private fb: FormBuilder,
     public readonly service: AuthService,
@@ -23,10 +39,9 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    console.log(this.registerForm);
   }
 
-  createForm() {
+  createForm(): void {
     this.registerForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
@@ -47,11 +62,10 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  register() {
+  register(): void {
     const user: User = this.registerForm.value;
     this.service.signUp(user).subscribe(
       (userResponse) => {
-        console.log(userResponse, '--userResponse');
         if (userResponse === 200) {
           this.snackBar.open(`Congrats ${user.firstName}, your account is created! Login now!`, null, {
             duration: 3000,
@@ -66,7 +80,6 @@ export class RegisterComponent implements OnInit {
       (error: any) => {
         // TODO: Manage errors
         // console.log(error.error.errors[1].defaultMessage, '--Message register');
-        console.log(error, '--Erreurssss');
         if (error.status === 400) {
           if (error.error === null) {
             this.email.setErrors({
@@ -74,7 +87,7 @@ export class RegisterComponent implements OnInit {
             });
           }
           this.snackBar.open(`Error occurred during registration.`, null, {
-            duration: 5000,
+            duration: 3000,
             verticalPosition: 'top',
             panelClass: ['orange-snackbar'],
           });
@@ -84,23 +97,7 @@ export class RegisterComponent implements OnInit {
     );
   }
 
-  get firstName() {
-    return this.registerForm.get('firstName');
-  }
-
-  get lastName() {
-    return this.registerForm.get('lastName');
-  }
-
-  get email() {
-    return this.registerForm.get('email');
-  }
-
-  get password() {
-    return this.registerForm.get('password');
-  }
-
-  patternMessage() {
+  patternMessage(): string {
     return 'Password should contain numbers, uppercase and lowercase letters';
   }
 
@@ -108,7 +105,7 @@ export class RegisterComponent implements OnInit {
     return `The ${minMax === 0 ? 'minimum' : 'maximum'} length for this field is ${length} characters`;
   }
 
-  requiredMessage(name: string) {
+  requiredMessage(name: string): string {
     return `${name} is required`;
   }
 }

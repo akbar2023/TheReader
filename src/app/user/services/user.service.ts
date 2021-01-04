@@ -57,11 +57,11 @@ export class UserService {
   }
 
   // used by editBookGuard
-  setUserReadings(books: Reading[]) {
+  setUserReadings(books: Reading[]): void {
     this.userReadings = books;
   }
 
-  getUserReadings() {
+  getUserReadings(): Reading[] {
     return this.userReadings;
   }
 }

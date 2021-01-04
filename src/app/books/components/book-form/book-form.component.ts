@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BookService } from '../../services/book.service';
 import { BookGenre } from '../../models/book-genre';
 import { AuthService } from '../../../auth/services/auth.service';
@@ -20,6 +20,26 @@ export class BookFormComponent implements OnInit {
   book: Book;
   editMode: boolean;
 
+  get title(): AbstractControl {
+    return this.bookForm.get('title');
+  }
+
+  get author(): AbstractControl {
+    return this.bookForm.get('author');
+  }
+
+  get year(): AbstractControl {
+    return this.bookForm.get('year');
+  }
+
+  get genre(): AbstractControl {
+    return this.bookForm.get('genre');
+  }
+
+  get summary(): AbstractControl {
+    return this.bookForm.get('summary');
+  }
+
   constructor(
     private fb: FormBuilder,
     private readonly bookService: BookService,
@@ -32,11 +52,9 @@ export class BookFormComponent implements OnInit {
   ngOnInit(): void {
     this.bookId = parseInt(this.route.snapshot.paramMap.get('id'), 10);
     this.editMode = !!this.bookId;
-    console.log(this.bookId, '--book Id');
     if (this.bookId) {
       this.bookService.getBookById(this.bookId).subscribe(
         (response) => {
-          console.log(response);
           if (response.status === 200 && response.body) {
             this.createForm(response.body);
           }
@@ -49,7 +67,11 @@ export class BookFormComponent implements OnInit {
               panelClass: ['orange-snackbar'],
             });
           } else {
-            alert('Error!');
+            this.snackBar.open(`Unexpected Error`, null, {
+              duration: 2000,
+              verticalPosition: 'top',
+              panelClass: ['orange-snackbar'],
+            });
           }
         }
       );
@@ -58,7 +80,7 @@ export class BookFormComponent implements OnInit {
     }
   }
 
-  createForm(book?: Book) {
+  createForm(book?: Book): void {
     this.bookForm = this.fb.group({
       title: [book ? book.title : '', [Validators.minLength(2), Validators.maxLength(100), Validators.required]],
       author: [book ? book.author : '', [Validators.minLength(2), Validators.maxLength(100), Validators.required]],
@@ -68,7 +90,7 @@ export class BookFormComponent implements OnInit {
     });
   }
 
-  saveBook() {
+  saveBook(): void {
     const book: Book = this.bookForm.value;
     // ***Update
     if (this.bookId) {
@@ -85,7 +107,11 @@ export class BookFormComponent implements OnInit {
               this.router.navigate(['/home']).then();
             }, 2000);
           } else {
-            alert('error!');
+            this.snackBar.open(`Unexpected Error`, null, {
+              duration: 2000,
+              verticalPosition: 'top',
+              panelClass: ['orange-snackbar'],
+            });
           }
         },
         (error) => {
@@ -96,7 +122,11 @@ export class BookFormComponent implements OnInit {
               panelClass: ['orange-snackbar'],
             });
           } else {
-            alert('Error!');
+            this.snackBar.open(`Unexpected Error`, null, {
+              duration: 2000,
+              verticalPosition: 'top',
+              panelClass: ['orange-snackbar'],
+            });
           }
         }
       );
@@ -116,7 +146,6 @@ export class BookFormComponent implements OnInit {
           }
         },
         (error: any) => {
-          console.log(error);
           if (error.status === 400) {
             this.snackBar.open(`Error occurred while saving the book.`, null, {
               duration: 5000,
@@ -133,38 +162,26 @@ export class BookFormComponent implements OnInit {
             //   this.authService.logOut();
             // }
           } else {
-            alert('Error!');
+            this.snackBar.open('Unexpected Error', null, {
+              duration: 2000,
+              verticalPosition: 'top',
+              panelClass: ['orange-snackbar'],
+            });
           }
         }
       );
     }
   }
 
-  get title() {
-    return this.bookForm.get('title');
-  }
-
-  get author() {
-    return this.bookForm.get('author');
-  }
-
-  get year() {
-    return this.bookForm.get('year');
-  }
-
-  get genre() {
-    return this.bookForm.get('genre');
-  }
-
-  get summary() {
-    return this.bookForm.get('summary');
-  }
-
-  requiredMessage(name: string) {
+  requiredMessage(name: string): string {
     return `${name} is required`;
   }
 
-  lengthMessage(length: number, minMax: number) {
+  lengthMessage(length: number, minMax: number): string {
     return `The ${minMax === 0 ? 'minimum' : 'maximum'} length for this field is ${length} characters`;
+  }
+
+  yearRange(currentYear: number): string {
+    return `Valid range [0 - ${currentYear}]`;
   }
 }

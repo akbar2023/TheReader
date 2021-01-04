@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { UserLogin } from '../../models/userLogin';
@@ -15,11 +15,12 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   hide = true;
 
-  createForm() {
-    this.loginForm = this.fb.group({
-      username: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(4)]],
-    });
+  get password(): AbstractControl {
+    return this.loginForm.get('password');
+  }
+
+  get username(): AbstractControl {
+    return this.loginForm.get('username');
   }
 
   constructor(
@@ -29,11 +30,18 @@ export class LoginComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {}
 
+  createForm(): void {
+    this.loginForm = this.fb.group({
+      username: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(4)]],
+    });
+  }
+
   ngOnInit(): void {
     this.createForm();
   }
 
-  userLogin() {
+  userLogin(): void {
     const user: UserLogin = this.loginForm.value;
     console.log(user, '--User login form data');
     this.authService.logIn(user.username, user.password).subscribe(
@@ -66,17 +74,7 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  get password() {
-    return this.loginForm.get('password');
-  }
-
-  get username() {
-    return this.loginForm.get('username');
-  }
-
-  requiredMessage(field: string) {
+  requiredMessage(field: string): string {
     return `Enter your ${field} please`;
   }
-
-  showPassword() {}
 }

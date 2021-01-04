@@ -36,7 +36,6 @@ export class BookListComponent implements OnInit {
   getLibraryBooks(): void {
     this.bookService.getBooks().subscribe(
       (response: HttpResponse<BookLite[]>) => {
-        console.log(response, 'library books');
         if (response.status === 200) {
           this.libraryBooks = response.body;
         }
@@ -53,14 +52,14 @@ export class BookListComponent implements OnInit {
     );
   }
 
-  getUserReadingBookIds() {
+  getUserReadingBookIds(): void {
     this.userService.getReadingBookIds().subscribe((data) => {
       console.log(data, 'les IDs');
       this.readingBookIds = data;
     });
   }
 
-  searchBook() {
+  searchBook(): void {
     // this.search.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
     const safeSearch = this.search.replace(/[`~!@#$%^&*()_|+=?;:",.<>{}\[\]\\\/]/gi, '');
     if (safeSearch === '') {
@@ -72,12 +71,12 @@ export class BookListComponent implements OnInit {
     }
   }
 
-  openDialog(bookId: number) {
+  openDialog(bookId: number): void {
     const modalRef = this.dialog.open(BookDetailsComponent);
     modalRef.componentInstance.bookId = bookId;
   }
 
-  addToList(bookId: number, title: string) {
+  addToList(bookId: number, title: string): void {
     this.userService.addReading(bookId).subscribe((response) => {
       console.log(response.status, 'add reading');
       if (response.status === 200) {
@@ -107,12 +106,16 @@ export class BookListComponent implements OnInit {
         });
       } else if (response.status === 400) {
         this.snackBar.open(`Error: Unable to remove`, null, {
-          duration: 1000,
+          duration: 2000,
           verticalPosition: 'top',
           panelClass: ['orange-snackbar'],
         });
       } else {
-        alert('Error!');
+        this.snackBar.open(`Unexpected Error`, null, {
+          duration: 2000,
+          verticalPosition: 'top',
+          panelClass: ['orange-snackbar'],
+        });
       }
     });
   }

@@ -32,36 +32,39 @@ export class UserLibraryComponent implements OnInit {
     this.getUserReadings();
   }
 
-  getUserReadings() {
+  getUserReadings(): void {
     this.userService.getReadings().subscribe((readings: Reading[]) => {
       this.myReadings = readings;
       this.userService.setUserReadings(readings);
-      console.log(this.myReadings, 'My readings');
     });
   }
 
-  removeUserReading(bookId: number, title: string) {
+  removeUserReading(bookId: number, title: string): void {
     this.userService.removeReading(bookId).subscribe((response) => {
       if (response.status === 200) {
         this.myReadings = this.myReadings.filter((reading) => reading.bookId !== bookId);
         this.snackBar.open(`**${title}** removed from favorite!`, null, {
-          duration: 1000,
+          duration: 2000,
           verticalPosition: 'top',
           panelClass: ['yellow-snackbar'],
         });
       } else if (response.status === 400) {
         this.snackBar.open(`Error: Unable to remove`, null, {
-          duration: 1000,
+          duration: 2000,
           verticalPosition: 'top',
           panelClass: ['orange-snackbar'],
         });
       } else {
-        alert('Error!');
+        this.snackBar.open(`Unexpected Error`, null, {
+          duration: 2000,
+          verticalPosition: 'top',
+          panelClass: ['orange-snackbar'],
+        });
       }
     });
   }
 
-  changeReadingStatus(readingId: number, read: boolean) {
+  changeReadingStatus(readingId: number, read: boolean): void {
     this.myReadings.filter((readings) => readings.readingId === readingId).map((reading) => (reading.read = !read));
     this.userService
       .editReadingStatus({
@@ -71,12 +74,12 @@ export class UserLibraryComponent implements OnInit {
       .subscribe();
   }
 
-  openDialog(bookId) {
+  openDialog(bookId): void {
     const matDialogRef = this.dialog.open(BookDetailsComponent);
     matDialogRef.componentInstance.bookId = bookId;
   }
 
-  deleteBook(bookId: number) {
+  deleteBook(bookId: number): void {
     const bookToDelete = this.myReadings.filter((reading) => reading.bookId === bookId)[0];
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '350px',
@@ -86,7 +89,6 @@ export class UserLibraryComponent implements OnInit {
       if (result) {
         this.bookService.deleteBook(bookId).subscribe(
           (response) => {
-            console.log(response);
             if (response.status === 200) {
               this.myReadings = this.myReadings.filter((reading) => reading.bookId !== bookId);
               this.snackBar.open(`DELETE success!`, null, {
@@ -96,14 +98,18 @@ export class UserLibraryComponent implements OnInit {
               });
             } else if (response.status === 400 && response.body === null) {
               this.snackBar.open(`Error!`, null, {
-                duration: 1000,
+                duration: 2000,
                 verticalPosition: 'top',
                 panelClass: ['orange-snackbar'],
               });
             }
           },
-          (error) => {
-            alert('Error ' + error.status);
+          () => {
+            this.snackBar.open(`Unexpected Error`, null, {
+              duration: 2000,
+              verticalPosition: 'top',
+              panelClass: ['orange-snackbar'],
+            });
           }
         );
       }
