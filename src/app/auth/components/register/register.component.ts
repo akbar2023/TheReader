@@ -87,13 +87,19 @@ export class RegisterComponent implements OnInit {
             });
           }
           this.snackBar.open(`Error occurred during registration.`, null, {
-            duration: 3000,
+            duration: 2000,
+            verticalPosition: 'top',
+            panelClass: ['orange-snackbar'],
+          });
+        } else {
+          this.snackBar.open(`Unexpected Error`, null, {
+            duration: 2000,
             verticalPosition: 'top',
             panelClass: ['orange-snackbar'],
           });
         }
       },
-      () => console.log('Completed')
+      () => {}
     );
   }
 

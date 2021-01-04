@@ -54,7 +54,6 @@ export class BookListComponent implements OnInit {
 
   getUserReadingBookIds(): void {
     this.userService.getReadingBookIds().subscribe((data) => {
-      console.log(data, 'les IDs');
       this.readingBookIds = data;
     });
   }
@@ -78,10 +77,8 @@ export class BookListComponent implements OnInit {
 
   addToList(bookId: number, title: string): void {
     this.userService.addReading(bookId).subscribe((response) => {
-      console.log(response.status, 'add reading');
       if (response.status === 200) {
         this.readingBookIds.push(bookId);
-        console.log(this.readingBookIds);
         this.snackBar.open(`**${title}** added to favorite!`, null, {
           duration: 1000,
           verticalPosition: 'top',
@@ -93,12 +90,10 @@ export class BookListComponent implements OnInit {
 
   removeFromList(bookId: number, title: string): void {
     this.userService.removeReading(bookId).subscribe((response) => {
-      console.log(response.status, 'remove reading');
       if (response.status === 200) {
         // this.readingBookIds = this.readingBookIds.filter((id) => id !== bookId); //doesn't work, IDK why...
         const index = this.readingBookIds.indexOf(bookId);
         this.readingBookIds.splice(index, 1);
-        console.log(this.readingBookIds);
         this.snackBar.open(`**${title}** removed from favorite!`, null, {
           duration: 1000,
           verticalPosition: 'top',

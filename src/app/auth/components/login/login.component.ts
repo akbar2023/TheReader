@@ -43,34 +43,34 @@ export class LoginComponent implements OnInit {
 
   userLogin(): void {
     const user: UserLogin = this.loginForm.value;
-    console.log(user, '--User login form data');
     this.authService.logIn(user.username, user.password).subscribe(
       (data: HttpResponse<any>) => {
-        console.log(data, '--response data');
         if (data.status === 200) {
           localStorage.setItem('userDetails', JSON.stringify(data.body));
           const userDetString = localStorage.getItem('userDetails');
           this.authService.isLoggedIn = true;
           this.authService.userDetails = JSON.parse(userDetString);
           this.snackBar.open(`Welcome ${this.authService.userDetails.firstName}!`, null, {
-            duration: 3000,
+            duration: 2000,
             verticalPosition: 'top',
             panelClass: ['green-snackbar'],
           });
         } else {
           this.snackBar.open(`Incorrect email or password.`, null, {
-            duration: 5000,
+            duration: 2000,
             verticalPosition: 'top',
             panelClass: ['orange-snackbar'],
           });
         }
       },
-      (error) => {
-        console.log(error, 'login error');
-      },
       () => {
-        console.log('login request complete!');
-      }
+        this.snackBar.open(`Unexpected Error`, null, {
+          duration: 2000,
+          verticalPosition: 'top',
+          panelClass: ['orange-snackbar'],
+        });
+      },
+      () => {}
     );
   }
 

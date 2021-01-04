@@ -31,19 +31,16 @@ export class BookService {
       .post<void>(this.baseUrl, book, { observe: 'response' })
       .pipe(
         map((response) => {
-          console.log(response, '--Book Response');
           return response.status;
         })
       );
   }
 
   updateBook(book: Book): Observable<number> {
-    console.log(book, '--Book update');
     return this.http
       .put<void>(this.baseUrl, book, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<void>) => {
-          console.log(response, '--book update response');
           return response.status;
         })
       );
