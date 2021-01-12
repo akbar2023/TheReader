@@ -21,7 +21,7 @@ export class UserService {
 
   addReading(bookId: number): Observable<HttpResponse<void>> {
     return this.http
-      .post<void>(`${this.readingApi + bookId}`, null, { observe: 'response' })
+      .post<void>(this.readingApi + bookId, null, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<void>) => response),
         catchError((err) => of(err))
@@ -29,16 +29,16 @@ export class UserService {
   }
 
   getReadings(): Observable<Reading[]> {
-    return this.http.get<Reading[]>(`${this.readingApi}`);
+    return this.http.get<Reading[]>(this.readingApi);
   }
 
   getReadingBookIds(): Observable<number[]> {
-    return this.http.get<number[]>(`${this.readingApi}` + `reading-book-ids`);
+    return this.http.get<number[]>(this.readingApi + 'reading-book-ids');
   }
 
   removeReading(bookId?: number): Observable<HttpResponse<void>> {
     return this.http
-      .delete<void>(`${this.readingApi + bookId}`, {
+      .delete<void>(this.readingApi + bookId, {
         observe: 'response',
       })
       .pipe(
@@ -49,7 +49,7 @@ export class UserService {
 
   editReadingStatus(readingStatus: ReadingStatus): Observable<HttpResponse<void>> {
     return this.http
-      .put<void>(`${this.readingApi}`, readingStatus, { observe: 'response' })
+      .put<void>(this.readingApi, readingStatus, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<void>) => response),
         catchError((err) => of(err))

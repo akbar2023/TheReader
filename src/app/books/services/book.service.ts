@@ -23,7 +23,7 @@ export class BookService {
   }
 
   searchBookByTitle(title: string): Observable<HttpResponse<BookLite[]>> {
-    return this.http.get<BookLite[]>(`${this.baseUrl + 'search/' + title}`, { observe: 'response' });
+    return this.http.get<BookLite[]>(this.baseUrl + 'search/' + title, { observe: 'response' });
   }
 
   addBook(book: Book): Observable<number> {
