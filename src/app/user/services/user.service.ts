@@ -6,6 +6,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Reading } from '../../books/models/reading';
 import { ReadingStatus } from '../../books/models/readingStatus';
+import { FavoriteReading } from '../../books/models/favoriteReading';
 
 @Injectable({
   providedIn: 'root',
@@ -63,5 +64,14 @@ export class UserService {
 
   getUserReadings(): Reading[] {
     return this.userReadings;
+  }
+
+  setFavoriteBook(favoriteBook: FavoriteReading): Observable<HttpResponse<void>> {
+    return this.http
+      .put<void>(this.readingApi + 'favorite', favoriteBook, { observe: 'response' })
+      .pipe(
+        map((response: HttpResponse<void>) => response),
+        catchError((err) => of(err))
+      );
   }
 }

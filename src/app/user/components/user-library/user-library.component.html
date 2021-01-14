@@ -9,17 +9,26 @@
     <div class="card-actions">
       <button mat-raised-button color="accent" (click)="openDialog(reading.bookId)">Details</button>
       <div>
-        <button class="remove-btn" color="warn" mat-icon-button matTooltip="remove" aria-label="heart icon-button for liked books"
-                (click)="removeUserReading(reading.bookId, reading.title)">
-          <mat-icon>favorite</mat-icon>
-        </button>
-        <button (click)="changeReadingStatus(reading.readingId, reading.read)" mat-icon-button color="accent" aria-label="check-box icon-button for reading status"
+        <button (click)="changeReadingStatus(reading.title, reading.readingId, reading.read)" mat-icon-button
+                color="accent" aria-label="check-box icon-button for reading status"
                 matTooltip="{{reading.read?'reading complete': 'Unread'}}">
           <mat-icon>{{reading.read ? 'check_box' : 'check_box_outline_blank'}}</mat-icon>
         </button>
 
+        <button (click)="favoriteBook(reading.title, reading.readingId, reading.favorite)" mat-icon-button color="warn"
+                aria-label="check-box icon-button for reading status"
+                matTooltip="{{reading.favorite?'Favorite': ''}}">
+          <mat-icon>{{reading.favorite ? 'favorite' : 'favorite_border'}}</mat-icon>
+        </button>
+        <button class="remove-btn" mat-icon-button matTooltip="bookmarked"
+                aria-label="heart icon-button for liked books"
+                (click)="removeUserReading(reading.bookId, reading.title)">
+          <mat-icon>bookmark</mat-icon>
+        </button>
+
         <!-- Menu more over -->
-        <button *ngIf="userId === reading.creatorId" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <button *ngIf="userId === reading.creatorId" mat-icon-button [matMenuTriggerFor]="menu"
+                aria-label="Example icon-button with a menu">
           <mat-icon>more_vert</mat-icon>
         </button>
 

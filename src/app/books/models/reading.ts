@@ -5,4 +5,5 @@ export interface Reading {
   author: string;
   title: string;
   read: boolean;
+  favorite: boolean;
 }

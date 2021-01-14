@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth.service';
-import { Book } from '../../../books/models/book';
 import { UserService } from '../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BookDetailsComponent } from '../../../books/components/book-details/book-details.component';
@@ -15,7 +14,6 @@ import { Reading } from '../../../books/models/reading';
   styleUrls: ['./user-library.component.scss'],
 })
 export class UserLibraryComponent implements OnInit {
-  myBooks: Book[];
   userId: number;
   myReadings: Reading[];
 
@@ -43,7 +41,7 @@ export class UserLibraryComponent implements OnInit {
     this.userService.removeReading(bookId).subscribe((response) => {
       if (response.status === 200) {
         this.myReadings = this.myReadings.filter((reading) => reading.bookId !== bookId);
-        this.snackBar.open(`**${title}** removed from favorite!`, null, {
+        this.snackBar.open(`**${title}** removed!`, null, {
           duration: 2000,
           verticalPosition: 'top',
           panelClass: ['yellow-snackbar'],
@@ -64,14 +62,59 @@ export class UserLibraryComponent implements OnInit {
     });
   }
 
-  changeReadingStatus(readingId: number, read: boolean): void {
-    this.myReadings.filter((readings) => readings.readingId === readingId).map((reading) => (reading.read = !read));
+  changeReadingStatus(title: string, readingId: number, read: boolean): void {
     this.userService
       .editReadingStatus({
         id: readingId,
         isRead: !read,
       })
-      .subscribe();
+      .subscribe((data) => {
+        if (data.status === 200) {
+          this.myReadings
+            .filter((readings) => readings.readingId === readingId)
+            .map((reading) => {
+              reading.read = !read;
+              if (reading.read) {
+                this.snackBar.open(`**${title}** reading complete!`, null, {
+                  duration: 2000,
+                  verticalPosition: 'top',
+                  panelClass: ['green-snackbar'],
+                });
+              }
+            });
+        } else {
+          this.snackBar.open('Error', null, {
+            duration: 2000,
+            verticalPosition: 'top',
+            panelClass: ['orange-snackbar'],
+          });
+        }
+      });
+  }
+
+  favoriteBook(title: string, readingId: number, favorite: boolean): void {
+    this.userService.setFavoriteBook({ id: readingId, isFavorite: !favorite }).subscribe((data) => {
+      if (data.status === 200) {
+        this.myReadings
+          .filter((reading) => reading.readingId === readingId)
+          .map((reading) => {
+            reading.favorite = !favorite;
+            if (reading.favorite) {
+              this.snackBar.open(`**${title}** added to favorite!`, null, {
+                duration: 2000,
+                verticalPosition: 'top',
+                panelClass: ['green-snackbar'],
+              });
+            }
+          });
+      } else {
+        this.snackBar.open('Error', null, {
+          duration: 2000,
+          verticalPosition: 'top',
+          panelClass: ['orange-snackbar'],
+        });
+      }
+    });
   }
 
   openDialog(bookId): void {
