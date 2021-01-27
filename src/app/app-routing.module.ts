@@ -18,10 +18,28 @@ const routes: Routes = [
     component: BookFormComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'edit-book/:id', component: BookFormComponent, canActivate: [EditBookGuard] },
-  { path: 'home', component: HomeComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  {
+    path: 'edit-book/:id',
+    component: BookFormComponent,
+    canActivate: [AuthGuard, EditBookGuard],
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+  },
+  {
+    path: '',
+    redirectTo: '/home',
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
+    redirectTo: '/home',
+  },
 ];
 
 @NgModule({
