@@ -15,8 +15,7 @@ import { HttpResponse } from '@angular/common/http';
 })
 export class BookListComponent implements OnInit {
   libraryBooks: BookLite[];
-  userId: number;
-  readingBookIds: number[] = [];
+  userBookIds: number[] = [];
   search: string;
 
   constructor(
@@ -28,7 +27,6 @@ export class BookListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userId = this.authService.userDetails.id;
     this.getLibraryBooks();
     this.getUserReadingBookIds();
   }
@@ -53,8 +51,8 @@ export class BookListComponent implements OnInit {
   }
 
   getUserReadingBookIds(): void {
-    this.userService.getReadingBookIds().subscribe((data) => {
-      this.readingBookIds = data;
+    this.userService.getUserBookIds().subscribe((data) => {
+      this.userBookIds = data;
     });
   }
 
@@ -78,7 +76,7 @@ export class BookListComponent implements OnInit {
   addToList(bookId: number, title: string): void {
     this.userService.addReading(bookId).subscribe((response) => {
       if (response.status === 200) {
-        this.readingBookIds.push(bookId);
+        this.userBookIds.push(bookId);
         this.snackBar.open(`**${title}** saved!`, null, {
           duration: 1000,
           verticalPosition: 'top',
@@ -91,9 +89,9 @@ export class BookListComponent implements OnInit {
   removeFromList(bookId: number, title: string): void {
     this.userService.removeReading(bookId).subscribe((response) => {
       if (response.status === 200) {
-        // this.readingBookIds = this.readingBookIds.filter((id) => id !== bookId); //doesn't work, IDK why...
-        const index = this.readingBookIds.indexOf(bookId);
-        this.readingBookIds.splice(index, 1);
+        // this.userBookIds = this.userBookIds.filter((id) => id !== bookId); //doesn't work, IDK why...
+        const index = this.userBookIds.indexOf(bookId);
+        this.userBookIds.splice(index, 1);
         this.snackBar.open(`**${title}** removed!`, null, {
           duration: 1000,
           verticalPosition: 'top',

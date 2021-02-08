@@ -33,7 +33,7 @@ export class UserService {
     return this.http.get<Reading[]>(this.readingApi);
   }
 
-  getReadingBookIds(): Observable<number[]> {
+  getUserBookIds(): Observable<number[]> {
     return this.http.get<number[]>(this.readingApi + 'reading-book-ids');
   }
 
