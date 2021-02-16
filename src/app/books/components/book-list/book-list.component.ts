@@ -74,16 +74,25 @@ export class BookListComponent implements OnInit {
   }
 
   addToList(bookId: number, title: string): void {
-    this.userService.addReading(bookId).subscribe((response) => {
-      if (response.status === 200) {
-        this.userBookIds.push(bookId);
-        this.snackBar.open(`**${title}** saved!`, null, {
+    this.userService.addReading(bookId).subscribe(
+      (response) => {
+        if (response.status === 200) {
+          this.userBookIds.push(bookId);
+          this.snackBar.open(`**${title}** saved!`, null, {
+            duration: 1000,
+            verticalPosition: 'top',
+            panelClass: ['green-snackbar'],
+          });
+        }
+      },
+      (error) => {
+        this.snackBar.open(`Error occurred!`, null, {
           duration: 1000,
           verticalPosition: 'top',
-          panelClass: ['green-snackbar'],
+          panelClass: ['orange-snackbar'],
         });
       }
-    });
+    );
   }
 
   removeFromList(bookId: number, title: string): void {
