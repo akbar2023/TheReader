@@ -92,8 +92,48 @@ export class BookFormComponent implements OnInit {
 
   saveBook(): void {
     const book: Book = this.bookForm.value;
-    // ***Update
-    if (this.bookId) {
+    if (!this.bookId) {
+      // ***Create
+      this.bookService.addBook(book).subscribe(
+        (response) => {
+          if (response === 200) {
+            this.snackBar.open(`Congrats, ${book.title} was added successfully!`, null, {
+              duration: 2000,
+              verticalPosition: 'top',
+              panelClass: ['green-snackbar'],
+            });
+            setTimeout(() => {
+              this.router.navigate(['home']).then();
+            }, 2000);
+          }
+        },
+        (error: any) => {
+          if (error.status === 400) {
+            this.snackBar.open(`Error occurred while saving the book.`, null, {
+              duration: 5000,
+              verticalPosition: 'top',
+              panelClass: ['orange-snackbar'],
+            });
+          } else if (error.status === 403) {
+            this.snackBar.open('Token might be expired. Please log-out and log-in again. Thank you.', null, {
+              duration: 2000,
+              verticalPosition: 'top',
+              panelClass: ['orange-snackbar'],
+            });
+            // if (confirm('Token might be expired. Log-out and log-in again?')) {
+            //   this.authService.logOut();
+            // }
+          } else {
+            this.snackBar.open('Unexpected Error', null, {
+              duration: 2000,
+              verticalPosition: 'top',
+              panelClass: ['orange-snackbar'],
+            });
+          }
+        }
+      );
+    } else {
+      // ***Update
       book.id = this.bookId;
       this.bookService.updateBook(book).subscribe(
         (data) => {
@@ -123,46 +163,6 @@ export class BookFormComponent implements OnInit {
             });
           } else {
             this.snackBar.open(`Unexpected Error`, null, {
-              duration: 2000,
-              verticalPosition: 'top',
-              panelClass: ['orange-snackbar'],
-            });
-          }
-        }
-      );
-    } else {
-      // ***Create
-      this.bookService.addBook(book).subscribe(
-        (response) => {
-          if (response === 200) {
-            this.snackBar.open(`Congrats, ${book.title} was added successfully!`, null, {
-              duration: 2000,
-              verticalPosition: 'top',
-              panelClass: ['green-snackbar'],
-            });
-            setTimeout(() => {
-              this.router.navigate(['home']).then();
-            }, 3000);
-          }
-        },
-        (error: any) => {
-          if (error.status === 400) {
-            this.snackBar.open(`Error occurred while saving the book.`, null, {
-              duration: 5000,
-              verticalPosition: 'top',
-              panelClass: ['orange-snackbar'],
-            });
-          } else if (error.status === 403) {
-            this.snackBar.open('Token might be expired. Please log-out and log-in again. Thank you.', null, {
-              duration: 2000,
-              verticalPosition: 'top',
-              panelClass: ['orange-snackbar'],
-            });
-            // if (confirm('Token might be expired. Log-out and log-in again?')) {
-            //   this.authService.logOut();
-            // }
-          } else {
-            this.snackBar.open('Unexpected Error', null, {
               duration: 2000,
               verticalPosition: 'top',
               panelClass: ['orange-snackbar'],
