@@ -8,19 +8,36 @@ Mark as favorite if it's the case
 
 # Wireframes
 ## Signup mobile
-<img width="200px" alt="portfolio_view" src="docs/sign_up_mobile.png">
-![sign-up mobile](docs/sign_up_mobile.png | width=50)
+<img width="200px" alt="Wireframe The Reader" src="docs/sign_up_mobile.png">
 
 ## Login mobile
-![login mobile](docs/login_mobile.png?raw=true "Title")
+<img width="200px" alt="Wireframe The Reader" src="docs/login_mobile.png">
 
 ## Home mobile
-![home mobile](docs/home_mobile.png?raw=true "Title")
+<img width="200px" alt="Wireframe The Reader" src="docs/home_mobile.png">
 
 ## Add book form mobile
-![add book form mobile](docs/Add_Book_mobile.png?raw=true "Title")
+<img width="200px" alt="Wireframe The Reader" src="docs/add_Book_mobile.png">
 
 ## Library mobile
-![library mobile](docs/library_mobile.png?raw=true "Title")
+<img width="200px" alt="Wireframe The Reader" src="docs/library_mobile.png">
+
+
+*Desktop*
+
+## Signup
+<img width="400px" alt="Wireframe The Reader" src="docs/sign_up.png">
+
+## Login 
+<img width="400px" alt="Wireframe The Reader" src="docs/login.png">
+
+## Home 
+<img width="400px" alt="Wireframe The Reader" src="docs/home.png">
+
+## Add book form 
+<img width="400px" alt="Wireframe The Reader" src="docs/add_Book_form.png">
+
+## Library 
+<img width="400px" alt="Wireframe The Reader" src="docs/library.png">
 
 
