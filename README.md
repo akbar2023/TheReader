@@ -17,7 +17,7 @@ Mark as favorite if it's the case
 <img width="300px" alt="Wireframe The Reader" src="docs/home_mobile.png">
 
 ## Add book form mobile
-<img width="300px" alt="Wireframe The Reader" src="docs/add_book_mobile.png">
+<img width="300px" alt="Wireframe The Reader" src="docs/app_add_book_mobile.png">
 
 ## Library mobile
 <img width="300px" alt="Wireframe The Reader" src="docs/library_mobile.png">
@@ -35,9 +35,9 @@ Mark as favorite if it's the case
 <img width="600px" alt="Wireframe The Reader" src="docs/home.png">
 
 ## Add book form 
-<img width="600px" alt="Wireframe The Reader" src="docs/add_book.png">
+<img width="600px" alt="Wireframe The Reader" src="docs/app_add_book.png">
 
 ## Library 
-<img width="600px" alt="Wireframe The Reader" src="docs/library.png">
+<img width="600px" alt="Wireframe The Reader" src="docs/app_library.png">
 
 
