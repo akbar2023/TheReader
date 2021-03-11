@@ -1,10 +1,13 @@
 # The Reader
-This is a CRUD app with authentication developed for my exam of my training at Renault Digital Inclusive University
+This is a CRUD app with authentication developed for the final exam of my training at Renault Digital Inclusive University and Simplon.co
  
 # Functionalities
-Issued for readers, here we can add a book to reading list
-Mark as read when a reading is complete
-Mark as favorite if it's the case
+Developed for addicted readers:
+- Can add a book to reading list
+- Mark as read when a reading is complete
+- Mark as favorite
+
+[Api Repository](https://github.com/akbar2023/TheReader_API)
 
 # Wireframes
 ## Signup mobile
