@@ -1,27 +1,26 @@
-# Mediatheque
+# The Reader
+This is a CRUD app with authentication developed for my exam of my training at Renault Digital Inclusive University
+ 
+# Functionalities
+Issued for readers, here we can add a book to reading list
+Mark as read when a reading is complete
+Mark as favorite if it's the case
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
+# Wireframes
+## Signup mobile
+<img width="200px" alt="portfolio_view" src="docs/sign_up_mobile.png">
+![sign-up mobile](docs/sign_up_mobile.png | width=50)
 
-## Development server
+## Login mobile
+![login mobile](docs/login_mobile.png?raw=true "Title")
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Home mobile
+![home mobile](docs/home_mobile.png?raw=true "Title")
 
-## Code scaffolding
+## Add book form mobile
+![add book form mobile](docs/Add_Book_mobile.png?raw=true "Title")
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Library mobile
+![library mobile](docs/library_mobile.png?raw=true "Title")
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
