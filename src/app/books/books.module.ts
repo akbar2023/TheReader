@@ -5,6 +5,7 @@ import { BookListComponent } from './components/book-list/book-list.component';
 import { MaterialModule } from '../material/material.module';
 import { BookDetailsComponent } from './components/book-details/book-details.component';
 import { MatIconModule } from '@angular/material/icon';
+
 @NgModule({
   imports: [CommonModule, MaterialModule, MatIconModule],
   declarations: [BookFormComponent, BookListComponent, BookDetailsComponent],

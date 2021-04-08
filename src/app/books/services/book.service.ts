@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BookLite } from '../models/book-lite';
+import { PageableBooks } from '../models/pageableBooks';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,10 @@ export class BookService {
 
   getBooks(): Observable<HttpResponse<BookLite[]>> {
     return this.http.get<BookLite[]>(this.baseUrl, { observe: 'response' });
+  }
+
+  getPageable(page: number, size: number): Observable<HttpResponse<PageableBooks>> {
+    return this.http.get<any>(`${environment.apiUrl}/api/reading/page/${page}/${size}`, { observe: 'response' });
   }
 
   getBookById(id: number): Observable<HttpResponse<Book>> {

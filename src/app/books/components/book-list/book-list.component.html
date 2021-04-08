@@ -7,7 +7,7 @@
 </div>
 
 <div class="livres">
-  <mat-card *ngFor="let book of libraryBooks" class="cards">
+  <mat-card *ngFor="let book of pageableBooks?.bookLiteDto" class="cards">
     <mat-card-header>
       <mat-card-title>{{book.title}}</mat-card-title>
       <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
@@ -23,3 +23,8 @@
     </button>
   </mat-card>
 </div>
+
+<mat-paginator color="accent" [length]="dataLength"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions" showFirstLastButtons="true" (page)="getPageableBooks($event, $event)">
+</mat-paginator>

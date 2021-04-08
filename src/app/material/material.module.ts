@@ -14,6 +14,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 const modules = [
   CommonModule,
@@ -32,6 +33,7 @@ const modules = [
   MatMenuModule,
   MatIconModule,
   FormsModule,
+  MatPaginatorModule
 ];
 
 @NgModule({
