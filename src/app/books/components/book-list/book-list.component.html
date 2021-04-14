@@ -26,5 +26,5 @@
 
 <mat-paginator color="accent" [length]="dataLength"
                [pageSize]="pageSize"
-               [pageSizeOptions]="pageSizeOptions" showFirstLastButtons="true" (page)="getPageableBooks($event, $event)">
+               [pageSizeOptions]="pageSizeOptions" showFirstLastButtons="true" (page)="isSearching ? searchBook($event, $event) : getPageableBooks($event, $event)">
 </mat-paginator>

@@ -5,9 +5,7 @@ import { BookDetailsComponent } from '../book-details/book-details.component';
 import { UserService } from '../../../user/services/user.service';
 import { AuthService } from '../../../auth/services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { BookLite } from '../../models/book-lite';
 import { PageableBooks } from '../../models/pageableBooks';
-import { HttpResponse } from '@angular/common/http';
 import { MatPaginatorDefaultOptions, PageEvent } from '@angular/material/paginator';
 
 @Component({
@@ -16,13 +14,13 @@ import { MatPaginatorDefaultOptions, PageEvent } from '@angular/material/paginat
   styleUrls: ['./book-list.component.scss']
 })
 export class BookListComponent implements OnInit {
-  libraryBooks: BookLite[];
   userBookIds: number[] = [];
   search: string;
+  isSearching = false;
 
   pageableBooks: PageableBooks;
   pageSize: number;
-  dataLength = 0;
+  dataLength: number;
   pageSizeOptions = [4, 8, 12, 16];
 
   constructor(
@@ -31,44 +29,19 @@ export class BookListComponent implements OnInit {
     private readonly authService: AuthService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
-    this.getLibraryBooks();
     this.getUserReadingBookIds();
-    this.getPageableOnInit(0, 4);
+    this.getPageableBooks();
   }
 
-  private getPageableOnInit(page: number, size: number): void {
-    this.bookService.getPageable(page, size).subscribe((data) => {
+  getPageableBooks(event?: PageEvent, event2?: MatPaginatorDefaultOptions): void {
+    this.bookService.getPageable(event?.pageIndex, event2?.pageSize).subscribe((data) => {
       this.pageableBooks = data.body;
       this.dataLength = data.body.totalElements;
     });
-  }
-
-  getPageableBooks(event: PageEvent, event2: MatPaginatorDefaultOptions): void {
-    this.bookService.getPageable(event.pageIndex, event2.pageSize).subscribe((data) => {
-      this.pageableBooks = data.body;
-      this.dataLength = data.body.totalElements;
-    });
-  }
-  getLibraryBooks(): void {
-    this.bookService.getBooks().subscribe(
-      (response: HttpResponse<BookLite[]>) => {
-        if (response.status === 200) {
-          this.libraryBooks = response.body;
-        }
-      },
-      (error: any) => {
-        if (error.status === 403) {
-          this.snackBar.open('Token might be expired. Please log-out and log-in again.', null, {
-            duration: 2000,
-            verticalPosition: 'top',
-            panelClass: ['orange-snackbar']
-          });
-        }
-      }
-    );
   }
 
   getUserReadingBookIds(): void {
@@ -77,14 +50,17 @@ export class BookListComponent implements OnInit {
     });
   }
 
-  searchBook(): void {
+  searchBook(event?: PageEvent, event2?: MatPaginatorDefaultOptions): void {
     // this.search.replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '');
-    const safeSearch = this.search.replace(/[`~!@#$%^&*()_|+=?;:",.<>{}\[\]\\\/]/gi, '');
+    const safeSearch = this.search.replace(/[`~!@#$%^&*()_|+=?;:",.<>{}\[\]\\\/]/gi, '').trim();
     if (safeSearch === '') {
-      this.getLibraryBooks();
+      this.isSearching = false;
+      this.getPageableBooks();
     } else {
-      this.bookService.searchBookByTitle(safeSearch).subscribe((data) => {
-        this.libraryBooks = data.body;
+      this.isSearching = true;
+      this.bookService.pageableSearchBookByTitle(safeSearch, event?.pageIndex, event2?.pageSize).subscribe((data) => {
+        this.pageableBooks = data.body;
+        this.dataLength = data.body.totalElements;
       });
     }
   }

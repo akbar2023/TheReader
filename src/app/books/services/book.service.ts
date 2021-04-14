@@ -11,29 +11,26 @@ import { PageableBooks } from '../models/pageableBooks';
   providedIn: 'root',
 })
 export class BookService {
-  private readonly baseUrl = `${environment.apiUrl}/api/book/`;
+  private readonly bookApiUrl = `${environment.apiUrl}/api/book/`;
+  private readonly readingApiUrl = `${environment.apiUrl}/api/reading/page/`;
 
   constructor(private http: HttpClient) {}
 
-  getBooks(): Observable<HttpResponse<BookLite[]>> {
-    return this.http.get<BookLite[]>(this.baseUrl, { observe: 'response' });
-  }
-
-  getPageable(page: number, size: number): Observable<HttpResponse<PageableBooks>> {
-    return this.http.get<any>(`${environment.apiUrl}/api/reading/page/${page}/${size}`, { observe: 'response' });
+  getPageable(page: number = 0, size: number = 4): Observable<HttpResponse<PageableBooks>> {
+    return this.http.get<any>(this.bookApiUrl + 'page/' + page + '/' + size, { observe: 'response' });
   }
 
   getBookById(id: number): Observable<HttpResponse<Book>> {
-    return this.http.get<Book>(this.baseUrl + id, { observe: 'response' });
+    return this.http.get<Book>(this.bookApiUrl + id, { observe: 'response' });
   }
 
-  searchBookByTitle(title: string): Observable<HttpResponse<BookLite[]>> {
-    return this.http.get<BookLite[]>(this.baseUrl + 'search/' + title, { observe: 'response' });
+  pageableSearchBookByTitle(title: string, page: number = 0, size: number = 4): Observable<HttpResponse<PageableBooks>> {
+    return this.http.get<PageableBooks>(this.bookApiUrl + 'search/' + page + '/' + size + '/' + title, { observe: 'response' });
   }
 
   addBook(book: Book): Observable<number> {
     return this.http
-      .post<void>(this.baseUrl, book, { observe: 'response' })
+      .post<void>(this.bookApiUrl, book, { observe: 'response' })
       .pipe(
         map((response) => {
           return response.status;
@@ -43,7 +40,7 @@ export class BookService {
 
   updateBook(book: Book): Observable<number> {
     return this.http
-      .put<void>(this.baseUrl, book, { observe: 'response' })
+      .put<void>(this.bookApiUrl, book, { observe: 'response' })
       .pipe(
         map((response: HttpResponse<void>) => {
           return response.status;
@@ -52,6 +49,6 @@ export class BookService {
   }
 
   deleteBook(bookId: number): Observable<HttpResponse<void>> {
-    return this.http.delete<void>(this.baseUrl + bookId, { observe: 'response' });
+    return this.http.delete<void>(this.bookApiUrl + bookId, { observe: 'response' });
   }
 }
