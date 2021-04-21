@@ -1,7 +1,10 @@
 # The Reader
 This is a CRUD app with authentication developed for the final exam of my training at Renault Digital Inclusive University and Simplon.co
- 
-# Functionalities
+
+# New
+Pagination implemented on both home page and library page
+
+# Features
 Developed for addicted readers:
 - Can add a book to reading list
 - Mark as read when a reading is complete
