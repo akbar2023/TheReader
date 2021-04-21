@@ -7,15 +7,22 @@ import { MatDialog } from '@angular/material/dialog';
 import { BookService } from '../../../books/services/book.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { Reading } from '../../../books/models/reading';
+import { MatPaginatorDefaultOptions, PageEvent } from '@angular/material/paginator';
+import { PageableReadings } from '../../../books/models/PageableReadings';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-library',
   templateUrl: './user-library.component.html',
-  styleUrls: ['./user-library.component.scss'],
+  styleUrls: ['./user-library.component.scss']
 })
 export class UserLibraryComponent implements OnInit {
   userId: number;
   myReadings: Reading[];
+  dataLength: number;
+  pageSize: number;
+  pageSizeOptions = [4, 8, 12, 16];
+  pageableReadings: PageableReadings;
 
   constructor(
     private authService: AuthService,
@@ -23,17 +30,20 @@ export class UserLibraryComponent implements OnInit {
     private bookService: BookService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.userId = this.authService.userDetails.id;
-    this.getUserReadings();
+    this.getPageableReadings();
   }
 
-  getUserReadings(): void {
-    this.userService.getReadings().subscribe((readings: Reading[]) => {
-      this.myReadings = readings;
-      this.userService.setUserReadings(readings);
+  getPageableReadings($event?: PageEvent, $event2?: MatPaginatorDefaultOptions): void {
+    this.userService.getPageable($event?.pageIndex, $event2?.pageSize).subscribe((data: HttpResponse<PageableReadings>) => {
+      this.myReadings = data.body.readingDto;
+      this.pageableReadings = data.body;
+      this.dataLength = data.body.totalElements;
+      this.userService.setUserReadings(data.body.readingDto); // needed for book edit
     });
   }
 
@@ -44,19 +54,19 @@ export class UserLibraryComponent implements OnInit {
         this.snackBar.open(`**${title}** removed!`, null, {
           duration: 2000,
           verticalPosition: 'top',
-          panelClass: ['yellow-snackbar'],
+          panelClass: ['yellow-snackbar']
         });
       } else if (response.status === 400) {
         this.snackBar.open(`Error: Unable to remove`, null, {
           duration: 2000,
           verticalPosition: 'top',
-          panelClass: ['orange-snackbar'],
+          panelClass: ['orange-snackbar']
         });
       } else {
         this.snackBar.open(`Unexpected Error`, null, {
           duration: 2000,
           verticalPosition: 'top',
-          panelClass: ['orange-snackbar'],
+          panelClass: ['orange-snackbar']
         });
       }
     });
@@ -66,7 +76,7 @@ export class UserLibraryComponent implements OnInit {
     this.userService
       .editReadingStatus({
         id: readingId,
-        isRead: !read,
+        isRead: !read
       })
       .subscribe((data) => {
         if (data.status === 200) {
@@ -78,7 +88,7 @@ export class UserLibraryComponent implements OnInit {
                 this.snackBar.open(`**${title}** reading complete!`, null, {
                   duration: 2000,
                   verticalPosition: 'top',
-                  panelClass: ['green-snackbar'],
+                  panelClass: ['green-snackbar']
                 });
               }
             });
@@ -86,7 +96,7 @@ export class UserLibraryComponent implements OnInit {
           this.snackBar.open('Error', null, {
             duration: 2000,
             verticalPosition: 'top',
-            panelClass: ['orange-snackbar'],
+            panelClass: ['orange-snackbar']
           });
         }
       });
@@ -103,7 +113,7 @@ export class UserLibraryComponent implements OnInit {
               this.snackBar.open(`**${title}** added to favorite!`, null, {
                 duration: 2000,
                 verticalPosition: 'top',
-                panelClass: ['green-snackbar'],
+                panelClass: ['green-snackbar']
               });
             }
           });
@@ -111,7 +121,7 @@ export class UserLibraryComponent implements OnInit {
         this.snackBar.open('Error', null, {
           duration: 2000,
           verticalPosition: 'top',
-          panelClass: ['orange-snackbar'],
+          panelClass: ['orange-snackbar']
         });
       }
     });
@@ -126,7 +136,7 @@ export class UserLibraryComponent implements OnInit {
     const bookToDelete = this.myReadings.filter((reading) => reading.bookId === bookId)[0];
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '350px',
-      data: `Delete **${bookToDelete.title}**?`,
+      data: `Delete **${bookToDelete.title}**?`
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -137,13 +147,13 @@ export class UserLibraryComponent implements OnInit {
               this.snackBar.open(`DELETE success!`, null, {
                 duration: 2000,
                 verticalPosition: 'top',
-                panelClass: ['green-snackbar'],
+                panelClass: ['green-snackbar']
               });
             } else if (response.status === 400 && response.body === null) {
               this.snackBar.open(`Error!`, null, {
                 duration: 2000,
                 verticalPosition: 'top',
-                panelClass: ['orange-snackbar'],
+                panelClass: ['orange-snackbar']
               });
             }
           },
@@ -151,7 +161,7 @@ export class UserLibraryComponent implements OnInit {
             this.snackBar.open(`Unexpected Error`, null, {
               duration: 2000,
               verticalPosition: 'top',
-              panelClass: ['orange-snackbar'],
+              panelClass: ['orange-snackbar']
             });
           }
         );

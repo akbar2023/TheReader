@@ -7,6 +7,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Reading } from '../../books/models/reading';
 import { ReadingStatus } from '../../books/models/readingStatus';
 import { FavoriteReading } from '../../books/models/favoriteReading';
+import { PageableReadings } from '../../books/models/PageableReadings';
 
 @Injectable({
   providedIn: 'root',
@@ -29,8 +30,8 @@ export class UserService {
       );
   }
 
-  getReadings(): Observable<Reading[]> {
-    return this.http.get<Reading[]>(this.readingApi);
+  getPageable(pageIndex: number = 0, pageSize: number = 4): Observable<HttpResponse<PageableReadings>> {
+    return this.http.get<PageableReadings>(this.readingApi + pageIndex + '/' + pageSize, { observe: 'response' });
   }
 
   getUserBookIds(): Observable<number[]> {

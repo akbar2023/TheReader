@@ -46,3 +46,8 @@
     </div>
   </mat-card>
 </div>
+
+<mat-paginator color="accent" [length]="dataLength"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions" showFirstLastButtons="true" (page)="getPageableReadings($event, $event)">
+</mat-paginator>

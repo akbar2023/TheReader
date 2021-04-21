@@ -4,20 +4,19 @@ import { Book } from '../models/book';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { BookLite } from '../models/book-lite';
 import { PageableBooks } from '../models/pageableBooks';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class BookService {
   private readonly bookApiUrl = `${environment.apiUrl}/api/book/`;
-  private readonly readingApiUrl = `${environment.apiUrl}/api/reading/page/`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   getPageable(page: number = 0, size: number = 4): Observable<HttpResponse<PageableBooks>> {
-    return this.http.get<any>(this.bookApiUrl + 'page/' + page + '/' + size, { observe: 'response' });
+    return this.http.get<PageableBooks>(this.bookApiUrl + 'page/' + page + '/' + size, { observe: 'response' });
   }
 
   getBookById(id: number): Observable<HttpResponse<Book>> {
